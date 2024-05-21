@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -43,7 +43,7 @@ const Container = styled.div`
         margin-bottom: 4rem;   
     }
 
-    @media (max-width: 400px){
+    @media (max-width: 420px){
         img{
             width: 70%;
         }
@@ -101,11 +101,18 @@ const InputWrapper = styled.div`
 `;
 
 
+const ErrorText = styled.p`
+    color: red;
+`
+
 export const Login = () => {
+    const [error, setError] = useState(null);
+
   return (
     <>
         <Container>
         <img src="src\assets\fulllogo.svg"></img>
+        {error && <ErrorText>{error}</ErrorText>}
             <form>
                 <input type="text" placeholder="Username" />
                 <InputWrapper>
