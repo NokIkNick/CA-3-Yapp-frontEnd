@@ -24,6 +24,14 @@ const Container = styled.div`
             cursor: pointer;
         }
     }
+    img{
+        align-self: flex-start;
+        margin-bottom: 1rem;
+        width: 26em;
+        height: 26rem;
+
+    
+    }
 `
 
 const Footer = styled.div`
@@ -57,6 +65,7 @@ export const Login = () => {
   return (
     <>
         <Container>
+            <img src="src\assets\fulllogo.svg"></img>
             <form>
                 <input type="text" placeholder="Username" />
                 <input type="password" placeholder="Password" />
