@@ -6,31 +6,47 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
     form{
         display: flex;
         flex-direction: column;
         gap: 1rem;
         input{
             padding: 0.5rem;
-            border-radius: 5px;
-            border: none;
+            border-radius: 0.5rem;
+            background-color: transparent;
+            color: var(--offwhite);
+            font-size: 1.1rem;
+            border: 0.1rem solid var(--offwhite);
+        }
+        input:focus{
+            outline: none;
+            border-color: initial;
         }
         button{
             padding: 0.5rem;
             border-radius: 5px;
             border: none;
-            background-color: var(--dark-green);
-            color: var(--offwhite);
+            background-color: var(--offwhite);
+            color: var(--green);
+            font-size: 1.1rem;
             cursor: pointer;
+        }
+        button[type="button"]{
+            background-color: transparent;
+            color: var(--offwhite);
         }
     }
     img{
-        align-self: flex-start;
-        margin-bottom: 1rem;
-        width: 26em;
-        height: 26rem;
+        width: 30%;
+        height: auto;
+        margin-bottom: 4rem;   
+    }
 
-    
+    @media (max-width: 400px){
+        img{
+            width: 70%;
+        }
     }
 `
 
@@ -47,6 +63,8 @@ const Footer = styled.div`
         border: none;
         color: var(--offwhite);
         cursor: pointer;
+        font-size: 1rem;
+        font-weight: bold;
     }
     background-color: var(--dark-green);
     div{
@@ -60,15 +78,42 @@ const Footer = styled.div`
     }
 `;
 
+const InputWrapper = styled.div`
+    position: relative;
+    input[type="password"]{
+        padding-right: 2rem;
+    }
+    button{
+        position: absolute;
+        left: 12.8rem;
+        top: 0.01rem;
+        width: 3rem;
+        height: 3rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+
+        img{
+            width: 80%;
+            height: auto;
+        }
+    }
+`;
+
 
 export const Login = () => {
   return (
     <>
         <Container>
-            <img src="src\assets\fulllogo.svg"></img>
+        <img src="src\assets\fulllogo.svg"></img>
             <form>
                 <input type="text" placeholder="Username" />
-                <input type="password" placeholder="Password" />
+                <InputWrapper>
+                <input type="password" placeholder="Password"/>
+                <button type="button">
+                    <img src="src\assets\circle-svgrepo-com.svg"></img>
+                </button>
+                </InputWrapper>
                 <button type="submit">Login</button>
                 <button type="button">Forgot password?</button>
             </form>
