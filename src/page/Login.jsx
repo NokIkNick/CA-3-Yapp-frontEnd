@@ -2,6 +2,15 @@ import React from 'react'
 
 export const Login = () => {
   return (
-    <div>Login</div>
+    <>
+        <div>
+            <form>
+                <input type="text" placeholder="Username" />
+                <input type="password" placeholder="Password" />
+                <button type="submit">Login</button>
+                <button type="button">Forgot password?</button>
+            </form>
+        </div>
+    </>
   )
 }
