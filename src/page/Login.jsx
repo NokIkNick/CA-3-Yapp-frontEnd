@@ -10,6 +10,10 @@ export const Login = () => {
                 <button type="submit">Login</button>
                 <button type="button">Forgot password?</button>
             </form>
+            <div>
+                <p>Don't have an account?</p>
+                <button type="button">Sign up here</button>
+            </div>
         </div>
     </>
   )
