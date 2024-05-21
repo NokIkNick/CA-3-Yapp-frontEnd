@@ -1,5 +1,12 @@
 import React from 'react'
 
+const Container = div.styled`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+
 export const Login = () => {
   return (
     <>
