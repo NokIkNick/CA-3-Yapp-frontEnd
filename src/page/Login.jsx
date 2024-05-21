@@ -131,6 +131,10 @@ export const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        if(!credentials.username || !credentials.password){
+            setError("Fields cannot be empty!");
+            return;
+        }
         console.log("Attempting to log in with these credentials: ", credentials.username, credentials.password);
         login(credentials.username, credentials.password).then((data) => {
             setError("Succesfully logged in!");
