@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { login } from '../services/apiFacade.js';
 
 const Container = styled.div`
     display: flex;
@@ -84,7 +86,7 @@ const Footer = styled.div`
 
 const InputWrapper = styled.div`
     position: relative;
-    input[type="password"]{
+    input[name="password"]{
         padding-right: 2rem;
     }
     button{
@@ -96,6 +98,7 @@ const InputWrapper = styled.div`
         border: none;
         background: none;
         cursor: pointer;
+        transition: all 0.3s ease-in-out;
 
         img{
             width: 80%;
@@ -107,11 +110,14 @@ const InputWrapper = styled.div`
 
 const ErrorText = styled.p`
     color: red;
+    margin-bottom: 1rem;
 `
 
 export const Login = () => {
     const [error, setError] = useState(null);
     const [credentials, setCredentials] = useState({"username": "", "password": ""});
+    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const handleOnChange = (e) => {
         console.log(e.target.name, e.target.value);
@@ -120,7 +126,22 @@ export const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(credentials);
+        handleLogin(e);
+    }
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        console.log("Attempting to log in with these credentials: ", credentials.username, credentials.password);
+        login(credentials.username, credentials.password).then((data) => {
+            setError("Succesfully logged in!");
+            localStorage.setItem("token", data.token);
+        }).catch((err) => {
+            setError(err.message);
+        });
+    }
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     }
 
   return (
@@ -131,9 +152,9 @@ export const Login = () => {
             <form onSubmit={handleSubmit}>
                 <input name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
                 <InputWrapper>
-                <input name="password" type="password" placeholder="Password" onChange={handleOnChange}/>
-                <button type="button">
-                    <img src="src\assets\circle-svgrepo-com.svg"></img>
+                <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
+                <button onClick={togglePasswordVisibility} type="button">
+                    <img src={showPassword ? "src/assets/eye-svgrepo-com.svg" : "src/assets/circle-svgrepo-com.svg"}></img>
                 </button>
                 </InputWrapper>
                 <button type="submit">Login</button>
@@ -143,7 +164,7 @@ export const Login = () => {
         <Footer>
             <div>
                 <p>Don't have an account?</p>
-                <button type="button">Sign up here</button>
+                <button type="button" onClick={() => {navigate("/register")}}>Sign up here</button>
             </div>
         </Footer>
     </>
