@@ -36,6 +36,10 @@ const Button = styled.button`
     background: white;
     font-family: 'Roboto', 'sans-serif';
     color: var(--green);
+    &:hover {
+        background: var(--dark-green);
+        color: white;
+    }
 `
 const FormContainer = styled.form`
     display: flex;
@@ -50,20 +54,33 @@ justify-content: center;
 align-items: center;
 `
 
-export const Register = () => {
+export const Register = ({registerUser}) => {
+    const [password, setPassword] = React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+        } else {
+            {registerUser}
+        }
+    }
+
+
     return (
         <>
             <Container>
                 <A href='/'>
                     <Logo src = 'src/assets/fulllogo.svg' alt='logo' />
                 </A>
-                <FormContainer>
-                    <Input type="text" placeholder="Email" />
-                    <Input type="text" placeholder="Name" />
-                    <Input type="text" placeholder="Username" />
-                    <Input type="password" placeholder="Password" />
-                    <Input type="Confirm password" placeholder="Confirm password" />
-                    <Button type="submit" onSubmit>Register</Button>
+                <FormContainer onSubmit={handleSubmit}>
+                    <Input type="text" id='email' placeholder="Email" />
+                    <Input type="text" id='name' placeholder="Name" />
+                    <Input type="text" id='username' placeholder="Username" />
+                    <Input type="password" id='password' placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+                    <Input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)}/>
+                    <Button type="submit">Register</Button>
                 </FormContainer>
             </Container>
         </>
