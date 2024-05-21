@@ -32,6 +32,10 @@ const Container = styled.div`
             font-size: 1.1rem;
             cursor: pointer;
         }
+        button:hover{
+            background-color: var(--dark-green);
+            color: var(--offwhite);
+        }
         button[type="button"]{
             background-color: transparent;
             color: var(--offwhite);
@@ -107,16 +111,27 @@ const ErrorText = styled.p`
 
 export const Login = () => {
     const [error, setError] = useState(null);
+    const [credentials, setCredentials] = useState({"username": "", "password": ""});
+
+    const handleOnChange = (e) => {
+        console.log(e.target.name, e.target.value);
+        setCredentials({...credentials, [e.target.name]: e.target.value});
+    } 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(credentials);
+    }
 
   return (
     <>
         <Container>
         <img src="src\assets\fulllogo.svg"></img>
         {error && <ErrorText>{error}</ErrorText>}
-            <form>
-                <input type="text" placeholder="Username" />
+            <form onSubmit={handleSubmit}>
+                <input name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
                 <InputWrapper>
-                <input type="password" placeholder="Password"/>
+                <input name="password" type="password" placeholder="Password" onChange={handleOnChange}/>
                 <button type="button">
                     <img src="src\assets\circle-svgrepo-com.svg"></img>
                 </button>
