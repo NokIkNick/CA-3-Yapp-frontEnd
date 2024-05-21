@@ -19,7 +19,18 @@ const GlobalStyles = createGlobalStyle`
         /*Blacks*/
         /*Text*/
         --grey: #404A4F;
-
-
     }
-`
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body{
+        font-family: 'Roboto', 'sans-serif';
+        background-color: var(--green);
+    }
+`;
+
+export default GlobalStyles

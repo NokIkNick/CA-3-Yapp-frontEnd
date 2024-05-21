@@ -1,6 +1,7 @@
 import React from 'react'
+import styled from 'styled-components'
 
-const Container = div.styled`
+const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +11,7 @@ const Container = div.styled`
 export const Login = () => {
   return (
     <>
-        <div>
+        <Container>
             <form>
                 <input type="text" placeholder="Username" />
                 <input type="password" placeholder="Password" />
@@ -21,7 +22,7 @@ export const Login = () => {
                 <p>Don't have an account?</p>
                 <button type="button">Sign up here</button>
             </div>
-        </div>
+        </Container>
     </>
   )
 }
