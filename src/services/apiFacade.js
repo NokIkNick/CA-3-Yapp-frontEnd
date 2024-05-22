@@ -21,7 +21,7 @@ export const login = async (username, password) => {
 }
 
 
-export const register = async (username, password) => {
+export const register = async (email, name, username, password) => {
         const response = await fetch(`${BASE_URL}/auth/register`, {
             method: "POST",
             headers: {

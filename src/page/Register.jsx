@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { register } from '../services/apiFacade'
 
 const Container = styled.div`
     display: flex;
@@ -55,18 +56,39 @@ justify-content: center;
 align-items: center;
 `
 
-export const Register = ({registerUser}) => {
+export const Register = () => {
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const navigate = useNavigate();
+    const [credentials, setCredentials] = useState({"email": "", "name": "", "username": "", "password": ""});
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+
+    const handleOnChange = (e) => {
+        console.log(e.target.name, e.target.value);
+        setCredentials({...credentials, [e.target.name]: e.target.value});
+    } 
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
         if (password !== confirmPassword) {
             alert("Passwords do not match");
         } else {
-            {registerUser}
+           {handleRegister(e)}
         }
+    }
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+        if(!credentials.email || !credentials.name || !credentials.username || !credentials.password){
+            setError("Fields cannot be empty!");
+            return;
+        }
+        console.log("Attempting to register with these credentials: ", credentials.email, credentials.name, credentials.username, credentials.password);
+        register(credentials.email, credentials.name, credentials.username, credentials.password).then((data) => {
+            setError("Succesfull register!");
+        }).catch((err) => {
+            setError(err.message);
+        });
     }
 
 
@@ -77,9 +99,9 @@ export const Register = ({registerUser}) => {
                     <Logo src = 'src/assets/fulllogo.svg' alt='logo' />
                 </A>
                 <FormContainer onSubmit={handleSubmit}>
-                    <Input type="text" id='email' placeholder="Email" />
-                    <Input type="text" id='name' placeholder="Name" />
-                    <Input type="text" id='username' placeholder="Username" />
+                    <Input type="text" id='email' placeholder="Email" onChange={handleOnChange} />
+                    <Input type="text" id='name' placeholder="Name" onChange={handleOnChange}/>
+                    <Input type="text" id='username' placeholder="Username" onChange={handleOnChange}/>
                     <Input type="password" id='password' placeholder="Password" onChange={e => setPassword(e.target.value)}/>
                     <Input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)}/>
                     <Button type="submit">Register</Button>
