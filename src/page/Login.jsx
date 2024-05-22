@@ -113,7 +113,7 @@ const ErrorText = styled.p`
     margin-bottom: 1rem;
 `
 
-export const Login = () => {
+export const Login = ({ loggedInUser, setLoggedInUser }) => {
     const [error, setError] = useState(null);
     const [credentials, setCredentials] = useState({"username": "", "password": ""});
     const [showPassword, setShowPassword] = useState(false);
@@ -138,9 +138,12 @@ export const Login = () => {
         console.log("Attempting to log in with these credentials: ", credentials.username, credentials.password);
         login(credentials.username, credentials.password).then((data) => {
             setError("Succesfully logged in!");
+            setLoggedInUser({"username": data.username, "roles": data.roles, "email": ""});
             localStorage.setItem("token", data.token);
+            navigate("/home");
         }).catch((err) => {
             setError(err.message);
+            return;
         });
     }
 
