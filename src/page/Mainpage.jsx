@@ -2,7 +2,16 @@ import React, {useEffect,useState} from 'react';
 import ReactDom from 'react-dom';
 import ReactPaginate from 'react-paginate';
 
-    const items = [1,2,3,4,5];
+//    const items = [1,2,3,4,5];
+
+    function formatDate(dateArray){
+        const [year,month,day,hour,minute,second] = dateArray;
+        return `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')} ${String(hour).padStart(2,'0')}:${String(minute).padStart(2,'0')}:${String(second).padStart(2,'0')}`; 
+    }
+
+    function goToThread(){
+        
+    }
 
     function Items({currentItems}){
         return(
@@ -10,8 +19,10 @@ import ReactPaginate from 'react-paginate';
             {
                 currentItems &&
                 currentItems.map((item) =>(
-                    <div>
-                        <h1>post #{item}</h1>
+                    <div id={item.id} onClick={goToThread}>
+                        <h1>{item.title}</h1>
+                        <p>{new Date(...item.createdDate).toLocaleString()}</p>
+                        <p>{item.userName}</p>
                     </div>
                 ))
             }
@@ -19,10 +30,33 @@ import ReactPaginate from 'react-paginate';
         )
     }
 
+
+
     function PaginatedItems({itemsPerPage}) {
         const [itemOffset,setItemOffset] = useState(0);
+        const [items,setItems] = useState([]);
+
+        const localhost = true;
+        const url = localhost ? 'http://localhost:7070/api' : ""; 
+
+
+        useEffect(() =>{
+            const fetchData = async() => {
+                try {
+                    const response = await fetch(url+'/public/getAllThreads');
+                    const data = await response.json();
+                    console.log(data);
+                    setItems(data);
+                }catch(error){
+                    console.error('fetching data error',error);
+                }
+            };
+            fetchData();
+        },[]);
+
 
         const endOffset = itemOffset + itemsPerPage;
+        console.log("here is your slices: "+items);
         const currentItems = items.slice(itemOffset,endOffset);
         const pageCount = Math.ceil(items.length / itemsPerPage);
 
@@ -57,13 +91,5 @@ export const Mainpage = () => {
     
 };
 
-
-/*export default function Mainpage(){
-    return(
-        <>
-            <PaginatedItems itemsPerPage={5}/>
-        </>
-    );
-}*/
-
+//https://www.npmjs.com/package/react-paginate source is from here.
 
