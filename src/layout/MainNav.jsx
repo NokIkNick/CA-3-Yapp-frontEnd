@@ -1,7 +1,7 @@
 
                 import React from 'react';
                 import styled from 'styled-components';
-                import { NavLink } from 'react-router-dom';
+                import { NavLink, useNavigate } from 'react-router-dom';
 
                 export const MainNav = () => {
                     const NavStyle = styled.nav`
@@ -39,13 +39,14 @@
                         }
                     `;
 
+                        const navigate = useNavigate();
                     return (    
                         <>
                             <NavStyle>
                                 <Logo src="./src/assets/fulllogo.svg" alt="Logo" />
                                 <SearchBar type="text" placeholder="Search..." />
                                 <div>
-                                    <Button>CreatePost</Button>
+                                    <Button onClick={() => {navigate("/createThread")}}>CreatePost</Button>
                                     <Button >
                                         <NavLink to="/login" />
                                         <img src="/src/assets/user.svg" alt="user" />

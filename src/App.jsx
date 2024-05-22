@@ -3,6 +3,7 @@ import { Login } from './page/Login'
 import { Register } from './page/Register'
 import { Home } from './page/Home'
 import { useState } from 'react';
+import { CreateThread } from './page/CreateThread';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/home" element={<Home loggedInUser={loggedInUser}/>} />
+          <Route path="/createThread" element={<CreateThread loggedInUser={loggedInUser}/>}/>
         </Routes>
       </BrowserRouter>
     </div>
