@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import SpecificUser from './SpecificUser';
 import Items from '../components/Items';
 import Header from '../layout/Header';
 
@@ -55,7 +54,7 @@ export const Mainpage = () => {
         <>
         <Header/>
               
-        <Container style={{}}>
+        <Container>
             <Items
                 items={items}
                 goToThread={goToThread}

@@ -64,8 +64,7 @@ export const Register = () => {
     const [error, setError] = useState(null);
     const [credentials, setCredentials] = useState({"email": "", "name": "","username": "","password": ""});
     const navigate = useNavigate();
-    const [credentials, setCredentials] = useState({"email": "", "name": "", "username": "", "password": ""});
-
+    
 
     const handleOnChange = (e) => {
         console.log(e.target.id, e.target.value);

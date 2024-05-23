@@ -11,7 +11,6 @@ import { useState } from 'react';
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({"username": "", "roles": "", "email": ""});
-
   return (
     <>
     <div>
