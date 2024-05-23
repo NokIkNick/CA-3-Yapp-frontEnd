@@ -4,7 +4,6 @@ import {Mainpage} from './page/Mainpage'
 import SpecificThread from './page/SpecificThread'
 import SpecificUser from './page/SpecificUser'
 import { Register } from './page/Register'
-import { Home } from './page/Home'
 import { Threads } from './page/Threads'
 import { useState } from 'react';
 
@@ -25,7 +24,6 @@ function App() {
           <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/threads" element={<Threads />} />
-          <Route path="/home" element={<Home loggedInUser={loggedInUser}/>} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import SpecificUser from './SpecificUser';
 import Items from '../components/Items';
-//height: '100vh', overflowY: 'auto',backgroundColor:'white' , scrollbarWidth: 'none', '-ms-overflow-style': 'none'
+import Header from '../layout/Header';
 
 const Container = styled.div`
     height: 100vh;
@@ -52,6 +53,7 @@ export const Mainpage = () => {
 
     return (
         <>
+        <Header/>
               
         <Container style={{}}>
             <Items
