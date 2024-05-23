@@ -1,10 +1,8 @@
 import { BrowserRouter,  Routes, Route } from 'react-router-dom'
 import { Login } from './page/Login'
-
 import {Mainpage} from './page/Mainpage'
 import SpecificThread from './page/SpecificThread'
 import SpecificUser from './page/SpecificUser'
-
 import { Register } from './page/Register'
 import { Home } from './page/Home'
 import { useState } from 'react';
