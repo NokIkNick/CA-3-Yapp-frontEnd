@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -57,6 +58,7 @@ align-items: center;
 export const Register = ({registerUser}) => {
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -71,7 +73,7 @@ export const Register = ({registerUser}) => {
     return (
         <>
             <Container>
-                <A href='/'>
+                <A onClick={() => {navigate("/login")}}>
                     <Logo src = 'src/assets/fulllogo.svg' alt='logo' />
                 </A>
                 <FormContainer onSubmit={handleSubmit}>
