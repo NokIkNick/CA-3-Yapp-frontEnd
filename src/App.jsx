@@ -1,8 +1,12 @@
 import { BrowserRouter,  Routes, Route } from 'react-router-dom'
 import { Login } from './page/Login'
+import {Mainpage} from './page/Mainpage'
+import SpecificThread from './page/SpecificThread'
+import SpecificUser from './page/SpecificUser'
 import { Register } from './page/Register'
 import { Home } from './page/Home'
 import { useState } from 'react';
+
 
 
 function App() {
@@ -12,10 +16,15 @@ function App() {
     <>
     <div>
       <BrowserRouter>
-        <Routes>
+        <Routes> 
+          <Route path="/" element={<Login />}/>         
+          <Route path="/home" element={<Mainpage />}/>
+          <Route path="/thread/:id" element={<SpecificThread />} />
+          <Route path="/users/:id" element={<SpecificUser/>}/>
           <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>}/>
           <Route path="/register" element={<Register />}/>
-          <Route path="/home" element={<Home loggedInUser={loggedInUser}/>} />
+         
+
         </Routes>
       </BrowserRouter>
     </div>
