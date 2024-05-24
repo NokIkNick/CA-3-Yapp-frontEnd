@@ -41,3 +41,19 @@ export const register = async (email, name, username, password) => {
         }
         return data;
 }
+
+
+export const fetchCategories = async () => {
+    const response = await fetch(`${BASE_URL}/public/getCategories`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    const data = await response.json();
+    if(!data){
+        throw new Error("Could not fetch categories");
+    }
+    return data;
+}

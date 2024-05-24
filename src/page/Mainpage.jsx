@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Items from '../components/Items';
-import Header from '../layout/Header';
 
 const Container = styled.div`
     height: 100vh;
@@ -13,7 +12,6 @@ const Container = styled.div`
     
     @media(max-width:400px){
         width:70%;
-           
         
     }
 
@@ -52,8 +50,6 @@ export const Mainpage = () => {
 
     return (
         <>
-        <Header/>
-              
         <Container>
             <Items
                 items={items}

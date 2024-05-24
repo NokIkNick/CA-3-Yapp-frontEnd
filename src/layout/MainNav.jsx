@@ -2,23 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-export const MainNav = () => {
-const navigate = useNavigate();
-const MainNav = () => {
-    let button;
-if (window.location.pathname === "/home") {
-    button = <button onClick={() => {navigate("/createthread")}}>Create Thread</button>;
-} else if (window.location.pathname === "/threads") {
-    button = <button onClick={() => {navigate("/home")}}>Create Post</button>;
-} else {
-    button = null;
-}
-return (
-    <div>
-        {button}
-    </div>
-);
-}
+
 const NavStyle = styled.nav`
     background-color: var(--green);
     display: flex;
@@ -74,6 +58,24 @@ const Buttons = styled.div`
     }
 `;
 
+
+export const MainNav = () => {
+const navigate = useNavigate();
+const MainNav = () => {
+    let button;
+if (window.location.pathname === "/home") {
+    button = <button onClick={() => {navigate("/createthread")}}>Create Thread</button>;
+} else if (window.location.pathname === "/threads") {
+    button = <button onClick={() => {navigate("/home")}}>Create Post</button>;
+} else {
+    button = null;
+}
+return (
+    <div>
+        {button}
+    </div>
+);
+}
 return (    
     <>
         <NavStyle>
