@@ -9,6 +9,10 @@ const NavStyle = styled.nav`
     align-items: center;
     justify-content: space-between;
     height: 8%;
+    
+    position: fixed;
+    top: 0;
+    width: 100%;
 `;
 
 const Logo = styled.img`

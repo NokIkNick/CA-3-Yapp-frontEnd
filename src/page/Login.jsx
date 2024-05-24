@@ -49,7 +49,7 @@ const Container = styled.div`
         margin-bottom: 4rem;   
     }
 
-    @media (max-width: 420px){
+    @media (max-width: 450px){
         img{
             width: 70%;
         }
