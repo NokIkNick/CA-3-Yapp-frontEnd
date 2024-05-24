@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Items from '../components/Items';
+import { fetchThreads } from '../services/apiFacade';
 
 const Container = styled.div`
     height: 100vh;
@@ -19,17 +20,11 @@ const Container = styled.div`
 
 export const Mainpage = () => {
     const [items, setItems] = useState([]);
-    const navigate = useNavigate();
-
-    const localhost = true;
-    const url = localhost ? 'http://localhost:7070/api' : "";
-
+   
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(url + '/public/getAllThreads');
-                const data = await response.json();
-                console.log(data);
+                const data = await fetchThreads();
                 setItems(data);
             } catch (error) {
                 console.error('fetching data error', error);
