@@ -21,13 +21,15 @@ export const login = async (username, password) => {
 }
 
 
-export const register = async (username, password) => {
+export const register = async (email, name, username, password) => {
         const response = await fetch(`${BASE_URL}/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
+                email: email,
+                name: name,
                 username: username,
                 password: password
             })

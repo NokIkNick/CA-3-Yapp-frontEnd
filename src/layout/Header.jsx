@@ -1,9 +1,11 @@
 import { MainNav } from './MainNav'
 
-export const Header = () => {
+const Header = () => {
     return (
       <>
         <MainNav />
       </>
     )
   }
+
+    export default Header;

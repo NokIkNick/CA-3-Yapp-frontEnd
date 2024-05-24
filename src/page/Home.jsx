@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Header } from '../layout/Header';
+import Header from '../layout/Header';
 import PropTypes from 'prop-types';
 
 export const Home = ({ loggedInUser }) => {
