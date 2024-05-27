@@ -2,10 +2,10 @@ import { Outlet } from "react-router-dom"
 import Header from "./Header"
 
 
-export const AppLayout = () => {
+export const AppLayout = ({setSearch}) => {
     return (
       <>
-        <Header />
+        <Header setSearch={setSearch} />
         <Outlet />
       </>
     )

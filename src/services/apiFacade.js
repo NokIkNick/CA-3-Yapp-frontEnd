@@ -1,7 +1,7 @@
 import {BASE_URL} from "../utils/globalVariables.js"
 
 export const fetchThreads = async () => {
-    const response = await fetch(`${BASE_URL}/public/getAllThreads`,{
+    const response = await fetch(`${BASE_URL2}/public/getAllThreads`,{
         method:"GET",
         headers: {
             "Content-Type":"application/json"
