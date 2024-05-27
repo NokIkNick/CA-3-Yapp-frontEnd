@@ -1,5 +1,4 @@
 import {BASE_URL} from "../utils/globalVariables.js"
-import {BASE_URL2} from "../utils/globalVariables.js"
 
 export const fetchThreads = async () => {
     const response = await fetch(`${BASE_URL2}/public/getAllThreads`,{
@@ -18,7 +17,7 @@ export const fetchThreads = async () => {
 
 
 export const login = async (username, password) => {
-        const response = await fetch(`${BASE_URL2}/security/auth/login`, {
+        const response = await fetch(`${BASE_URL}/security/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -38,7 +37,7 @@ export const login = async (username, password) => {
 
 
 export const register = async (email, name, username, password) => {
-        const response = await fetch(`${BASE_URL2}/security/auth/register`, {
+        const response = await fetch(`${BASE_URL}/security/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -60,7 +59,7 @@ export const register = async (email, name, username, password) => {
 
 
 export const fetchCategories = async () => {
-    const response = await fetch(`${BASE_URL2}/public/getCategories`, {
+    const response = await fetch(`${BASE_URL}/public/getCategories`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
