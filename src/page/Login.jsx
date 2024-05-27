@@ -9,50 +9,55 @@ const Container = styled.div`
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    form{
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        input{
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            background-color: transparent;
-            color: var(--offwhite);
-            font-size: 1.1rem;
-            border: 0.1rem solid var(--offwhite);
-        }
-        input:focus{
-            outline: none;
-            border-color: initial;
-        }
-        button{
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: none;
-            background-color: var(--offwhite);
-            color: var(--green);
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-        button:hover{
-            background-color: var(--dark-green);
-            color: var(--offwhite);
-        }
-        button[type="button"]{
-            background-color: transparent;
-            color: var(--offwhite);
-        }
+    `;
+
+const StyledForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
+
+const StyledInput = styled.input`
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    color: var(--offwhite);
+    font-size: 1.1rem;
+    border: 0.1rem solid var(--offwhite);
+
+    &:focus{
+        outline: none;
+        border-color: initial;
     }
-    img{
-        width: 30%;
-        height: auto;
-        margin-bottom: 4rem;   
+`;
+
+const StyledButton = styled.button`
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--offwhite);
+    color: var(--green);
+    font-size: 1.1rem;
+    cursor: pointer;
+
+    &:hover{
+        background-color: var(--dark-green);
+        color: var(--offwhite);
     }
+`;
+
+const StyledTypeButton = styled.button`
+    background-color: transparent;
+    color: var(--offwhite);
+`;
+
+const StyledLogo = styled.img`
+    width: 30%;
+    height: auto;
+    margin-bottom: 4rem;
 
     @media (max-width: 450px){
-        img{
-            width: 70%;
-        }
+        width: 70%;
     }
 `
 
@@ -92,21 +97,19 @@ const InputWrapper = styled.div`
     button{
         position: absolute;
         left: 12.8rem;
-        top: 0.01rem;
         width: 3rem;
-        height: 3rem;
+        height: 2.7rem;
         border: none;
         background: none;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
 
         img{
-            width: 80%;
+            width: 60%;
             height: auto;
         }
     }
 `;
-
 
 const ErrorText = styled.p`
     color: red;
@@ -154,24 +157,24 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
   return (
     <>
         <Container>
-        <img src="src\assets\fulllogo.svg"></img>
+        <StyledLogo src="src\assets\fulllogo.svg"></StyledLogo>
         {error && <ErrorText>{error}</ErrorText>}
-            <form onSubmit={handleSubmit}>
-                <input name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
+            <StyledForm onSubmit={handleSubmit}>
+                <StyledInput name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
                 <InputWrapper>
-                <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
+                <StyledInput name="password" type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
                 <button onClick={togglePasswordVisibility} type="button">
                     <img src={showPassword ? "src/assets/eye-svgrepo-com.svg" : "src/assets/circle-svgrepo-com.svg"}></img>
                 </button>
                 </InputWrapper>
-                <button type="submit">Login</button>
-                <button type="button">Forgot password?</button>
-            </form>
+                <StyledButton type="submit">Login</StyledButton>
+                <StyledButton type="button">Forgot password?</StyledButton>
+            </StyledForm>
         </Container>
         <Footer>
             <div>
                 <p>Don't have an account?</p>
-                <button type="button" onClick={() => {navigate("/register")}}>Sign up here</button>
+                <StyledTypeButton type="button" onClick={() => {navigate("/register")}}>Sign up here</StyledTypeButton>
             </div>
         </Footer>
     </>
