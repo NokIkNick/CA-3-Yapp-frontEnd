@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Items from '../components/Items';
 import { fetchThreads } from '../services/apiFacade';
+import ThreadItem from '../components/Threaditems';
 
 const Container = styled.div`
     height: 100vh;
@@ -10,28 +10,45 @@ const Container = styled.div`
     background-color: white;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    
+    margin-top: 2rem;
     @media(max-width:400px){
         width:70%;
-        
     }
 
 `
 
-export const Mainpage = () => {
+export const Mainpage = ({search}) => {
     const [items, setItems] = useState([]);
-   
+    const navigate = useNavigate();
+    const [filteredItems, setFilteredItems] = useState([]);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await fetchThreads();
                 setItems(data);
+                setFilteredItems(data);
             } catch (error) {
                 console.error('fetching data error', error);
             }
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        filterItems(search);
+    }, [search]);
+
+    function filterItems(search) {
+        if (search === '') {
+            setFilteredItems(items);
+            return;
+        }
+        const filteredItems = items.filter((item) => {
+            return item.title.toLowerCase().includes(search.toLowerCase());
+        });
+        setFilteredItems(filteredItems);
+    }
 
     function goToThread(item) {
         console.log(item.id);
@@ -46,8 +63,8 @@ export const Mainpage = () => {
     return (
         <>
         <Container>
-            <Items
-                items={items}
+            <ThreadItem
+                items={filteredItems}
                 goToThread={goToThread}
                 goToUser={goToUser}
             />
