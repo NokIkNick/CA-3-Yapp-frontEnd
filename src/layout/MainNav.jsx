@@ -13,17 +13,6 @@ const NavStyle = styled.nav`
     position: fixed;
     top: 0;
     width: 100%;
-
-    @media (max-width: 1000px) {
-        height: 0;
-        overflow: hidden;
-
-    }
-
-    @media (max-height: 1000px){
-        height: 5%;
-
-    }
 `;
 
 const Logo = styled.img`
@@ -74,39 +63,70 @@ const Buttons = styled.div`
 `;
 
 
-export const MainNav = () => {
+export const MainNav = ({setSearch}) => {
 const navigate = useNavigate();
 const MainNav = () => {
     let button;
-if (window.location.pathname === "/home") {
-    button = <button onClick={() => {navigate("/createthread")}}>Create Thread</button>;
-} else if (window.location.pathname === "/threads") {
-    button = <button onClick={() => {navigate("/home")}}>Create Post</button>;
-} else {
-    button = null;
-}
+    if (window.location.pathname === "/home") {
+        if(localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
+            button = <button>Login first</button>;
+        } else {
+            button = <button onClick={() => {navigate("/createthread")}}>Create Thread</button>;
+        }
+        
+    } else if (window.location.pathname === "/threads") {
+        if(localStorage.getItem("token") !== null) {
+            button = <button>Login first</button>;
+        } else {
+        button = <button onClick={() => {navigate("/home")}}>Create Post</button>;
+        }
+    } else {
+        button = null;
+    }
 return (
     <div>
         {button}
     </div>
 );
 }
+
+
+let debounceTimer;
+
+const debounce = (callback, time) => {
+  window.clearTimeout(debounceTimer);
+  debounceTimer = window.setTimeout(callback, time);
+};
+
+function handleChange(event){
+    const search = event.target.value;
+    debounce(() => handleSearchPosts(search), 500);
+}
+
+function handleSearchPosts(search){
+    console.log(search);
+    setSearch(search);
+    // fetch posts
+    // filter posts
+    // render posts
+}
+
 return (    
     <>
         <NavStyle>
             <Logo src="./src/assets/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
                 <SearchWrapper>
-                    <input type="text" placeholder="Search..." />
-                        <button>
-                            <img src="/src/assets/search.svg" alt="search" />
-                                </button>
-                                    </SearchWrapper>
-                                    <Buttons>
-                                        <MainNav />
-                                        <button onClick={() => {navigate("/login")}}>
-                                            <img src="/src/assets/user.svg" alt="user" />
-                                        </button>
-                                    </Buttons>
+                    <input type="search" placeholder="Search..." onChange={handleChange} />
+                    <button>
+                        <img src="/src/assets/search.svg" alt="search" />
+                    </button>
+                </SearchWrapper>
+                <Buttons>
+                    <MainNav />
+                    <button onClick={() => {navigate("/login")}}>
+                        <img src="/src/assets/user.svg" alt="user" />
+                    </button>
+                </Buttons>
         </NavStyle>
     </>
 );

@@ -1,9 +1,9 @@
 import { MainNav } from './MainNav'
 
-const Header = () => {
+const Header = ({setSearch}) => {
     return (
       <>
-        <MainNav />
+        <MainNav setSearch={setSearch}/>
       </>
     )
   }

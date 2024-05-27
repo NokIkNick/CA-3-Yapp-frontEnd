@@ -12,6 +12,7 @@ import { AppLayout } from './layout/AppLayout'
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({"username": "", "roles": "", "email": ""});
+  const [search, setSearch] = useState("");
   return (
     <>
     <div>
@@ -19,11 +20,11 @@ function App() {
         <Routes>
 
           <Route element={
-            <AppLayout />
+            <AppLayout setSearch={setSearch} />
           }>
           
           {/*All routes under here, have the AppLayout rendered ontop of it.*/}
-            <Route path="/home" element={<Mainpage />}/>
+            <Route path="/home" element={<Mainpage search={search}/>}/>
             <Route path="/thread/:id" element={<SpecificThread />} />
             <Route path="/users/:id" element={<SpecificUser/>}/>
             <Route path="/threads" element={<Threads />} />
