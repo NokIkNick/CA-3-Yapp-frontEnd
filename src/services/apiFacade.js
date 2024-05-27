@@ -17,7 +17,7 @@ export const fetchThreads = async () => {
 
 
 export const login = async (username, password) => {
-        const response = await fetch(`${BASE_URL}/auth/login`, {
+        const response = await fetch(`${BASE_URL}/security/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -37,7 +37,7 @@ export const login = async (username, password) => {
 
 
 export const register = async (email, name, username, password) => {
-        const response = await fetch(`${BASE_URL}/auth/register`, {
+        const response = await fetch(`${BASE_URL}/security/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

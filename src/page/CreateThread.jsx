@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
-import { createThread } from '../services/apiFacade.js';
+import { createThread, fetchCategories } from '../services/apiFacade.js';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -160,38 +160,47 @@ const Container = styled.div`
 
 export const CreateThread = ({ loggedInUser }) => {
     const [categories, setCategories] = useState(null);
-    const [createdThread, setCreatedThread] = useState(null);
+    const [createdThread, setCreatedThread] = useState({title: '', content: '', category: 1});
     const [error, setError] = useState(null);
-    const [token, setToken] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, [])
+        handleCategories();
+    }, []);
+
+    const handleCategories = () => {
+        fetchCategories().then((data) => {
+            setCategories(data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setCreatedThread({...createdThread, author: loggedInUser.id});
-        attempCreatingThread(createThread, token);
+        console.log(loggedInUser.username);
+        const thread = {...createdThread, author: loggedInUser.username};
+        console.log(thread);
+        attempCreatingThread(thread);
     }
 
     const handleOnChange = (e) => {
         e.preventDefault();
         setCreatedThread({...createdThread, [e.target.id]: e.target.value});
+        console.log([e.target.id], e.target.value);
     }
 
-    const attempCreatingThread = (e) => {
-        e.preventDefault();
+    const attempCreatingThread = (thread) => {
         if(!loggedInUser){
             setError('You need to be logged in to create a thread');
             return;
         }
-        if(createdThread.title === '' || createdThread.content === '' || createdThread.category === ''){
+        if(thread.title === '' || thread.content === '' || thread.category === ''){
             setError('All fields must be filled out');
             return;
         }
-
-        createThread(createdThread, loggedInUser.token).catch((error) => {
+        console.log(localStorage.getItem('token'));
+        createThread(thread, localStorage.getItem('token')).catch((error) => {
             setError("Error creating thread");
             console.log(error);
             return;

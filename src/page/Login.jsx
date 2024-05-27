@@ -141,7 +141,7 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
         console.log("Attempting to log in with these credentials: ", credentials.username, credentials.password);
         login(credentials.username, credentials.password).then((data) => {
             setError("Succesfully logged in!");
-            setLoggedInUser({"username": data.username, "roles": data.roles, "email": ""});
+            setLoggedInUser({"username": data.username, "roles": data.roles, "email": data.email});
             localStorage.setItem("token", data.token);
             navigate("/home");
         }).catch((err) => {
