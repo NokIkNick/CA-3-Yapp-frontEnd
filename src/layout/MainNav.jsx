@@ -30,6 +30,7 @@ const SearchWrapper = styled.div`
             padding: 0.5rem 0.5rem;
             border: 1px solid gray;
             border-radius: 5px;
+            background-color: var(--basewhite);
         }
         button{
             position: absolute;
@@ -52,7 +53,7 @@ const Buttons = styled.div`
     button {
         padding: 0.5rem 0.7rem;
         margin: 0 0.2rem;
-        background-color: #f0f0f0;
+        background-color: var(--basewhite);
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -75,10 +76,16 @@ const MainNav = () => {
         }
         
     } else if (window.location.pathname === "/threads") {
-        if(localStorage.getItem("token") !== null) {
+        if(localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
             button = <button>Login first</button>;
         } else {
         button = <button onClick={() => {navigate("/home")}}>Create Post</button>;
+        }
+    } else if (window.location.pathname === "/accountPage") {
+        if(localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
+            button = <button>Login first</button>;
+        } else {
+        button = <button onClick={() => {navigate("/createthread")}}>create thread</button>;
         }
     } else {
         button = null;
@@ -104,11 +111,18 @@ function handleChange(event){
 }
 
 function handleSearchPosts(search){
-    console.log(search);
     setSearch(search);
-    // fetch posts
-    // filter posts
-    // render posts
+}
+
+function userButton(){
+    if (localStorage.getItem("token") === null) {
+        navigate("/login");
+        console.log("Login first");
+    } else {
+        console.log("Account page");
+        navigate("/accountPage");
+        
+    }
 }
 
 return (    
@@ -117,13 +131,10 @@ return (
             <Logo src="./src/assets/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
                 <SearchWrapper>
                     <input type="search" placeholder="Search..." onChange={handleChange} />
-                    <button>
-                        <img src="/src/assets/search.svg" alt="search" />
-                    </button>
                 </SearchWrapper>
                 <Buttons>
                     <MainNav />
-                    <button onClick={() => {navigate("/login")}}>
+                    <button onClick={userButton}>
                         <img src="/src/assets/user.svg" alt="user" />
                     </button>
                 </Buttons>
