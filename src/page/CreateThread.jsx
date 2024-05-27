@@ -58,7 +58,7 @@ const Container = styled.div`
             margin-top: 1rem;
         }
 
-        @media (max-width: 450px){
+        @media (max-width: 1000px){
             form{
                 width: 90%;
             }

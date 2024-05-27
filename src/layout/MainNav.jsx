@@ -13,6 +13,17 @@ const NavStyle = styled.nav`
     position: fixed;
     top: 0;
     width: 100%;
+
+    @media (max-width: 1000px) {
+        height: 0;
+        overflow: hidden;
+
+    }
+
+    @media (max-height: 1000px){
+        height: 5%;
+
+    }
 `;
 
 const Logo = styled.img`
