@@ -9,6 +9,21 @@ const NavStyle = styled.nav`
     align-items: center;
     justify-content: space-between;
     height: 8%;
+    
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    @media (max-width: 1000px) {
+        height: 0;
+        overflow: hidden;
+
+    }
+
+    @media (max-height: 1000px){
+        height: 5%;
+
+    }
 `;
 
 const Logo = styled.img`
