@@ -13,6 +13,7 @@ const NavStyle = styled.nav`
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1000;
 `;
 
 const Logo = styled.img`
