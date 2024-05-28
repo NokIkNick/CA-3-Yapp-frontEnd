@@ -36,7 +36,7 @@ function App() {
           {/*These routes are exempt from the AppLayout component */}
           <Route index element={<Navigate to="/login"/>}/>   
           <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>}/>
-          <Route path="/register" element={<Register />}/>
+          <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} />}/>
         </Routes>
       </BrowserRouter>
     </div>

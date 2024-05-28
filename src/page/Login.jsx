@@ -142,7 +142,7 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
             localStorage.setItem("token", data.token);
             navigate("/home");
         }).catch((err) => {
-            setError(err.message);
+            setError(err.message, err.cause);
             return;
         });
     }

@@ -1,7 +1,7 @@
 import {BASE_URL, BASE_URL2} from "../utils/globalVariables.js"
 
 export const fetchThreads = async () => {
-    const response = await fetch(`${BASE_URL2}/public/getAllThreads`,{
+    const response = await fetch(`${BASE_URL}/public/getAllThreads`,{
         method:"GET",
         headers: {
             "Content-Type":"application/json"
@@ -36,15 +36,15 @@ export const login = async (username, password) => {
 }
 
 
-export const register = async (email, name, username, password) => {
-        const response = await fetch(`${BASE_URL2}/security/auth/register`, {
+
+export const register = async (email, username, password) => {
+        const response = await fetch(`${BASE_URL}/security/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 email: email,
-                name: name,
                 username: username,
                 password: password
             })
