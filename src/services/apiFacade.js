@@ -12,7 +12,6 @@ export const fetchThreads = async () => {
         throw new Error("No network connection")
     }
     const data = await response.json();
-    console.log(data);
     return data;
 }
 
@@ -35,7 +34,6 @@ export const login = async (username, password) => {
         }
         return data;
 }
-
 
 
 export const register = async (email, username, password) => {
@@ -73,11 +71,24 @@ export const fetchCategories = async () => {
     }
     return data;
 }
-export function formatDate(createdDate) {
-    // Extracting individual components
-    const [year, month, day, hours, minutes, seconds, milliseconds] = createdDate;
-    // Creating a new Date object
-    const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
-    // Formatting the date
-    return dateObject.toLocaleString(); // Adjust to your desired format
+
+export const createThread = async (thread, token) => {
+    const response = await fetch(`${BASE_URL}/protected/createThread`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+    },
+        body: JSON.stringify({
+            title: thread.title,
+            content: thread.content,
+            category: thread.category,
+            userName: thread.author
+        })
+    });
+    const data = await response.json();
+    if(!data){
+        throw new Error("Could not create thread");
+    }
+    return data;
 }

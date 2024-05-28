@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {formatDate} from "../services/apiFacade.js";
 
 const Container = styled.div`
     box-shadow:inset 0 0 0 2rem #f1f1e5;
@@ -25,6 +24,7 @@ export default function ThreadItem({ items, goToThread, goToUser }) {
         }
     }
 
+
 return (
     <>
         <br></br>
@@ -33,7 +33,7 @@ return (
                 <p onClick={() => goToUser(item.userName)} style={{ cursor: 'pointer' }}> {item.userName}</p>
                 <h1 onClick={() => goToThread(item)} style={{ cursor: 'pointer' }}>{item.title}</h1>
                 <p>{lengthshortner(item.content)}</p>
-                <p>date: {formatDate(item.createdDate)}</p>
+                <p>date: {new Date(...item.createdDate).toLocaleString()}</p>
             </Container>
         ))}
     </>
