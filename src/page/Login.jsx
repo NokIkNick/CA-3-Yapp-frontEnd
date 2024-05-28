@@ -120,7 +120,7 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(localStorage.getItem("token") !== null){
+        if(loggedInUser.username){
             navigate("/home");
         }
     },[navigate]);
