@@ -58,7 +58,7 @@ justify-content: center;
 align-items: center;
 `
 
-export const Register = () => {
+export const Register = ({setLoggedInUser}) => {
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [error, setError] = useState(null);
@@ -90,10 +90,11 @@ export const Register = () => {
             return;
         }
         console.log("Attempting to register with these credentials: ", credentials.email, credentials.name, credentials.username, credentials.password);
-        register(credentials.email, credentials.name, credentials.username, credentials.password).then((data) => {
+        register(credentials.email, credentials.username, credentials.password).then((dataOne) => {
             setError("Succesfully registered!");
-            login(credentials.username, credentials.password).then((data) => {
-                localStorage.setItem("token", data.token);
+            login(credentials.username, credentials.password).then((dataTwo) => {
+                setLoggedInUser({"username": dataTwo.username, "roles": dataTwo.roles, "email": dataTwo.email});
+                localStorage.setItem("token", dataTwo.token);
                 navigate("/home");
             }).catch((err) => {
                 setError(err.message);

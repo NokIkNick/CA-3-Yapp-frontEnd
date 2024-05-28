@@ -1,1 +1,1 @@
-export const BASE_URL = "http://localhost:7080/api"
+export const BASE_URL = "https://yappapi.wintherdev.com/api";
