@@ -1,6 +1,7 @@
-import ThreadItem from "./Threaditems.jsx";
+
 import styled from "styled-components";
 import {useEffect, useState} from "react";
+import {formatDate} from "../services/apiFacade.js";
 
 // Styled components
 const MainContainer = styled.div`
@@ -8,21 +9,24 @@ const MainContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding-top: 20px; /* Optional: add padding to the top */
     padding-bottom: 80px; /* Make space for the fixed form at the bottom */
 `;
 
 const PostContainer = styled.div`
-    background: azure;
+    background: var(--basewhite);
     min-height: 20vh;
     padding: 16px;
     margin: 16px;
     width: 33%;
     box-sizing: border-box;
     position: relative;
+    border: 10px var(--green) solid
+    // border-top: 15px var(--green) solid;
 `;
 
 const ReplyContainer = styled.div`
-    background: lightblue;
+    background: var(--baseWhite);;
     min-height: 10vh;
     padding: 12px;
     margin: 8px 16px;
@@ -30,6 +34,7 @@ const ReplyContainer = styled.div`
     box-sizing: border-box;
     position: relative;
     margin-left: 20px;
+    border: 2px var(--green) solid
 `;
 
 const DateContainer = styled.p`
@@ -38,8 +43,12 @@ const DateContainer = styled.p`
     right: 16px;
     margin: 0;
     font-size: 0.9em;
-    color: gray;
+    color: var(--green);
 `;
+
+const TextWithColor = styled.p`
+    color: white;
+    `;
 
 const ReplyButton = styled.button`
     margin-top: 10px;
@@ -54,20 +63,22 @@ const ToggleRepliesLink = styled.p`
 `;
 
 const FormContainer = styled.div`
-    background: lightgrey;
+    background: var(--green);
     padding: 16px;
     margin: 16px;
     width: 90%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    color: var(--baseWhite);
+    
 `;
 
 const TextArea = styled.textarea`
     margin-bottom: 10px;
     padding: 8px;
     width: 100%;
-    height: 100px; /* Larger default height for post text area */
+    height: 50px; /* Larger default height for post text area */
     box-sizing: border-box;
     resize: none;
 `;
@@ -76,7 +87,7 @@ const ReplyTextArea = styled.textarea`
     margin-bottom: 10px;
     padding: 8px;
     width: 100%;
-    height: 80px; /* Larger default height for reply text area */
+    height: 50px; /* Larger default height for reply text area */
     box-sizing: border-box;
     resize: none;
 `;
@@ -100,9 +111,9 @@ const BottomFormContainer = styled(FormContainer)`
 `;
 
 
-export default function Post({ postData , threadId, loggedInUser }) {
+export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
-    const [posts, setPosts] = useState([]);
+    // const [posts, setPosts] = useState([]);
     const [currentThreadId, setCurrentThreadId] = useState(null); // threadId is passed as a prop from the parent component [Thread.jsx
     const [loggedInUserData, setLoggedInUserData] = useState({});
     const [visibleReplies, setVisibleReplies] = useState({});
@@ -113,13 +124,10 @@ export default function Post({ postData , threadId, loggedInUser }) {
     const url = localhost ? 'http://localhost:7080/api' : "";
 
     useEffect(() => {
-        if (Array.isArray(postData)) {
-            const sortedPosts = postData.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
-            setPosts(sortedPosts);
-        }
         setLoggedInUserData(loggedInUser);
         setCurrentThreadId(threadId);
-    }, [postData,posts]);
+        console.log("threadId: "+threadId +"from post.jsx");
+    }, []);
 
     const toggleReplies = (postId) => {
         setVisibleReplies((prev) => ({
@@ -140,7 +148,7 @@ export default function Post({ postData , threadId, loggedInUser }) {
                 body: JSON.stringify({
                     content: newPostContent,
                     userName: "PatrickUser3", // loggedInUserData.username,
-                    threadId: 1//currentThreadId,
+                    threadId: currentThreadId,
                 })
             });
             const data = await response.json();
@@ -162,7 +170,7 @@ export default function Post({ postData , threadId, loggedInUser }) {
                 body: JSON.stringify({
                     content: newReplyContent,
                     userName: "PatrickUser3", // loggedInUserData.username,
-                    threadId:1, // currentThreadId,
+                    threadId: currentThreadId,
                     parentReplyId: replyingToPostId
                 })
             });
@@ -187,7 +195,6 @@ export default function Post({ postData , threadId, loggedInUser }) {
         console.log(newPostContent);
     }
 
-
     return (
         <MainContainer>
             {posts && posts.map((post) => (
@@ -196,7 +203,7 @@ export default function Post({ postData , threadId, loggedInUser }) {
                         <strong>Post by User: {post.userName}:</strong>
                         <p>{post.content}</p>
                     </div>
-                    <DateContainer><strong>Created Date:</strong> {new Date(...post.createdDate).toLocaleString()}</DateContainer>
+                    <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
                     {post.replies.length > 0 && (
                         <>
                             <ToggleRepliesLink onClick={() => toggleReplies(post.id)}>
@@ -207,11 +214,9 @@ export default function Post({ postData , threadId, loggedInUser }) {
                                     <h4>Replies:</h4>
                                     {post.replies.map((reply) => (
                                         <ReplyContainer key={reply.id} className="reply">
-                                            <p>
                                                 <strong>Reply by User: {reply.userName}:</strong>
-                                            </p>
                                             <p>{reply.content}</p>
-                                            <DateContainer><strong>Created Date:</strong> {new Date(...reply.createdDate).toLocaleString()}</DateContainer>
+                                            <DateContainer><strong>Created Date:</strong> {formatDate(reply.createdDate)}</DateContainer>
                                             </ReplyContainer>
                                     ))}
                         </div>
@@ -221,7 +226,7 @@ export default function Post({ postData , threadId, loggedInUser }) {
                     <ReplyButton onClick={() => handleReplyClick(post.id)}>Reply</ReplyButton>
                     {replyingToPostId === post.id && (
                         <FormContainer>
-                            <h4>Write a Reply</h4>
+                            <TextWithColor>Write a Reply: </TextWithColor>
                             <form onSubmit={handleNewReplySubmit}>
                                 <ReplyTextArea
                                     value={newReplyContent}
