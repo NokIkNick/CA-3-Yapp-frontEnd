@@ -9,55 +9,50 @@ const Container = styled.div`
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    `;
-
-const StyledForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`;
-
-const StyledInput = styled.input`
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    background-color: transparent;
-    color: var(--offwhite);
-    font-size: 1.1rem;
-    border: 0.1rem solid var(--offwhite);
-
-    &:focus{
-        outline: none;
-        border-color: initial;
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        input{
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: transparent;
+            color: var(--offwhite);
+            font-size: 1.1rem;
+            border: 0.1rem solid var(--offwhite);
+        }
+        input:focus{
+            outline: none;
+            border-color: initial;
+        }
+        button{
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--offwhite);
+            color: var(--green);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: var(--dark-green);
+            color: var(--offwhite);
+        }
+        button[type="button"]{
+            background-color: transparent;
+            color: var(--offwhite);
+        }
     }
-`;
-
-const StyledButton = styled.button`
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: none;
-    background-color: var(--offwhite);
-    color: var(--green);
-    font-size: 1.1rem;
-    cursor: pointer;
-
-    &:hover{
-        background-color: var(--dark-green);
-        color: var(--offwhite);
+    img{
+        width: 30%;
+        height: auto;
+        margin-bottom: 4rem;   
     }
-`;
-
-const StyledTypeButton = styled.button`
-    background-color: transparent;
-    color: var(--offwhite);
-`;
-
-const StyledLogo = styled.img`
-    width: 30%;
-    height: auto;
-    margin-bottom: 4rem;
 
     @media (max-width: 450px){
-        width: 70%;
+        img{
+            width: 70%;
+        }
     }
 `
 
@@ -97,19 +92,21 @@ const InputWrapper = styled.div`
     button{
         position: absolute;
         left: 12.8rem;
+        top: 0.01rem;
         width: 3rem;
-        height: 2.7rem;
+        height: 3rem;
         border: none;
         background: none;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
 
         img{
-            width: 60%;
+            width: 80%;
             height: auto;
         }
     }
 `;
+
 
 const ErrorText = styled.p`
     color: red;
@@ -141,7 +138,7 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
         console.log("Attempting to log in with these credentials: ", credentials.username, credentials.password);
         login(credentials.username, credentials.password).then((data) => {
             setError("Succesfully logged in!");
-            setLoggedInUser({"username": data.username, "roles": data.roles, "email": data.email});
+            setLoggedInUser({"username": data.username, "roles": data.roles, "email": ""});
             localStorage.setItem("token", data.token);
             navigate("/home");
         }).catch((err) => {
@@ -157,24 +154,24 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
   return (
     <>
         <Container>
-        <StyledLogo src="src\assets\fulllogo.svg"></StyledLogo>
+        <img src="src\assets\fulllogo.svg"></img>
         {error && <ErrorText>{error}</ErrorText>}
-            <StyledForm onSubmit={handleSubmit}>
-                <StyledInput name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
+            <form onSubmit={handleSubmit}>
+                <input name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
                 <InputWrapper>
-                <StyledInput name="password" type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
+                <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
                 <button onClick={togglePasswordVisibility} type="button">
                     <img src={showPassword ? "src/assets/eye-svgrepo-com.svg" : "src/assets/circle-svgrepo-com.svg"}></img>
                 </button>
                 </InputWrapper>
-                <StyledButton type="submit">Login</StyledButton>
-                <StyledButton type="button">Forgot password?</StyledButton>
-            </StyledForm>
+                <button type="submit">Login</button>
+                <button type="button">Forgot password?</button>
+            </form>
         </Container>
         <Footer>
             <div>
                 <p>Don't have an account?</p>
-                <StyledTypeButton type="button" onClick={() => {navigate("/register")}}>Sign up here</StyledTypeButton>
+                <button type="button" onClick={() => {navigate("/register")}}>Sign up here</button>
             </div>
         </Footer>
     </>
