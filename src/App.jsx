@@ -1,8 +1,7 @@
-import { BrowserRouter,  Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { BrowserRouter,  Routes, Route, Navigate } from 'react-router-dom'
 import { Login } from './page/Login'
 import {Mainpage} from './page/Mainpage'
 import SpecificThread from './page/SpecificThread'
-import SpecificUser from './page/SpecificUser'
 import { Register } from './page/Register'
 import { Threads } from './page/Threads'
 import { useEffect, useState } from 'react';
