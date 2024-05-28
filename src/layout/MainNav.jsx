@@ -129,14 +129,14 @@ function userButton(){
 return (    
     <>
         <NavStyle>
-            <Logo src="./src/assets/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
+            <Logo src="/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
                 <SearchWrapper>
                     <input type="search" placeholder="Search..." onChange={handleChange} />
                 </SearchWrapper>
                 <Buttons>
                     <MainNav />
                     <button onClick={userButton}>
-                        <img src="/src/assets/user.svg" alt="user" />
+                        <img src="/user.svg" alt="user" />
                     </button>
                 </Buttons>
         </NavStyle>
