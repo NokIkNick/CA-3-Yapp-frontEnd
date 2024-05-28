@@ -33,7 +33,7 @@ return (
                 <p onClick={() => goToUser(item.userName)} style={{ cursor: 'pointer' }}> {item.userName}</p>
                 <h1 onClick={() => goToThread(item)} style={{ cursor: 'pointer' }}>{item.title}</h1>
                 <p>{lengthshortner(item.content)}</p>
-                <p>date: {new Date(...item.createdDate).toLocaleString()}</p>
+                <p>date: {new Date(item.createdDate[0], item.createdDate[1], item.createdDate[2], item.createdDate[3], item.createdDate[4], item.createdDate[5]).toLocaleString()}</p>
             </Container>
         ))}
     </>

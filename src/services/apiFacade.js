@@ -12,6 +12,7 @@ export const fetchThreads = async () => {
         throw new Error("No network connection")
     }
     const data = await response.json();
+    console.log(data);
     return data;
 }
 
