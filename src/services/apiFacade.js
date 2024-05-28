@@ -72,24 +72,3 @@ export const fetchCategories = async () => {
     }
     return data;
 }
-
-export const createThread = async (thread, token) => {
-    const response = await fetch(`${BASE_URL}/protected/createThread`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-    },
-        body: JSON.stringify({
-            title: thread.title,
-            content: thread.content,
-            category: thread.category,
-            userName: thread.author
-        })
-    });
-    const data = await response.json();
-    if(!data){
-        throw new Error("Could not create thread");
-    }
-    return data;
-}
