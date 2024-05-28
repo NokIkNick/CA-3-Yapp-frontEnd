@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import styled from "styled-components";
 import Thread from "../components/Thread";
 
+
 const Container = styled.div`
     height: calc(100vh - 1rem);
     overflow-y: auto;

@@ -6,13 +6,13 @@ import ThreadItem from '../components/Threaditems';
 
 const Container = styled.div`
     height: 100vh;
-    overflow-y: auto;
+    
     background-color: white;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    margin-top: 2rem;
+    margin-top: 5rem;
     @media(max-width:400px){
-        width:70%;
+        
     }
 
 `
