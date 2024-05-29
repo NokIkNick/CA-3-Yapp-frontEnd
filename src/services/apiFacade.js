@@ -110,6 +110,70 @@ export const createThread = async (thread, token) => {
     return data;
 }
 
+export const postSubmit = async (newPostContent, username, currentThreadId) => {
+    if (newPostContent.trim()) {
+        const response = await fetch(`${BASE_URL}/protected/createPost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: newPostContent,
+                userName: username,
+                threadId: currentThreadId,
+            })
+        });
+        const data = await response.json();
+        return data;
+    }
+}
+export const replySubmit = async (newReplyContent,replyingToPostId,username, currentThreadId) => {
+        const response = await fetch(`${BASE_URL}/protected/createPost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: newReplyContent,
+                userName: username,
+                threadId: currentThreadId,
+                parentReplyId: replyingToPostId
+            })
+        });
+        const data = await response.json();
+        return data;
+};
+
+export const editPost = async (editContent,postIdToEdit) => {
+        const response = await fetch(`${BASE_URL}/protected/editPost/${postIdToEdit}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: editContent,
+            })
+        });
+        const data = await response.json();
+        return data;
+};
+export const editReply = async (editContent,replyIdToEdit) => {
+        const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: editContent
+            })
+        });
+        const data = await response.json();
+        return data;
+}
 
 export function formatDate(createdDate) {
     // Extracting individual components
