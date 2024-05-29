@@ -6,7 +6,7 @@ import ThreadItem from '../components/Threaditems';
 
 const Container = styled.div`
     height: 100vh;
-    
+    overflow-y: auto;
     background-color: white;
     scrollbar-width: none;
     -ms-overflow-style: none;
