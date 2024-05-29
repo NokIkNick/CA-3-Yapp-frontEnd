@@ -3,7 +3,6 @@ import { Login } from './page/Login'
 import {Mainpage} from './page/Mainpage'
 import SpecificThread from './page/SpecificThread'
 import { Register } from './page/Register'
-import { Threads } from './page/Threads'
 import { useEffect, useState } from 'react';
 import {CreateThread} from './page/CreateThread';
 import { AppLayout } from './layout/AppLayout'
