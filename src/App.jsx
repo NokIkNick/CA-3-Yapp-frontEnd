@@ -15,7 +15,8 @@ import {SpecificUser} from './page/SpecificUser';
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({"username": "", "roles": "", "email": ""});
   const [search, setSearch] = useState("");
-  const [tokenIsValid, setTokenIsValid] = useState(null);
+  const [tokenIsValid, setTokenIsValid] = useState(false);
+  const [currentToken, setCurrentToken] = useState("");
   
   
   useEffect(() => {
@@ -38,6 +39,14 @@ function App() {
       localStorage.removeItem("token");
       return;
     }
+
+    if(currentToken !== token){
+      alert("Token has expired, please log in again");
+      setTokenIsValid(false);
+      localStorage.removeItem("token");
+      return;
+    }
+
     setTokenIsValid(true);
     setLoggedInUser({username: tokenData.username, roles: tokenData.roles, email: tokenData.email});
     console.log("Token is valid");
@@ -70,7 +79,7 @@ function App() {
 
           {/*These routes are exempt from the AppLayout component */}
           <Route index element={<Navigate to="/login"/>}/>   
-          <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>}/>
+          <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setTokenIsValid={setTokenIsValid} setCurrentToken={setCurrentToken}/>}/>
           <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} />}/>
           <Route path="*" element={<PageNotFound/>}/>
         </Routes>
