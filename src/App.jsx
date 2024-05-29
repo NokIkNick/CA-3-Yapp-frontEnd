@@ -67,7 +67,7 @@ function App() {
             
               {/*All routes under here, have the AppLayout rendered ontop of it.*/}
                 <Route path="/home" element={<Mainpage search={search}/>}/>
-                <Route path="/thread/:id" element={<SpecificThread />} />
+                <Route path="/thread/:id" element={<SpecificThread loggedInUser={loggedInUser} />} />
                 <Route path="/user/:id" element={<SpecificUser />}/>
                 <Route path="/createThread" element={<CreateThread loggedInUser={loggedInUser}/>}/>
                 <Route path ="/accountPage" element={<AccountPage loggedInUser={loggedInUser}/>} />

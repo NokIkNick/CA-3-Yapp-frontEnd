@@ -132,9 +132,6 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
 
 
-    const localhost = true;
-    const url = localhost ? "http://localhost:7070/api" : "";
-
     useEffect(() => {
         setLoggedInUserData(loggedInUser);
         setCurrentThreadId(threadId);
