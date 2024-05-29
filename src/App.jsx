@@ -59,7 +59,6 @@ function App() {
                 <Route path="/home" element={<Mainpage search={search}/>}/>
                 <Route path="/thread/:id" element={<SpecificThread />} />
                 <Route path="/users/:id" element={<AccountPage loggedInUser={loggedInUser}/>} />
-                <Route path="/threads" element={<Threads />} />
                 <Route path="/createThread" element={<CreateThread loggedInUser={loggedInUser}/>}/>
                 <Route path ="/accountPage" element={<AccountPage loggedInUser={loggedInUser}/>} />
               </Route>
