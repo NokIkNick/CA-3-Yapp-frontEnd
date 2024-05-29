@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { login } from '../services/apiFacade.js';
@@ -119,6 +119,13 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if(loggedInUser.username){
+            navigate("/home");
+        }
+    },[navigate]);
+
+
     const handleOnChange = (e) => {
         console.log(e.target.name, e.target.value);
         setCredentials({...credentials, [e.target.name]: e.target.value});
@@ -142,7 +149,7 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
             localStorage.setItem("token", data.token);
             navigate("/home");
         }).catch((err) => {
-            setError(err.message);
+            setError(err.message, err.cause);
             return;
         });
     }
@@ -154,14 +161,14 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
   return (
     <>
         <Container>
-        <img src="src\assets\fulllogo.svg"></img>
+        <img src="\fulllogo.svg"></img>
         {error && <ErrorText>{error}</ErrorText>}
             <form onSubmit={handleSubmit}>
                 <input name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
                 <InputWrapper>
                 <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
                 <button onClick={togglePasswordVisibility} type="button">
-                    <img src={showPassword ? "src/assets/eye-svgrepo-com.svg" : "src/assets/circle-svgrepo-com.svg"}></img>
+                    <img src={showPassword ? "/eye-svgrepo-com.svg" : "/circle-svgrepo-com.svg"}></img>
                 </button>
                 </InputWrapper>
                 <button type="submit">Login</button>

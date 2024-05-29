@@ -13,6 +13,7 @@ const NavStyle = styled.nav`
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1000;
 `;
 
 const Logo = styled.img`
@@ -128,7 +129,7 @@ function userButton(){
 return (    
     <>
         <NavStyle>
-            <Logo src="./src/assets/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
+            <Logo src="/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
                 <SearchWrapper>
                     <input type="search" placeholder="Search..." onChange={handleChange} />
                 </SearchWrapper>
@@ -136,7 +137,7 @@ return (
                     <button onClick={() => {navigate(-1)}}>Go back</button>
                     <MainNav />
                     <button onClick={userButton}>
-                        <img src="/src/assets/user.svg" alt="user" />
+                        <img src="/user.svg" alt="user" />
                     </button>
                 </Buttons>
         </NavStyle>
