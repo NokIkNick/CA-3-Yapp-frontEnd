@@ -45,7 +45,7 @@ export const Mainpage = ({search}) => {
             }
         };
         fetchData();
-    });
+    }, [navigate]);
 
     useEffect(() => {
         filterItems(search);
