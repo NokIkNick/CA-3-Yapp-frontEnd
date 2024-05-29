@@ -8,8 +8,6 @@ const NavStyle = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 12%;
-    
     position: fixed;
     top: 0;
     width: 100%;
@@ -124,7 +122,6 @@ const SearchField = () => {
 };
 
 return (    
-    <>
         <NavStyle>
             <Logo src="/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
                 <SearchWrapper >
@@ -138,6 +135,5 @@ return (
                     </button>
                 </Buttons>
         </NavStyle>
-    </>
 );
 }
