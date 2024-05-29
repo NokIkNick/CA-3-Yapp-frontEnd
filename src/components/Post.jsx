@@ -133,7 +133,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
 
     const localhost = true;
-    const url = localhost ? 'http://localhost:7070/api' : "";
+    const url = localhost ? "http://localhost:7070/api" : "";
 
     useEffect(() => {
         setLoggedInUserData(loggedInUser);
@@ -167,7 +167,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
     const handleNewPostSubmit = async (event) => {
         event.preventDefault();
-        const data = await postSubmit(newPostContent, loggedInUserData.userName, currentThreadId);
+        const data = await postSubmit(newPostContent, loggedInUserData.username, currentThreadId);
         console.log(data);
         setPosts((prev) => [...prev, data]);
         setNewPostContent('');
@@ -176,7 +176,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
     const handleNewReplySubmit = async (e) => {
         e.preventDefault();
         if (newReplyContent.trim() && replyingToPostId !== null) {
-            const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.userName, currentThreadId);
+            const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.username, currentThreadId);
             setPosts((prev) =>
                 prev.map((post) =>
                     post.id === replyingToPostId
@@ -201,7 +201,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
             );
             setEditContent('');
             setEditingPostId(null);
-         }
+        }
     };
 
 const handleEditReplySubmit = async (e) => {

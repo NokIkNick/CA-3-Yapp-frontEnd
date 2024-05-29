@@ -175,6 +175,17 @@ export const editReply = async (editContent,replyIdToEdit) => {
         return data;
 }
 
+
+export const fetchThreadData = async (id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/public/getThreadById/${id}`)
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('fetching data error', error);
+    }
+};
+
 export function formatDate(createdDate) {
     // Extracting individual components
     const [year, month, day, hours, minutes, seconds, milliseconds] = createdDate;
