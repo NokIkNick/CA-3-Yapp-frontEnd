@@ -30,7 +30,7 @@ export default function SpecificThread({loggedInUser}){
     const [threadData, setThreadData] = useState([]);
     const [posts, setPosts] = useState([]);
     const localhost = true;
-    const url = localhost ? 'http://localhost:7080/api' : "";
+    const url = localhost ? 'http://localhost:7070/api' : "";
 
     const fetchData = async () => {
         try {
