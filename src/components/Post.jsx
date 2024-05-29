@@ -1,7 +1,7 @@
 
 import styled from "styled-components";
 import {useEffect, useState} from "react";
-import {formatDate} from "../services/apiFacade.js";
+import {formatDate, postSubmit, replySubmit, editPost, editReply} from "../services/apiFacade.js";
 
 // Styled components
 const MainContainer = styled.div`
@@ -21,8 +21,10 @@ const PostContainer = styled.div`
     width: 33%;
     box-sizing: border-box;
     position: relative;
-    border: 10px var(--green) solid
-    // border-top: 15px var(--green) solid;
+    border-left: 1rem solid var(--green);
+    border-right: 1rem solid var(--green);
+    border-bottom: 1rem solid var(--green);
+    border-top: 2.5rem solid var(--green); /* Larger top border */
 `;
 
 const ReplyContainer = styled.div`
@@ -47,7 +49,11 @@ const DateContainer = styled.p`
 `;
 
 const TextWithColor = styled.p`
-    color: white;
+    color: black;
+    position: absolute;
+    top: 8px; /* Adjust to be inside the padding and border */
+    left: 8px; /* Adjust to be inside the padding and border */
+    margin: 0; /* Optional: Remove default margin */
     `;
 
 const ReplyButton = styled.button`
@@ -115,7 +121,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
     // const [posts, setPosts] = useState([]);
     const [currentThreadId, setCurrentThreadId] = useState(null); // threadId is passed as a prop from the parent component [Thread.jsx
-    const [loggedInUserData, setLoggedInUserData] = useState({});
+    const [loggedInUserData, setLoggedInUserData] = useState(null);
     const [visibleReplies, setVisibleReplies] = useState({});
     const [newPostContent, setNewPostContent] = useState('');
     const [newReplyContent, setNewReplyContent] = useState('');
@@ -141,57 +147,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
             [postId]: !prev[postId]
         }));
     };
-    const handleNewPostSubmit = async (event) => {
-        event.preventDefault();
-        console.log(loggedInUser)
-        if (newPostContent.trim()) {
-            const response = await fetch("http://localhost:7070/api/protected/createPost", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    content: newPostContent,
-                    userName: "PatrickUser3", // loggedInUserData.username,
-                    threadId: currentThreadId,
-                })
-            });
-            const data = await response.json();
-            console.log(data);
-            setPosts((prev) => [...prev, data]);
-            setNewPostContent('');
-        }
-    }
 
-    const handleNewReplySubmit = async (e) => {
-        e.preventDefault();
-        if (newReplyContent.trim() && replyingToPostId !== null) {
-            const response = await fetch('http://localhost:7070/api/protected/createPost', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    content: newReplyContent,
-                    userName: "PatrickUser3", // loggedInUserData.username,
-                    threadId: currentThreadId,
-                    parentReplyId: replyingToPostId
-                })
-            });
-            const data = await response.json();
-            setPosts((prev) =>
-                prev.map((post) =>
-                    post.id === replyingToPostId
-                        ? { ...post, replies: [...post.replies, data] }
-                        : post
-                )
-            );
-            setNewReplyContent('');
-            setReplyingToPostId(null);
-        }
-    };
 
     const handleReplyClick = (postId) => {
         setReplyingToPostId(postId);
@@ -209,21 +165,33 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
         setEditingPostId(null);
     }
 
+    const handleNewPostSubmit = async (event) => {
+        event.preventDefault();
+        const data = await postSubmit(newPostContent, loggedInUserData.userName, currentThreadId);
+        console.log(data);
+        setPosts((prev) => [...prev, data]);
+        setNewPostContent('');
+        }
+
+    const handleNewReplySubmit = async (e) => {
+        e.preventDefault();
+        if (newReplyContent.trim() && replyingToPostId !== null) {
+            const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.userName, currentThreadId);
+            setPosts((prev) =>
+                prev.map((post) =>
+                    post.id === replyingToPostId
+                        ? { ...post, replies: [...post.replies, data] }
+                        : post
+                )
+            );
+            setNewReplyContent('');
+            setReplyingToPostId(null);
+        }
+    };
     const handleEditPostSubmit = async (e) => {
         e.preventDefault();
         if (editContent.trim() && editingPostId !== null) {
-            const postIdToEdit = editingPostId;
-            const response = await fetch(`http://localhost:7070/api/protected/editPost/${postIdToEdit}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    content: editContent,
-                })
-            });
-            const data = await response.json();
+            const data = await editPost(editContent, editingPostId);
             setPosts((prev) =>
                 prev.map((post) =>
                     post.id === editingPostId
@@ -239,18 +207,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 const handleEditReplySubmit = async (e) => {
     e.preventDefault();
     if (editContent.trim() && editingReplyId !== null) {
-        const replyIdToEdit = editingReplyId;
-        const response = await fetch(`http://localhost:7070/api/protected/editReply/${replyIdToEdit}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify({
-                content: editContent
-            })
-        });
-        const data = await response.json();
+        const data = await editReply(editContent, editingReplyId);
         setPosts((prev) => {
             return prev.map((post) => {
                 return {
@@ -270,6 +227,10 @@ const handleEditReplySubmit = async (e) => {
         <MainContainer>
             {posts && posts.map((post) => (
                 <PostContainer key={post.id} className="post">
+                    <TextWithColor>
+                        <strong>Post by: {post.userName}:</strong>
+                    </TextWithColor>
+                    <br/>
                     {editingPostId === post.id ? (
                         <FormContainer>
                             <TextWithColor>Edit Post:</TextWithColor>
@@ -283,12 +244,9 @@ const handleEditReplySubmit = async (e) => {
                         </FormContainer>
                     ) : (
                         <>
-                            <div>
-                                <strong>Post by User: {post.userName}:</strong>
-                                <p>{post.content}</p>
-                            </div>
+                            <p>{post.content}</p>
                             <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
-                            {post.userName === loggedInUserData.userName && (
+                            {loggedInUserData && post.userName === loggedInUserData.username && (
                                 <button onClick={() => handleEditPostClick(post.id, post.content)}>Edit</button>
                             )}
                         </>
@@ -318,7 +276,7 @@ const handleEditReplySubmit = async (e) => {
                                                 <>
                                                     <strong>Reply by User: {reply.userName}:</strong>
                                                     <p>{reply.content}</p>
-                                                    {reply.userName === loggedInUserData.userName && (
+                                                    {loggedInUserData && reply.userName === loggedInUserData.username && (
                                                         <button onClick={() => handleEditReplyClick(reply.id, reply.content)}>Edit</button>
                                                     )}
                                                     <DateContainer><strong>Created Date:</strong> {formatDate(reply.createdDate)}</DateContainer>
@@ -363,5 +321,6 @@ const handleEditReplySubmit = async (e) => {
             )}
         </MainContainer>
     );
+
 
 }
