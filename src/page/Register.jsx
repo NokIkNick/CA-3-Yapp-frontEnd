@@ -108,7 +108,7 @@ export const Register = ({setLoggedInUser}) => {
     return (
         <>
             <Container>
-                <img src = 'src/assets/fulllogo.svg' alt='logo' onClick={() => {navigate("/login")}}/>
+                <img src = '/fulllogo.svg' alt='logo' onClick={() => {navigate("/login")}}/>
                 <FormContainer onSubmit={handleSubmit}>
                 {error && <ErrorText>{error}</ErrorText>}
                     <Input type="text" id='email' placeholder="Email" onChange={handleOnChange} />

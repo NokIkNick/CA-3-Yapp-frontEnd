@@ -6,8 +6,7 @@ const Container = styled.div`
     background-color: #f3f3e4;
     text-align: left;
     flex-direction: start;
-    width: 65rem;
-    margin: 1rem auto; 
+    margin: 1rem 1rem; 
     padding:2rem ;
     border-radius: 2rem;
     @media(max-width:400px){

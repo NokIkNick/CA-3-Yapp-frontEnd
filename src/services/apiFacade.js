@@ -1,4 +1,4 @@
-import {BASE_URL, BASE_URL2} from "../utils/globalVariables.js"
+import {BASE_URL} from "../utils/globalVariables.js"
 
 export const fetchThreads = async () => {
     const response = await fetch(`${BASE_URL}/public/getAllThreads`,{
@@ -12,12 +12,28 @@ export const fetchThreads = async () => {
         throw new Error("No network connection")
     }
     const data = await response.json();
+    console.log(data);
+    return data;
+}
+
+export const fetchThreadsByUserId = async (userId) => {
+    const response = await fetch(`${BASE_URL}/public/getThreadsByUserId/${userId}`,{
+        method:"GET",
+        headers: {
+            "Content-Type":"application/json"
+        }
+    });
+    if(!response.ok){
+        throw new Error("No network connection")
+    }
+    const data = await response.json();
+    console.log(data);
     return data;
 }
 
 
 export const login = async (username, password) => {
-        const response = await fetch(`${BASE_URL2}/security/auth/login`, {
+        const response = await fetch(`${BASE_URL}/security/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -59,7 +75,7 @@ export const register = async (email, username, password) => {
 
 
 export const fetchCategories = async () => {
-    const response = await fetch(`${BASE_URL2}/public/getCategories`, {
+    const response = await fetch(`${BASE_URL}/public/getCategories`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -72,6 +88,29 @@ export const fetchCategories = async () => {
     }
     return data;
 }
+
+export const createThread = async (thread, token) => {
+    const response = await fetch(`${BASE_URL}/protected/createThread`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+    },
+        body: JSON.stringify({
+            title: thread.title,
+            content: thread.content,
+            category: thread.category,
+            userName: thread.author
+        })
+    });
+    const data = await response.json();
+    if(!data){
+        throw new Error("Could not create thread");
+    }
+    return data;
+}
+
+
 export function formatDate(createdDate) {
     // Extracting individual components
     const [year, month, day, hours, minutes, seconds, milliseconds] = createdDate;
