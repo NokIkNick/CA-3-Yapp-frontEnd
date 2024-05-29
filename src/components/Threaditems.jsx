@@ -26,7 +26,6 @@ export default function ThreadItem({ items, goToThread, goToUser }) {
 
 return (
     <>
-        <br></br>
         {items && items.map((item) => (
             <Container id={item.id} key={item.id}>
                 <p onClick={() => goToUser(item.userName)} style={{ cursor: 'pointer' }}> {item.userName}</p>

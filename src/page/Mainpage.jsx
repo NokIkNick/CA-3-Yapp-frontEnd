@@ -10,7 +10,7 @@ const Container = styled.div`
     background-color: white;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    margin-top: 2rem;
+    margin-top: 5rem;
     box-sizing: border-box;
     overflow-wrap: break-word;
     

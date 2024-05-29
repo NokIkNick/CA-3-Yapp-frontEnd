@@ -6,20 +6,29 @@ import { fetchPostsByUserId, fetchThreadsByUserId } from "../services/apiFacade"
 
 const Container = styled.div`
     display: flex;
-    height: 100vh;
+    height: 95vh;
     `;
 
     const PersonalInformation = styled.div`
     background-color: var(--basewhite);
-    margin-top: 15%;
+    margin-top: 9%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 5%;
+    overflow-y: hidden;
     padding: 2%;
     border-radius: 5px;
     width: 90%;
     text-align: center;
     color: var(--grey);
+    @media (max-width: 900px) {
+        margin-top: 15%;
+    }
+    @media (max-width: 600px) {
+        margin-top: 20%;
+    }
+    @media (max-width: 400px) {
+        margin-top: 30%;
+    }
 
     input {
         background-color: var(--green);

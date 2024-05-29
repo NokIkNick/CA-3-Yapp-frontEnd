@@ -6,7 +6,7 @@ import { fetchPostsByUserId, fetchThreadsByUserId } from "../services/apiFacade"
 
 const Container = styled.div`
     display: flex;
-    height: 100vh;
+    height: 95vh;
     `;
 
     const PersonalInformation = styled.div`
@@ -14,7 +14,8 @@ const Container = styled.div`
     margin-top: 9%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 2%;
+    
+    overflow-y: hidden;
     padding: 2%;
     border-radius: 5px;
     width: 90%;
@@ -122,7 +123,7 @@ export const AccountPage = ({loggedInUser}) => {
             return;
         }
         const filteredPosts = posts.filter((post) => {
-            return post.title.toLowerCase().includes(search.toLowerCase());
+            return post.title && post.title.toLowerCase().includes(search.toLowerCase());
         });
         setFilteredPosts(filteredPosts);
     }
@@ -133,7 +134,7 @@ export const AccountPage = ({loggedInUser}) => {
             return;
         }
         const filteredThreads = threads.filter((thread) => {
-            return thread.title.toLowerCase().includes(search.toLowerCase());
+            return thread.title && thread.title.toLowerCase().includes(search.toLowerCase());
         });
         setFilteredThreads(filteredThreads);
     }
@@ -147,18 +148,17 @@ return (
                 <h1>Account Page</h1>
                 <p>Here you can see your account information</p>
                 <p>Username: {loggedInUser.username}</p>
-                <p>Roles: {loggedInUser.roles}</p>
                 <p>Email: {loggedInUser.email}</p>
                 <form>
                     <input type="seach" placeholder="filter topics" onChange={handleSearch}/>
                 </form>
-
+                <p>Threads under your name :</p>
                 <Threads>
                 <ThreadsUnderYourName>
-                <p>Threads under your name :</p>
+                
                     {filteredThreads && filteredThreads.map((thread) => (
                         <div key={thread.id} onClick={() => {navigate(`/thread/${thread.id}`);}}>
-                            <h1>{thread.title}</h1>
+                            <h2>{thread.title}</h2>
                             <p>{thread.content}</p>
                         </div>
                     ))}
