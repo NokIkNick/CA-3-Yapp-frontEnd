@@ -133,6 +133,7 @@ return (
                     <input type="search" placeholder="Search..." onChange={handleChange} />
                 </SearchWrapper>
                 <Buttons>
+                    <button onClick={() => {navigate(-1)}}>Go back</button>
                     <MainNav />
                     <button onClick={userButton}>
                         <img src="/src/assets/user.svg" alt="user" />
