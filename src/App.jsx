@@ -80,7 +80,7 @@ function App() {
           {/*These routes are exempt from the AppLayout component */}
           <Route index element={<Navigate to="/login"/>}/>   
           <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setTokenIsValid={setTokenIsValid} setCurrentToken={setCurrentToken}/>}/>
-          <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} />}/>
+          <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} setTokenIsValid={setTokenIsValid} setCurrentToken={setCurrentToken}/>}/>
           <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
