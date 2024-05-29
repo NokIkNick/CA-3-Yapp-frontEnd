@@ -11,19 +11,49 @@ const Container = styled.div`
 
     const PersonalInformation = styled.div`
     background-color: var(--basewhite);
-    margin-top: 15%;
+    margin-top: 9%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
     padding: 2%;
     border-radius: 5px;
     width: 90%;
     text-align: center;
     color: var(--grey);
+    @media (max-width: 900px) {
+        margin-top: 15%;
+    }
+    @media (max-width: 600px) {
+        margin-top: 20%;
+    }
+    @media (max-width: 400px) {
+        margin-top: 30%;
+    }
+
+    input {
+        background-color: var(--green);
+        color: var(--basewhite);
+        padding: 1.5%;
+        border-radius: 5px;
+        margin: 1% 0;
+        width: 100%;
+        text-align: center;
+        border: none;
+    }
     `;
 
     const PostUnderYourName = styled.div`
-
+    background-color: var(--basewhite);
+    border-radius: 5px;
+    padding: 1%;
+        div {
+            background-color: var(--green);
+            color: var(--basewhite);
+            border-radius: 5px;
+            padding: 1%;
+            margin: 1% 0;
+            cursor: pointer;
+        }
     `;
 
     const ThreadsUnderYourName = styled.div`
@@ -38,6 +68,11 @@ const Container = styled.div`
             margin: 1% 0;
             cursor: pointer;
         }
+    `;
+
+    const Threads = styled.div`
+    overflow-y: auto;
+    max-height: 40%;
     `;
 
 
@@ -118,7 +153,7 @@ return (
                     <input type="seach" placeholder="filter topics" onChange={handleSearch}/>
                 </form>
 
-                
+                <Threads>
                 <ThreadsUnderYourName>
                 <p>Threads under your name :</p>
                     {filteredThreads && filteredThreads.map((thread) => (
@@ -128,7 +163,9 @@ return (
                         </div>
                     ))}
                 </ThreadsUnderYourName>
+                </Threads>
                 <p>Posts under your name : </p>
+                <Threads>
                 <PostUnderYourName>
                     {filteredposts && filteredposts.map((post) => (
                     <div key={post.id} onClick={() => {navigate(`/post/${post.id}`);}}>
@@ -137,6 +174,7 @@ return (
                     </div>
                     ))}
                 </PostUnderYourName>
+                </Threads>
             </PersonalInformation>
     </Container>
 );
