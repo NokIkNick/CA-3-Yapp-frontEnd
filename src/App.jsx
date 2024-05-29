@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import {CreateThread} from './page/CreateThread';
 import { AppLayout } from './layout/AppLayout'
 import { AccountPage } from './page/accountPage'
+import PageNotFound from "./page/PageNotFound.jsx";
 import { TokenValidator } from './page/TokenValidator'
 import {SpecificUser} from './page/SpecificUser';
 
@@ -71,6 +72,7 @@ function App() {
           <Route index element={<Navigate to="/login"/>}/>   
           <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>}/>
           <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} />}/>
+          <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
     </div>

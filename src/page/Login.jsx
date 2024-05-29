@@ -50,6 +50,8 @@ const Container = styled.div`
     }
 
     @media (max-width: 450px){
+        
+        .no-scroll {overflow:hidden;}
         img{
             width: 70%;
         }

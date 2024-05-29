@@ -28,14 +28,14 @@ return (
     <>
         <br></br>
         {items && items.map((item) => (
-                <Container id={item.id} key={item.id}>
-                    <p onClick={() => goToUser(item.userName)} style={{ cursor: 'pointer' }}> {item.userName}</p>
-                    <h1 onClick={() => goToThread(item)} style={{ cursor: 'pointer' }}>{item.title}</h1>
-                    <p>{lengthshortner(item.content)}</p>
-                    <p>Category/Topic: {item.category}</p>
-                    <p>date: {formatDate(item.createdDate)}</p>
-                </Container>
-            ))}
+            <Container id={item.id} key={item.id}>
+                <p onClick={() => goToUser(item.userName)} style={{ cursor: 'pointer' }}> {item.userName}</p>
+                <h2 onClick={() => goToThread(item)} style={{ cursor: 'pointer' }}>{item.title}</h2>
+                <p>{lengthshortner(item.content)}</p>
+                <p>Category/Topic: {item.category}</p>
+                <p>date: {formatDate(item.createdDate)}</p>
+            </Container>
+        ))}
     </>
 );
 }
