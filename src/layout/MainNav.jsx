@@ -33,6 +33,12 @@ const SearchWrapper = styled.div`
             border-radius: 5px;
             background-color: var(--basewhite);
         }
+    @media (max-width: 500px) {
+        input {
+            display: none;
+        }
+    
+    }
 `;
 
 const Buttons = styled.div`
