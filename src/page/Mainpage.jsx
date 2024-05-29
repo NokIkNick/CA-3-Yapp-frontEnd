@@ -11,8 +11,13 @@ const Container = styled.div`
     scrollbar-width: none;
     -ms-overflow-style: none;
     margin-top: 2rem;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    
     @media(max-width:400px){
-        width:70%;
+        width:100%;
+        padding: 0 1rem;
+       
     }
 
 `
