@@ -34,7 +34,6 @@ export default function Thread({ threadData, posts, setPosts, loggedInUser }) {
                     {threadData.content}
                     </ThreadContenData>
                     <br/>
-                    {console.log(threadData.id+"from thread.jsx")}
                     <Post posts={posts} setPosts={setPosts} threadId={threadData.id} loggedInUser={loggedInUser}/>
                 </>
             )}

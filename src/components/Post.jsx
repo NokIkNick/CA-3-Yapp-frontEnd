@@ -1,7 +1,7 @@
 
 import styled from "styled-components";
 import {useEffect, useState} from "react";
-import {formatDate} from "../services/apiFacade.js";
+import {formatDate, postSubmit, replySubmit, editPost, editReply} from "../services/apiFacade.js";
 
 // Styled components
 const MainContainer = styled.div`
@@ -21,8 +21,10 @@ const PostContainer = styled.div`
     width: 33%;
     box-sizing: border-box;
     position: relative;
-    border: 10px var(--green) solid
-    // border-top: 15px var(--green) solid;
+    border-left: 1rem solid var(--green);
+    border-right: 1rem solid var(--green);
+    border-bottom: 1rem solid var(--green);
+    border-top: 2.5rem solid var(--green); /* Larger top border */
 `;
 
 const ReplyContainer = styled.div`
@@ -47,7 +49,11 @@ const DateContainer = styled.p`
 `;
 
 const TextWithColor = styled.p`
-    color: white;
+    color: black;
+    position: absolute;
+    top: 8px; /* Adjust to be inside the padding and border */
+    left: 8px; /* Adjust to be inside the padding and border */
+    margin: 0; /* Optional: Remove default margin */
     `;
 
 const ReplyButton = styled.button`
@@ -115,13 +121,16 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
     // const [posts, setPosts] = useState([]);
     const [currentThreadId, setCurrentThreadId] = useState(null); // threadId is passed as a prop from the parent component [Thread.jsx
-    const [loggedInUserData, setLoggedInUserData] = useState({});
+    const [loggedInUserData, setLoggedInUserData] = useState(null);
     const [visibleReplies, setVisibleReplies] = useState({});
     const [newPostContent, setNewPostContent] = useState('');
     const [newReplyContent, setNewReplyContent] = useState('');
     const [replyingToPostId, setReplyingToPostId] = useState(null);
-    const localhost = true;
-    const url = localhost ? 'http://localhost:7080/api' : "";
+    const [editingPostId, setEditingPostId] = useState(null);
+    const [editingReplyId, setEditingReplyId] = useState(null);
+    const [editContent, setEditContent] = useState('');
+
+
 
     useEffect(() => {
         setLoggedInUserData(loggedInUser);
@@ -135,46 +144,36 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
             [postId]: !prev[postId]
         }));
     };
+
+
+    const handleReplyClick = (postId) => {
+        setReplyingToPostId(postId);
+    };
+
+    const handleEditPostClick = (postId, content) => {
+        setEditingPostId(postId);
+        setEditContent(content);
+        setEditingReplyId(null);
+    };
+
+    function handleEditReplyClick(replyId,content) {
+        setEditingReplyId(replyId);
+        setEditContent(content);
+        setEditingPostId(null);
+    }
+
     const handleNewPostSubmit = async (event) => {
         event.preventDefault();
-        console.log(loggedInUser)
-        if (newPostContent.trim()) {
-            const response = await fetch("http://localhost:7080/api/protected/createPost", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    content: newPostContent,
-                    userName: "PatrickUser3", // loggedInUserData.username,
-                    threadId: currentThreadId,
-                })
-            });
-            const data = await response.json();
-            console.log(data);
-            setPosts((prev) => [...prev, data]);
-            setNewPostContent('');
+        const data = await postSubmit(newPostContent, loggedInUserData.username, currentThreadId);
+        console.log(data);
+        setPosts((prev) => [...prev, data]);
+        setNewPostContent('');
         }
-    }
 
     const handleNewReplySubmit = async (e) => {
         e.preventDefault();
         if (newReplyContent.trim() && replyingToPostId !== null) {
-            const response = await fetch('http://localhost:7080/api/protected/createPost', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    content: newReplyContent,
-                    userName: "PatrickUser3", // loggedInUserData.username,
-                    threadId: currentThreadId,
-                    parentReplyId: replyingToPostId
-                })
-            });
-            const data = await response.json();
+            const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.username, currentThreadId);
             setPosts((prev) =>
                 prev.map((post) =>
                     post.id === replyingToPostId
@@ -186,24 +185,69 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
             setReplyingToPostId(null);
         }
     };
-
-    const handleReplyClick = (postId) => {
-        setReplyingToPostId(postId);
+    const handleEditPostSubmit = async (e) => {
+        e.preventDefault();
+        if (editContent.trim() && editingPostId !== null) {
+            const data = await editPost(editContent, editingPostId);
+            setPosts((prev) =>
+                prev.map((post) =>
+                    post.id === editingPostId
+                        ? { ...post, content: data.content }
+                        : post
+                )
+            );
+            setEditContent('');
+            setEditingPostId(null);
+        }
     };
-    const handlePostChange = (e) => {
-        setNewPostContent(e.target.value);
-        console.log(newPostContent);
+
+const handleEditReplySubmit = async (e) => {
+    e.preventDefault();
+    if (editContent.trim() && editingReplyId !== null) {
+        const data = await editReply(editContent, editingReplyId);
+        setPosts((prev) => {
+            return prev.map((post) => {
+                return {
+                    ...post,
+                    replies: post.replies.map((reply) => {
+                        return reply.id === editingReplyId ? { ...reply, content: data.content } : reply;
+                    })
+                };
+            });
+        });
+        setEditContent('');
+        setEditingReplyId(null);
     }
+}
 
     return (
         <MainContainer>
             {posts && posts.map((post) => (
                 <PostContainer key={post.id} className="post">
-                    <div>
-                        <strong>Post by User: {post.userName}:</strong>
-                        <p>{post.content}</p>
-                    </div>
-                    <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
+                    <TextWithColor>
+                        <strong>Post by: {post.userName}:</strong>
+                    </TextWithColor>
+                    <br/>
+                    {editingPostId === post.id ? (
+                        <FormContainer>
+                            <TextWithColor>Edit Post:</TextWithColor>
+                            <form onSubmit={handleEditPostSubmit}>
+                                <TextArea
+                                    value={editContent}
+                                    onChange={(e) => setEditContent(e.target.value)}
+                                />
+                                <SubmitButton type="submit">Submit Edit</SubmitButton>
+                            </form>
+                        </FormContainer>
+                    ) : (
+                        <>
+                            <p>{post.content}</p>
+                            <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
+                            {loggedInUserData && post.userName === loggedInUserData.username && (
+                                <button onClick={() => handleEditPostClick(post.id, post.content)}>Edit</button>
+                            )}
+                        </>
+                    )}
                     {post.replies.length > 0 && (
                         <>
                             <ToggleRepliesLink onClick={() => toggleReplies(post.id)}>
@@ -214,16 +258,36 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
                                     <h4>Replies:</h4>
                                     {post.replies.map((reply) => (
                                         <ReplyContainer key={reply.id} className="reply">
-                                                <strong>Reply by User: {reply.userName}:</strong>
-                                            <p>{reply.content}</p>
-                                            <DateContainer><strong>Created Date:</strong> {formatDate(reply.createdDate)}</DateContainer>
-                                            </ReplyContainer>
+                                            {editingReplyId === reply.id ? (
+                                                <FormContainer>
+                                                    <h4>Edit Reply</h4>
+                                                    <form onSubmit={handleEditReplySubmit}>
+                                                        <ReplyTextArea
+                                                            value={editContent}
+                                                            onChange={(e) => setEditContent(e.target.value)}
+                                                        />
+                                                        <SubmitButton type="submit">Submit Edit</SubmitButton>
+                                                    </form>
+                                                </FormContainer>
+                                            ) : (
+                                                <>
+                                                    <strong>Reply by User: {reply.userName}:</strong>
+                                                    <p>{reply.content}</p>
+                                                    {loggedInUserData && reply.userName === loggedInUserData.username && (
+                                                        <button onClick={() => handleEditReplyClick(reply.id, reply.content)}>Edit</button>
+                                                    )}
+                                                    <DateContainer><strong>Created Date:</strong> {formatDate(reply.createdDate)}</DateContainer>
+                                                </>
+                                            )}
+                                        </ReplyContainer>
                                     ))}
-                        </div>
+                                </div>
                             )}
                         </>
                     )}
-                    <ReplyButton onClick={() => handleReplyClick(post.id)}>Reply</ReplyButton>
+                    {loggedInUserData && (
+                        <ReplyButton onClick={() => handleReplyClick(post.id)}>Reply</ReplyButton>
+                    )}
                     {replyingToPostId === post.id && (
                         <FormContainer>
                             <TextWithColor>Write a Reply: </TextWithColor>
@@ -239,17 +303,21 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
                     )}
                 </PostContainer>
             ))}
-            <BottomFormContainer>
-                <h3>Create New Post</h3>
-                <form onSubmit={handleNewPostSubmit}>
-                    <TextArea
-                        value={newPostContent}
-                        onChange={(e) => setNewPostContent(e.target.value)}
-                        placeholder="Post content"
-                    />
-                    <SubmitButton type="submit">Submit Post</SubmitButton>
-                </form>
-            </BottomFormContainer>
+            {loggedInUserData && (
+                <BottomFormContainer>
+                    <h3>Create New Post</h3>
+                    <form onSubmit={handleNewPostSubmit}>
+                        <TextArea
+                            value={newPostContent}
+                            onChange={(e) => setNewPostContent(e.target.value)}
+                            placeholder="Post content"
+                        />
+                        <SubmitButton type="submit">Submit Post</SubmitButton>
+                    </form>
+                </BottomFormContainer>
+            )}
         </MainContainer>
     );
+
+
 }

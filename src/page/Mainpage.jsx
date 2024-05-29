@@ -10,9 +10,12 @@ const Container = styled.div`
     background-color: white;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    margin-top: 2rem;
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+    //height, box sizing and overflow wrap could be removed for smoother experience. try it.
     @media(max-width:400px){
-        width:70%;
+        width:100vw;
+        padding: 0;
     }
 
 `
@@ -21,6 +24,15 @@ export const Mainpage = ({search}) => {
     const [items, setItems] = useState([]);
     const navigate = useNavigate();
     const [filteredItems, setFilteredItems] = useState([]);
+
+    useEffect(() => {
+        // Disable scrolling on the body
+        document.body.style.overflow = 'hidden';
+        // Enable scrolling when the component is unmounted
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,7 +45,7 @@ export const Mainpage = ({search}) => {
             }
         };
         fetchData();
-    }, []);
+    }, [navigate]);
 
     useEffect(() => {
         filterItems(search);
@@ -61,7 +73,6 @@ export const Mainpage = ({search}) => {
     }
 
     return (
-        <>
         <Container>
             <ThreadItem
                 items={filteredItems}
@@ -69,7 +80,5 @@ export const Mainpage = ({search}) => {
                 goToUser={goToUser}
             />
         </Container>
-        </>
-        
     )
 };

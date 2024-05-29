@@ -3,18 +3,20 @@ import { Login } from './page/Login'
 import {Mainpage} from './page/Mainpage'
 import SpecificThread from './page/SpecificThread'
 import { Register } from './page/Register'
-import { Threads } from './page/Threads'
 import { useEffect, useState } from 'react';
 import {CreateThread} from './page/CreateThread';
 import { AppLayout } from './layout/AppLayout'
 import { AccountPage } from './page/accountPage'
+import PageNotFound from "./page/PageNotFound.jsx";
 import { TokenValidator } from './page/TokenValidator'
+import {SpecificUser} from './page/SpecificUser';
 
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({"username": "", "roles": "", "email": ""});
   const [search, setSearch] = useState("");
-  const [tokenIsValid, setTokenIsValid] = useState(null);
+  const [tokenIsValid, setTokenIsValid] = useState(false);
+  const [currentToken, setCurrentToken] = useState("");
   
   
   useEffect(() => {
@@ -37,8 +39,16 @@ function App() {
       localStorage.removeItem("token");
       return;
     }
+
+    if(currentToken !== token){
+      alert("Token has expired, please log in again");
+      setTokenIsValid(false);
+      localStorage.removeItem("token");
+      return;
+    }
+
     setTokenIsValid(true);
-    setLoggedInUser({"username": tokenData.username, "roles": tokenData.roles, "email": tokenData.email});
+    setLoggedInUser({username: tokenData.username, roles: tokenData.roles, email: tokenData.email});
     console.log("Token is valid");
   }
 
@@ -57,9 +67,8 @@ function App() {
             
               {/*All routes under here, have the AppLayout rendered ontop of it.*/}
                 <Route path="/home" element={<Mainpage search={search}/>}/>
-                <Route path="/thread/:id" element={<SpecificThread />} />
-                <Route path="/users/:id" element={<AccountPage loggedInUser={loggedInUser}/>} />
-                <Route path="/threads" element={<Threads />} />
+                <Route path="/thread/:id" element={<SpecificThread loggedInUser={loggedInUser} />} />
+                <Route path="/user/:id" element={<SpecificUser />}/>
                 <Route path="/createThread" element={<CreateThread loggedInUser={loggedInUser}/>}/>
                 <Route path ="/accountPage" element={<AccountPage loggedInUser={loggedInUser}/>} />
               </Route>
@@ -70,8 +79,9 @@ function App() {
 
           {/*These routes are exempt from the AppLayout component */}
           <Route index element={<Navigate to="/login"/>}/>   
-          <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser}/>}/>
-          <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} />}/>
+          <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setTokenIsValid={setTokenIsValid} setCurrentToken={setCurrentToken}/>}/>
+          <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} setTokenIsValid={setTokenIsValid} setCurrentToken={setCurrentToken}/>}/>
+          <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
     </div>

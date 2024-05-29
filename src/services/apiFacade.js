@@ -16,6 +16,36 @@ export const fetchThreads = async () => {
     return data;
 }
 
+export const fetchThreadsByUserId = async (userId) => {
+    const response = await fetch(`${BASE_URL}/public/getThreadsByUserId/${userId}`,{
+        method:"GET",
+        headers: {
+            "Content-Type":"application/json"
+        }
+    });
+    if(!response.ok){
+        throw new Error("No network connection")
+    }
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
+
+export const fetchPostsByUserId = async (userId) => {
+    const response = await fetch(`${BASE_URL}/public/getPostsByUserId/${userId}`,{
+        method:"GET",
+        headers: {
+            "Content-Type":"application/json"
+        }
+    });
+    if(!response.ok){
+        throw new Error("No network connection")
+    }
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
+
 
 export const login = async (username, password) => {
         const response = await fetch(`${BASE_URL}/security/auth/login`, {
@@ -95,6 +125,81 @@ export const createThread = async (thread, token) => {
     return data;
 }
 
+export const postSubmit = async (newPostContent, username, currentThreadId) => {
+    if (newPostContent.trim()) {
+        const response = await fetch(`${BASE_URL}/protected/createPost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: newPostContent,
+                userName: username,
+                threadId: currentThreadId,
+            })
+        });
+        const data = await response.json();
+        return data;
+    }
+}
+export const replySubmit = async (newReplyContent,replyingToPostId,username, currentThreadId) => {
+        const response = await fetch(`${BASE_URL}/protected/createPost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: newReplyContent,
+                userName: username,
+                threadId: currentThreadId,
+                parentReplyId: replyingToPostId
+            })
+        });
+        const data = await response.json();
+        return data;
+};
+
+export const editPost = async (editContent,postIdToEdit) => {
+        const response = await fetch(`${BASE_URL}/protected/editPost/${postIdToEdit}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: editContent,
+            })
+        });
+        const data = await response.json();
+        return data;
+};
+export const editReply = async (editContent,replyIdToEdit) => {
+        const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({
+                content: editContent
+            })
+        });
+        const data = await response.json();
+        return data;
+}
+
+
+export const fetchThreadData = async (id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/public/getThreadById/${id}`)
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('fetching data error', error);
+    }
+};
 
 export function formatDate(createdDate) {
     // Extracting individual components

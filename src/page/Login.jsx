@@ -113,17 +113,19 @@ const ErrorText = styled.p`
     margin-bottom: 1rem;
 `
 
-export const Login = ({ loggedInUser, setLoggedInUser }) => {
+export const Login = ({ loggedInUser, setLoggedInUser, setTokenIsValid, setCurrentToken }) => {
     const [error, setError] = useState(null);
     const [credentials, setCredentials] = useState({"username": "", "password": ""});
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(loggedInUser.username){
+        if(localStorage.getItem("token") !== null && localStorage.getItem("token") !== undefined && localStorage.getItem("token") !== ""){
+            setTokenIsValid(true);
             navigate("/home");
+            console.log("I'm at login, but I'm already logged in!");
         }
-    },[navigate]);
+    },[]);
 
 
     const handleOnChange = (e) => {
@@ -145,8 +147,11 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
         console.log("Attempting to log in with these credentials: ", credentials.username, credentials.password);
         login(credentials.username, credentials.password).then((data) => {
             setError("Succesfully logged in!");
-            setLoggedInUser({"username": data.username, "roles": data.roles, "email": ""});
+
+            setLoggedInUser({"username": data.username, "roles": data.roles, "email": data.email});
             localStorage.setItem("token", data.token);
+            setCurrentToken(data.token);
+            setTokenIsValid(true);
             navigate("/home");
         }).catch((err) => {
             setError(err.message, err.cause);

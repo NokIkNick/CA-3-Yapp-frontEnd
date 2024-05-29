@@ -6,11 +6,10 @@ const Container = styled.div`
     background-color: #f3f3e4;
     text-align: left;
     flex-direction: start;
-    width: 65rem;
-    margin: 1rem auto; 
+    margin: 1rem 1rem; 
     padding:2rem ;
     border-radius: 2rem;
-    @media(max-width:400px){
+    @media(max-width:360){
         width:70%;   
     }
 `
@@ -27,12 +26,12 @@ export default function ThreadItem({ items, goToThread, goToUser }) {
 
 return (
     <>
-        <br></br>
         {items && items.map((item) => (
             <Container id={item.id} key={item.id}>
                 <p onClick={() => goToUser(item.userName)} style={{ cursor: 'pointer' }}> {item.userName}</p>
-                <h1 onClick={() => goToThread(item)} style={{ cursor: 'pointer' }}>{item.title}</h1>
+                <h2 onClick={() => goToThread(item)} style={{ cursor: 'pointer' }}>{item.title}</h2>
                 <p>{lengthshortner(item.content)}</p>
+                <p>Category/Topic: {item.category}</p>
                 <p>date: {formatDate(item.createdDate)}</p>
             </Container>
         ))}

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const NavStyle = styled.nav`
@@ -8,8 +8,6 @@ const NavStyle = styled.nav`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 8%;
-    
     position: fixed;
     top: 0;
     width: 100%;
@@ -33,20 +31,12 @@ const SearchWrapper = styled.div`
             border-radius: 5px;
             background-color: var(--basewhite);
         }
-        button{
-            position: absolute;
-            right: 0;
-            top: 0.01rem;
-            width: 3rem;
-            height: 2.5rem;
-            border: none;
-            background: none;
-            cursor: pointer;
-            img{
-                width: 60%;
-                height: auto;
-            }
+    @media (max-width: 500px) {
+        input {
+            display: none;
         }
+    
+    }
 `;
 
 const Buttons = styled.div`
@@ -66,27 +56,15 @@ const Buttons = styled.div`
 
 
 export const MainNav = ({setSearch}) => {
+const params = useParams();
 const navigate = useNavigate();
 const MainNav = () => {
     let button;
-    if (window.location.pathname === "/home") {
+    if (window.location.pathname === "/home" || window.location.pathname === "/createthread" || window.location.pathname === "/accountPage") {
         if(localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
             button = <button>Login first</button>;
         } else {
             button = <button onClick={() => {navigate("/createthread")}}>Create Thread</button>;
-        }
-        
-    } else if (window.location.pathname === "/threads") {
-        if(localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
-            button = <button>Login first</button>;
-        } else {
-        button = <button onClick={() => {navigate("/home")}}>Create Post</button>;
-        }
-    } else if (window.location.pathname === "/accountPage") {
-        if(localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
-            button = <button>Login first</button>;
-        } else {
-        button = <button onClick={() => {navigate("/createthread")}}>create thread</button>;
         }
     } else {
         button = null;
@@ -116,7 +94,7 @@ function handleSearchPosts(search){
 }
 
 function userButton(){
-    if (localStorage.getItem("token") === null) {
+    if (localStorage.getItem("token") === null || localStorage.getItem("token") === undefined){
         navigate("/login");
         console.log("Login first");
     } else {
@@ -126,20 +104,36 @@ function userButton(){
     }
 }
 
+
+const SearchField = () => {
+    let input;
+    //missing functionality for removing on threads
+    if(window.location.pathname === "/accountPage" || window.location.pathname === "/thread/" || window.location.pathname === "/user/"+params.id) {
+        input = null;
+    } else {
+        input = <input type="search" placeholder="Search..." onChange={handleChange} />;
+    }
+
+    return (
+        <div>
+            {input}
+        </div>
+    );
+};
+
 return (    
-    <>
         <NavStyle>
             <Logo src="/fulllogo.svg" alt="Logo" onClick={() => {navigate("/home")}} />
-                <SearchWrapper>
-                    <input type="search" placeholder="Search..." onChange={handleChange} />
+                <SearchWrapper >
+                    <SearchField />
                 </SearchWrapper>
                 <Buttons>
+                    <button onClick={() => {navigate(-1)}}>Go back</button>
                     <MainNav />
                     <button onClick={userButton}>
                         <img src="/user.svg" alt="user" />
                     </button>
                 </Buttons>
         </NavStyle>
-    </>
 );
 }

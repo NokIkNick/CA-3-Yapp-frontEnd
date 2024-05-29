@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export const TokenValidator = ({tokenIsValid, children}) => {
@@ -8,8 +8,9 @@ export const TokenValidator = ({tokenIsValid, children}) => {
   useEffect(() => {
     if(tokenIsValid === false){
       navigate("/login");
+      console.log("Im in the token validator!, token is invalid!");
     }
-  }, [tokenIsValid, navigate])
+  }, [tokenIsValid])
 
     if(tokenIsValid) return <>{children};</>
 }

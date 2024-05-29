@@ -9,11 +9,19 @@ const Container = styled.div`
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    img{
+
+    
+`
+const Logo = styled.img`
+    width: 30%;
+    height: auto;
+    margin-bottom: 4rem;
+    @media (max-width: 700px) {
         width: 50%;
         height: auto;
-        margin-bottom: 4rem;   
-    }
+        margin-bottom: 2rem;   
+
+}
 `
 
 const ErrorText = styled.p`
@@ -22,9 +30,9 @@ const ErrorText = styled.p`
 `
 
 const Input = styled.input`
-
+    margin-top: 1rem;
     padding: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 5px;
     background-color: transparent;
     color: var(--offwhite);
     font-size: 1.1rem;
@@ -32,40 +40,30 @@ const Input = styled.input`
     
 `
 const Button = styled.button`
+    margin-top: 1rem;
     padding: 0.5rem;
-    margin: 0.4rem ;
-    border-radius: 0.5rem;
-    border-style: none;
-    background: white;
+    border-radius: 5px;
+    border: none;
+    background: var(--offwhite);
     font-family: 'Roboto', 'sans-serif';
     color: var(--green);
+    font-size: 1.1rem;
     &:hover {
         background: var(--dark-green);
         color: white;
     }
 `
 const FormContainer = styled.form`
-    width: 40%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 `
-const A = styled.a`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-`
-
-export const Register = ({setLoggedInUser}) => {
+    
+export const Register = ({setLoggedInUser, setTokenIsValid, setCurrentToken}) => {
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [error, setError] = useState(null);
-    const [credentials, setCredentials] = useState({"email": "", "name": "","username": "","password": ""});
+    const [credentials, setCredentials] = useState({"email": "","username": "","password": ""});
     const navigate = useNavigate();
-    
-
     const handleOnChange = (e) => {
         console.log(e.target.id, e.target.value);
         if (e.target.id === "password") {
@@ -73,7 +71,6 @@ export const Register = ({setLoggedInUser}) => {
         }
         setCredentials({...credentials, [e.target.id]: e.target.value});
     } 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -82,19 +79,20 @@ export const Register = ({setLoggedInUser}) => {
             handleRegister(e);      
         }
     }
-
     const handleRegister = (e) => {
         e.preventDefault();
-        if(!credentials.email || !credentials.name || !credentials.username || !credentials.password){
+        if(!credentials.email || !credentials.username || !credentials.password){
             setError("Fields cannot be empty!");
             return;
         }
-        console.log("Attempting to register with these credentials: ", credentials.email, credentials.name, credentials.username, credentials.password);
+        console.log("Attempting to register with these credentials: ", credentials.email, credentials.username, credentials.password);
         register(credentials.email, credentials.username, credentials.password).then((dataOne) => {
             setError("Succesfully registered!");
             login(credentials.username, credentials.password).then((dataTwo) => {
                 setLoggedInUser({"username": dataTwo.username, "roles": dataTwo.roles, "email": dataTwo.email});
                 localStorage.setItem("token", dataTwo.token);
+                setCurrentToken(dataTwo.token);
+                setTokenIsValid(true);
                 navigate("/home");
             }).catch((err) => {
                 setError(err.message);
@@ -103,16 +101,13 @@ export const Register = ({setLoggedInUser}) => {
             setError(err.message);
         });
     }
-
-
     return (
         <>
             <Container>
-                <img src = '/fulllogo.svg' alt='logo' onClick={() => {navigate("/login")}}/>
+                <Logo src = '/fulllogo.svg' alt='logo' onClick={() => {navigate("/login")}}/>
                 <FormContainer onSubmit={handleSubmit}>
                 {error && <ErrorText>{error}</ErrorText>}
                     <Input type="text" id='email' placeholder="Email" onChange={handleOnChange} />
-                    <Input type="text" id='name' placeholder="Name" onChange={handleOnChange} />
                     <Input type="text" id='username' placeholder="Username" onChange={handleOnChange} />
                     <Input type="password" id='password' placeholder="Password" onChange={handleOnChange}/>
                     <Input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)}/>
