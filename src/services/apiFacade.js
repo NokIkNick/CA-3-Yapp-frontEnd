@@ -16,6 +16,21 @@ export const fetchThreads = async () => {
     return data;
 }
 
+export const fetchThreadsByUserId = async (userId) => {
+    const response = await fetch(`${BASE_URL}/public/getThreadsByUserId/${userId}`,{
+        method:"GET",
+        headers: {
+            "Content-Type":"application/json"
+        }
+    });
+    if(!response.ok){
+        throw new Error("No network connection")
+    }
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
+
 
 export const login = async (username, password) => {
         const response = await fetch(`${BASE_URL}/security/auth/login`, {

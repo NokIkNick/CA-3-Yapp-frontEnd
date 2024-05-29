@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import styled from "styled-components";
 import Thread from "../components/Thread";
 
+
 const Container = styled.div`
     height: calc(100vh - 1rem);
     overflow-y: auto;
@@ -30,7 +31,9 @@ export default function SpecificThread({loggedInUser}){
     const [threadData, setThreadData] = useState([]);
     const [posts, setPosts] = useState([]);
     const localhost = true;
-    const url = localhost ? 'https://yappapi.wintherdev.com/api' : "";
+
+    const url = localhost ? 'http://localhost:7070/api' : "";
+    const url2 = localhost ? 'https://yappapi.wintherdev.com/api' : "";
 
     const fetchData = async () => {
         try {
