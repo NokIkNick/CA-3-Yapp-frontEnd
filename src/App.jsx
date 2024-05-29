@@ -3,12 +3,12 @@ import { Login } from './page/Login'
 import {Mainpage} from './page/Mainpage'
 import SpecificThread from './page/SpecificThread'
 import { Register } from './page/Register'
-import { Threads } from './page/Threads'
 import { useEffect, useState } from 'react';
 import {CreateThread} from './page/CreateThread';
 import { AppLayout } from './layout/AppLayout'
 import { AccountPage } from './page/accountPage'
 import { TokenValidator } from './page/TokenValidator'
+import {SpecificUser} from './page/SpecificUser';
 
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
       return;
     }
     setTokenIsValid(true);
-    setLoggedInUser({"username": tokenData.username, "roles": tokenData.roles, "email": tokenData.email});
+    setLoggedInUser({username: tokenData.username, roles: tokenData.roles, email: tokenData.email});
     console.log("Token is valid");
   }
 
@@ -58,7 +58,7 @@ function App() {
               {/*All routes under here, have the AppLayout rendered ontop of it.*/}
                 <Route path="/home" element={<Mainpage search={search}/>}/>
                 <Route path="/thread/:id" element={<SpecificThread />} />
-                <Route path="/users/:id" element={<AccountPage loggedInUser={loggedInUser}/>} />
+                <Route path="/user/:id" element={<SpecificUser />}/>
                 <Route path="/createThread" element={<CreateThread loggedInUser={loggedInUser}/>}/>
                 <Route path ="/accountPage" element={<AccountPage loggedInUser={loggedInUser}/>} />
               </Route>
