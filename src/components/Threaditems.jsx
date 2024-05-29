@@ -9,7 +9,7 @@ const Container = styled.div`
     margin: 1rem 1rem; 
     padding:2rem ;
     border-radius: 2rem;
-    @media(max-width:400px){
+    @media(max-width:360){
         width:70%;   
     }
 `
@@ -26,7 +26,6 @@ export default function ThreadItem({ items, goToThread, goToUser }) {
 
 return (
     <>
-        <br></br>
         {items && items.map((item) => (
             <Container id={item.id} key={item.id}>
                 <p onClick={() => goToUser(item.userName)} style={{ cursor: 'pointer' }}> {item.userName}</p>

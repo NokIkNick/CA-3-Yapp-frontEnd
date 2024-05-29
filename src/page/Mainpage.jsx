@@ -10,13 +10,13 @@ const Container = styled.div`
     background-color: white;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    margin-top: 2rem;
+    margin-top: 5rem;
     box-sizing: border-box;
     overflow-wrap: break-word;
     
     @media(max-width:400px){
-        width:100%;
-        padding: 0 1rem;
+        width:100vw;
+        padding: 0;
     }
 
 `
