@@ -50,8 +50,6 @@ const Container = styled.div`
     }
 
     @media (max-width: 450px){
-        
-        .no-scroll {overflow:hidden;}
         img{
             width: 70%;
         }
@@ -125,7 +123,7 @@ export const Login = ({ loggedInUser, setLoggedInUser }) => {
         if(loggedInUser.username){
             navigate("/home");
         }
-    },[navigate]);
+    },[loggedInUser.username]);
 
 
     const handleOnChange = (e) => {

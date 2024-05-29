@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import {useEffect, useState} from "react";
 import styled from "styled-components";
 import Thread from "../components/Thread";
+import {fetchThreadData} from "../services/apiFacade";
 
 
 const Container = styled.div`
@@ -30,23 +31,11 @@ export default function SpecificThread({loggedInUser}){
     let {id} = useParams();
     const [threadData, setThreadData] = useState([]);
     const [posts, setPosts] = useState([]);
-    const localhost = true;
 
-    const url = localhost ? 'http://localhost:7070/api' : "";
-    const url2 = localhost ? 'https://yappapi.wintherdev.com/api' : "";
-
-    const fetchData = async () => {
-        try {
-            const response = await fetch(url + `/public/getThreadById/${id}`)
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('fetching data error', error);
-        }
-    };
+    
     useEffect(() => {
         const fetchAndSetData = async () => {
-            const data = await fetchData();
+            const data = await fetchThreadData(id);
             setThreadData(data);
             setPosts(data.posts);
         };
