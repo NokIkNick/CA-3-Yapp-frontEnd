@@ -175,6 +175,21 @@ export const editPost = async (editContent,postIdToEdit) => {
         const data = await response.json();
         return data;
 };
+export const editThread = async (editContent,threadIdToEdit) => {
+    const response = await fetch(`${BASE_URL}/protected/editThread/${threadIdToEdit}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            content: editContent,
+        })
+    });
+    const data = await response.json();
+    return data;
+};
+
 export const editReply = async (editContent,replyIdToEdit) => {
         const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
             method: 'PUT',
@@ -189,7 +204,34 @@ export const editReply = async (editContent,replyIdToEdit) => {
         const data = await response.json();
         return data;
 }
-
+export const deleteReply = async (editContent,replyIdToEdit) => {
+    const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            content: editContent
+        })
+    });
+    const data = await response.json();
+    return data;
+}
+export const deletePost = async (editContent,replyIdToEdit) => {
+    const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            content: editContent
+        })
+    });
+    const data = await response.json();
+    return data;
+}
 
 export const fetchThreadData = async (id) => {
     try {
