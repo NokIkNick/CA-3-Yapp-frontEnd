@@ -54,7 +54,7 @@ function App() {
           <Route path="*" element={<TokenValidator tokenIsValid={tokenIsValid}>
               <Routes>
               <Route element={
-                <AppLayout setSearch={setSearch} />
+                <AppLayout  search={search} setSearch={setSearch}/>
               }>
             
               {/*All routes under here, have the AppLayout rendered ontop of it.*/}

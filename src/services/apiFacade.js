@@ -247,7 +247,7 @@ export function formatDate(createdDate) {
     // Extracting individual components
     const [year, month, day, hours, minutes, seconds, milliseconds] = createdDate;
     // Creating a new Date object
-    const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+    const dateObject = new Date(year, month - 1, day, hours+2, minutes, seconds);
     // Formatting the date
-    return dateObject.toLocaleString(); // Adjust to your desired format
+    return dateObject.toLocaleString('da-DK'); // Adjust to your desired format
 }

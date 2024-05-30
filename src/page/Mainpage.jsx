@@ -38,6 +38,7 @@ export const Mainpage = ({search}) => {
         const fetchData = async () => {
             try {
                 const data = await fetchThreads();
+
                 setItems(data);
                 setFilteredItems(data);
             } catch (error) {
@@ -52,15 +53,19 @@ export const Mainpage = ({search}) => {
     }, [search]);
 
     function filterItems(search) {
-        if (search === '') {
-            setFilteredItems(items);
-            return;
-        }
-        const filteredItems = items.filter((item) => {
-            return item.title.toLowerCase().includes(search.toLowerCase());
-        });
-        setFilteredItems(filteredItems);
+    if (search === '') {
+        setFilteredItems(items);
+        return;
     }
+    const lowerCaseSearch = search.toLowerCase();
+    const filteredItems = items.filter((item) => {
+        const titleMatch = item.title && item.title.toLowerCase().includes(lowerCaseSearch);
+        const userNameMatch = item.userName && item.userName.toLowerCase().includes(lowerCaseSearch);
+        const contentMatch = item.content && item.content.toLowerCase().includes(lowerCaseSearch);
+        return titleMatch || userNameMatch || contentMatch;
+    });
+    setFilteredItems(filteredItems);
+}
 
     function goToThread(item) {
         console.log(item.id);
