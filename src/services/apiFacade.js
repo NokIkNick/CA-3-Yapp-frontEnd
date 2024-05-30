@@ -143,8 +143,8 @@ export const postSubmit = async (newPostContent, username, currentThreadId) => {
         return data;
     }
 }
-export const replySubmit = async (newReplyContent,replyingToPostId,username, currentThreadId) => {
-        const response = await fetch(`${BASE_URL}/protected/createPost`, {
+export const replySubmit = async (newReplyContent,replyingToPostId,username) => {
+        const response = await fetch(`${BASE_URL}/protected/createReply`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -153,8 +153,7 @@ export const replySubmit = async (newReplyContent,replyingToPostId,username, cur
             body: JSON.stringify({
                 content: newReplyContent,
                 userName: username,
-                threadId: currentThreadId,
-                parentReplyId: replyingToPostId
+                parentPostId: replyingToPostId
             })
         });
         const data = await response.json();
@@ -242,6 +241,7 @@ export const fetchThreadData = async (id) => {
     try {
         const response = await fetch(`${BASE_URL}/public/getThreadById/${id}`)
         const data = await response.json();
+        console.log(data + "data in fetchThreadData");
         return data;
     } catch (error) {
         console.error('fetching data error', error);

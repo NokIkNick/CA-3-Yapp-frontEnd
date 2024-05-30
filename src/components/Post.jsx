@@ -144,25 +144,25 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
         setLoggedInUserData(loggedInUser);
         setCurrentThreadId(threadId);
         console.log("threadId: "+threadId +"from post.jsx");
-    }, []);
+    }, [])
 
     const toggleReplies = (postId) => {
         setVisibleReplies((prev) => ({
             ...prev,
             [postId]: !prev[postId]
         }));
-    };
+    }
 
 
     const handleReplyClick = (postId) => {
         setReplyingToPostId(postId);
-    };
+    }
 
     const handleEditPostClick = (postId, content) => {
         setEditingPostId(postId);
         setEditContent(content);
         setEditingReplyId(null);
-    };
+    }
 
     function handleEditReplyClick(replyId,content) {
         setEditingReplyId(replyId);
@@ -172,17 +172,18 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
     const handleNewPostSubmit = async (event) => {
         event.preventDefault();
-        if (!newPostContent.trim().valueOf("")) {
+        if (newPostContent.trim()) {
             const data = await postSubmit(newPostContent, loggedInUserData.username, currentThreadId);
             console.log(data);
             setPosts((prev) => [...prev, data]);
             setNewPostContent('');
         }
+    }
 
         const handleNewReplySubmit = async (e) => {
             e.preventDefault();
             if (newReplyContent.trim() && replyingToPostId !== null) {
-                const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.username, currentThreadId);
+                const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.username);
                 setPosts((prev) =>
                     prev.map((post) =>
                         post.id === replyingToPostId
@@ -190,10 +191,12 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
                             : post
                     )
                 );
+                console.log(data +"from post.jsx");
                 setNewReplyContent('');
                 setReplyingToPostId(null);
             }
-        };
+        }
+
         const handleEditPostSubmit = async (e) => {
             e.preventDefault();
             if (editContent.trim() && editingPostId !== null) {
@@ -208,7 +211,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
                 setEditContent('');
                 setEditingPostId(null);
             }
-        };
+        }
 
         const handleEditReplySubmit = async (e) => {
             e.preventDefault();
@@ -358,6 +361,4 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
                 )}
             </MainContainer>
         );
-
     }
-}

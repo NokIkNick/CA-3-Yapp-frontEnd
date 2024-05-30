@@ -1,5 +1,5 @@
 import Post from './Post';
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import {useState} from "react";
 import * as PropTypes from "prop-types";
@@ -43,7 +43,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
 
     const [editingThread, setEditingThread] = useState(false);
     const [editContent, setEditContent] = useState('');
-
+    const navigate = useNavigate();
 
     const handleEditThreadClick = (content) => {
         setEditingThread(true);
@@ -51,11 +51,11 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
     };
 
     const handleDeleteThreadClick = async (e) => {
-        e.preventDefault();
-
         const data = await deleteThread(threadData.id);
         setThreadData([]);
+        navigate('/home')
     };
+
     const handleEditThreadSubmit = async (e) => {
         e.preventDefault();
         if (editContent.trim() && editingThread === true) {
