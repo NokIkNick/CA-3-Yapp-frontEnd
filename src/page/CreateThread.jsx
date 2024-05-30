@@ -25,13 +25,6 @@ const Container = styled.div`
         margin: 1rem;
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-        /* Styles for tablet */
-        width: 90%;
-        margin: 2rem auto;
-        flex-direction: row;
-    }
-
 `;
 
     const StyledForm = styled.form`
@@ -52,40 +45,28 @@ const Container = styled.div`
         width: 70%;
         margin: 1rem auto;
     }
-        @media (min-width: 768px) and (max-width: 1023px) {
-        /* Styles for tablet */
-        width: 90%;
-        margin: 2rem auto;
-        flex-direction: row;
-    }
+
     `;
 
     const StyledTitleInput = styled.input`
         width: 85%;
         height: 15%;
         margin-bottom: 1rem;
-        font-size: 1.1rem;
+        font-size: 110%;
         padding-left: 0.2rem;
         border: 0.1rem solid var(--green);
         border-radius: 0.5rem;
+        white-space: normal;
         &:focus {
             outline: 0.1rem inset var(--green);
         }
 
         @media (min-width: 768px) {
         /* Styles for desktop */
-        margin-right: 40rem;
+        margin-right: 51%;
         width: 40%;
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-        /* Styles for tablet */
-        width: 90%;
-        height: 20%;
-        margin: 2rem auto;
-        padding: 1rem;
-
-    }
     `;
 
     const StyledAuthorInput = styled.input`
@@ -93,7 +74,7 @@ const Container = styled.div`
         height: 15%;
         margin-bottom: 1rem;
         margin-top: 2rem;
-        font-size: 1.1rem;
+        font-size: 110%;
         text-align: center;
         color: var(--green);
         font-weight: bold;
@@ -107,15 +88,9 @@ const Container = styled.div`
         @media (min-width: 768px) {
         /* Styles for desktop */
         width: 20%;
-        margin-right: 55.5rem;
+        margin-right: 71%;
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-        /* Styles for tablet */
-        width: 90%;
-        margin: 2rem auto;
-        display: none;
-    }
 
     `;
 
@@ -139,17 +114,6 @@ const Container = styled.div`
         
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-        /* Styles for tablet */
-        width: 10%;
-        margin: 2rem auto;
-        height: 30%;
-        font-size: 1rem;
-        white-space: normal;
-        padding: 0.5rem;
-        border-radius: 2rem;
-        margin-left: 1rem;
-    }
     `;
 
     const TextArea = styled.textarea`
@@ -158,7 +122,7 @@ const Container = styled.div`
         resize: none;
         border: 0.1rem solid var(--green);
         border-radius: 0.5rem;
-        font-size: 1rem;
+        font-size: 110%;
         padding: 0.5rem;
         &:focus {
             outline: 0.1rem inset var(--green);
@@ -170,11 +134,6 @@ const Container = styled.div`
         
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-        /* Styles for tablet */
-        width: 90%;
-        margin: 2rem auto;
-    }
     `;
 
     const StyledSelect = styled.select`
@@ -185,15 +144,10 @@ const Container = styled.div`
         @media (min-width: 768px) {
         /* Styles for desktop */
         width: 20%;
-        margin-right: 55.5rem;
+        margin-right: 71%;
         
     }
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-        /* Styles for tablet */
-        width: 90%;
-        margin: 2rem auto;
-    }
     `;
 
     const StyledOption = styled.option`
