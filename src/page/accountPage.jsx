@@ -123,7 +123,7 @@ export const AccountPage = ({loggedInUser}) => {
             return;
         }
         const filteredPosts = posts.filter((post) => {
-            return post.title && post.title.toLowerCase().includes(search.toLowerCase());
+            return post.content && post.content.toLowerCase().includes(search.toLowerCase());
         });
         setFilteredPosts(filteredPosts);
     }
