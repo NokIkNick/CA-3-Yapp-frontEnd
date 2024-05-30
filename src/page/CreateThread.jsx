@@ -6,150 +6,61 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Container = styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-top: 2rem, auto;
-        background-color: var(--offwhite);
-        height: calc(100vh - 0rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0.1rem solid red;
+    width: 100%;
+    margin-top: 1rem;
+    margin: 1rem auto;
+    height: 100vh;
 
-    `;
+    @media (min-width: 360px) {
+        margin: 1rem auto;
+    }
+
+`;
 
     const StyledForm = styled.form`
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
-        width: 60%;
-        background-color: var(--basewhite);
-        border-radius: 0.4rem;
-        padding: 1rem;
-        margin-top: 1rem;
-        border: solid var(--green) 0.2rem;
-        
-        @media (max-width: 1000px){
-            width: 90%;
-            margin-top: 2rem;
-        }
+        align-items: center;
+        width: 100%;
+        margin: 1rem auto;
+        height: 100%;
     `;
 
     const StyledTitleInput = styled.input`
-        width: 50%;
-        height: 8%;
-        margin-right: 40%;
-        font-size: 1.5rem;
-        border-radius: 0.4rem;
-        border: solid var(--green) 0.2rem;
-        padding-left: 0.5rem;
-        
-        &:focus{
-            outline: none;
-            border-color: initial;
-        }
-
-        @media (max-width: 1000px){
-            width: 80%;
-            margin-right: 10%;
-        }
+        width: 100%;
+        height: 100%;
     `;
 
     const StyledAuthorInput = styled.input`
-        margin-bottom: 1rem;
-        width: 20%;
-        height: 5%;
-        margin-right: 70%;
-        font-size: 1.5rem;
-        pointer-events: none;
-        padding: 0.5rem;
-
-        border-radius: 0.4rem;
-        border: solid var(--green) 0.2rem;
-
-        @media (max-width: 1000px){
-            width: 60%;
-            margin-right: 30%;
-            
-        }
+        width: 100%;
+        height: 100%;
     `;
 
 
     const StyledSubmitInput = styled.input`
-            margin-top: 1rem;
-            background-color: var(--green);
-            color: var(--offwhite);
-            border: solid var(--dark-green) 0.1rem;
-            margin-right: 60%;
-            width: 30%;
-            height: 10%;
-            font-size: 1.5rem;
-            cursor: pointer;
-
-        &:hover{
-            background-color: var(--dark-green);
-            color: var(--offwhite);
-            border: solid var(--offwhite) 0.1rem;
-            border-radius: 0.4rem;
-            outline: none;
-        }
-
-
-        @media (max-width: 1000px){
-            width: 60%;
-            margin: 1rem auto;
-        }
-
+        width: 100%;
+        height: 100%;
     `;
 
     const TextArea = styled.textarea`
-        box-sizing: border-box;
-        resize: none;
-        width: 90%;
-        height: 30rem;
-        margin: auto;
-        padding: 1;
-        margin-top: 1rem;
-        border-radius: 0.4rem;
-        border: solid var(--green) 0.2rem;
-        padding: 0.5rem;
-        font-size: 1.5rem;
-
-        &:focus{
-            outline: none;
-            border-color: initial;
-        }
-
+        width: 100%;
+        height: 100%;
     `;
 
     const StyledSelect = styled.select`
-        width: 20%;
-        height: 5%;
-        margin-right: 70%;
-        margin-top: 1rem;
-        font-size: 1rem;
-        background-color: var(--green);
-        color: var(--offwhite);
-        border: none;
-        padding-left: 0.5rem;
-        border-radius: 5px;
-        cursor: pointer;
-
-        &:hover{
-            background-color: var(--dark-green);
-            color: var(--offwhite);
-        }
-
-        @media (max-width: 1000px){
-            width: 60%;
-            margin-right: 30%;
-        }
+        width: 100%;
+        height: 100%;
     `;
 
     const StyledOption = styled.option`
-        color: var(--offwhite);
-        background-color: var(--green);
-        font-weight: bold;
-        
+        width: 100%;
+        height: 100%;
     `;
 
     const ErrorText = styled.p`
@@ -213,13 +124,13 @@ export const CreateThread = ({ loggedInUser }) => {
         <Container>
             <StyledForm onSubmit={handleSubmit}>
                 <StyledAuthorInput id='author' type='text' readOnly value={loggedInUser ? loggedInUser.username : "No User"}></StyledAuthorInput>
-                <StyledTitleInput id='title' type='text' onChange={handleOnChange}></StyledTitleInput> 
+                <StyledTitleInput id='title' type='text' onChange={handleOnChange} placeholder="Who's hype about.."></StyledTitleInput> 
                 <StyledSelect id='category' onChange={handleOnChange}>
                     {categories ? categories.map((category) => {
                         return <StyledOption key={category.id} value={category.id}>{category.name}</StyledOption>
                     }) : <StyledOption value=''>Loading...</StyledOption>}
                 </StyledSelect>
-                <TextArea id='content' onChange={handleOnChange}></TextArea>
+                <TextArea id='content' onChange={handleOnChange} placeholder="I cannot believe that.."></TextArea>
                 {error && <ErrorText>{error}</ErrorText>}
                 <StyledSubmitInput type='submit' value='Publish Thread'></StyledSubmitInput>
             </StyledForm>
