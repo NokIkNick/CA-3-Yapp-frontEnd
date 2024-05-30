@@ -172,180 +172,192 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
 
     const handleNewPostSubmit = async (event) => {
         event.preventDefault();
-        const data = await postSubmit(newPostContent, loggedInUserData.username, currentThreadId);
-        console.log(data);
-        setPosts((prev) => [...prev, data]);
-        setNewPostContent('');
+        if (!newPostContent.trim().valueOf("")) {
+            const data = await postSubmit(newPostContent, loggedInUserData.username, currentThreadId);
+            console.log(data);
+            setPosts((prev) => [...prev, data]);
+            setNewPostContent('');
         }
 
-    const handleNewReplySubmit = async (e) => {
-        e.preventDefault();
-        if (newReplyContent.trim() && replyingToPostId !== null) {
-            const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.username, currentThreadId);
-            setPosts((prev) =>
-                prev.map((post) =>
-                    post.id === replyingToPostId
-                        ? { ...post, replies: [...post.replies, data] }
-                        : post
-                )
-            );
-            setNewReplyContent('');
-            setReplyingToPostId(null);
+        const handleNewReplySubmit = async (e) => {
+            e.preventDefault();
+            if (newReplyContent.trim() && replyingToPostId !== null) {
+                const data = await replySubmit(newReplyContent, replyingToPostId, loggedInUserData.username, currentThreadId);
+                setPosts((prev) =>
+                    prev.map((post) =>
+                        post.id === replyingToPostId
+                            ? {...post, replies: [...post.replies, data]}
+                            : post
+                    )
+                );
+                setNewReplyContent('');
+                setReplyingToPostId(null);
+            }
+        };
+        const handleEditPostSubmit = async (e) => {
+            e.preventDefault();
+            if (editContent.trim() && editingPostId !== null) {
+                const data = await editPost(editContent, editingPostId);
+                setPosts((prev) =>
+                    prev.map((post) =>
+                        post.id === editingPostId
+                            ? {...post, content: data.content}
+                            : post
+                    )
+                );
+                setEditContent('');
+                setEditingPostId(null);
+            }
+        };
+
+        const handleEditReplySubmit = async (e) => {
+            e.preventDefault();
+            if (editContent.trim() && editingReplyId !== null) {
+                const data = await editReply(editContent, editingReplyId);
+                setPosts((prev) => {
+                    return prev.map((post) => {
+                        return {
+                            ...post,
+                            replies: post.replies.map((reply) => {
+                                return reply.id === editingReplyId ? {...reply, content: data.content} : reply;
+                            })
+                        };
+                    });
+                });
+                setEditContent('');
+                setEditingReplyId(null);
+            }
         }
-    };
-    const handleEditPostSubmit = async (e) => {
-        e.preventDefault();
-        if (editContent.trim() && editingPostId !== null) {
-            const data = await editPost(editContent, editingPostId);
-            setPosts((prev) =>
-                prev.map((post) =>
-                    post.id === editingPostId
-                        ? { ...post, content: data.content }
-                        : post
-                )
-            );
-            setEditContent('');
-            setEditingPostId(null);
+
+        function handleDeleteReplyClick(id) {
+            // const data = await deleteReply(id);
         }
-    };
 
-const handleEditReplySubmit = async (e) => {
-    e.preventDefault();
-    if (editContent.trim() && editingReplyId !== null) {
-        const data = await editReply(editContent, editingReplyId);
-        setPosts((prev) => {
-            return prev.map((post) => {
-                return {
-                    ...post,
-                    replies: post.replies.map((reply) => {
-                        return reply.id === editingReplyId ? { ...reply, content: data.content } : reply;
-                    })
-                };
-            });
-        });
-        setEditContent('');
-        setEditingReplyId(null);
-    }
-}
+        function handleDeletePostClick(id) {
 
-    function handleDeleteReplyClick(id) {
-       // const data = await deleteReply(id);
-    }
+        }
 
-    function handleDeletePostClick(id) {
-        
-    }
-
-    return (
-        <MainContainer>
-            {posts && posts.map((post) => (
-                <PostContainer key={post.id} className="post">
-                    <TextWithColorBlack>
-                        <strong>By: {post.userName}:</strong>
-                    </TextWithColorBlack>
-                    <br/>
-                    {editingPostId === post.id ? (
-                        <FormContainer>
-                            <TextWithColorWhite>Edit Post:</TextWithColorWhite>
-                            <form onSubmit={handleEditPostSubmit}>
-                                <TextArea
-                                    value={editContent}
-                                    onChange={(e) => setEditContent(e.target.value)}
-                                />
-                                <SubmitButton type="submit">Submit Edit</SubmitButton>
-                                <ReplyButton onClick={() => setEditingPostId(null)}>Cancel</ReplyButton>
-                            </form>
-                        </FormContainer>
-                    ) : (
-                        <>
-                        <p>{post.content}</p>
-                        <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
-                        {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || post.userName === loggedInUserData.username)) && (
+        return (
+            <MainContainer>
+                {posts && posts.map((post) => (
+                    <PostContainer key={post.id} className="post">
+                        <TextWithColorBlack>
+                            <strong>By: {post.userName}:</strong>
+                        </TextWithColorBlack>
+                        <br/>
+                        {editingPostId === post.id ? (
+                            <FormContainer>
+                                <TextWithColorWhite>Edit Post:</TextWithColorWhite>
+                                <form onSubmit={handleEditPostSubmit}>
+                                    <TextArea
+                                        value={editContent}
+                                        onChange={(e) => setEditContent(e.target.value)}
+                                    />
+                                    <SubmitButton type="submit">Submit Edit</SubmitButton>
+                                    <ReplyButton onClick={() => setEditingPostId(null)}>Cancel</ReplyButton>
+                                </form>
+                            </FormContainer>
+                        ) : (
                             <>
-                            <button onClick={() => handleEditPostClick(post.id, post.content)}>Edit post</button>
-                            <button onClick={() => handleDeletePostClick(post.id)}>Delete post</button>
+                                <p>{post.content}</p>
+                                <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}
+                                </DateContainer>
+                                {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || post.userName === loggedInUserData.username)) && (
+                                    <>
+                                        <button onClick={() => handleEditPostClick(post.id, post.content)}>Edit post
+                                        </button>
+                                        <button onClick={() => handleDeletePostClick(post.id)}>Delete post</button>
+                                    </>
+                                )}
+                                <br/>
                             </>
-                    )}
-                    <br/>
-                </>
-            )}
-                    {post.replies.length > 0 && (
-                        <>
-                            <ToggleRepliesLink onClick={() => toggleReplies(post.id)}>
-                                {visibleReplies[post.id] ? "Hide replies" : `Show replies (${post.replies.length})`}
-                            </ToggleRepliesLink>
-                            {visibleReplies[post.id] && (
-                                <div className="replies">
-                                    <h4>Replies:</h4>
-                                    {post.replies.map((reply) => (
-                                        <ReplyContainer key={reply.id} className="reply">
-                                            {editingReplyId === reply.id ? (
-                                                <FormContainer>
-                                                    <TextWithColorWhite>Edit Reply</TextWithColorWhite>
-                                                    <form onSubmit={handleEditReplySubmit}>
-                                                        <ReplyTextArea
-                                                            value={editContent}
-                                                            onChange={(e) => setEditContent(e.target.value)}
-                                                        />
-                                                        <SubmitButton type="submit">Submit Edit</SubmitButton>
-                                                        <ReplyButton onClick={() => setEditingReplyId(null)}>Cancel</ReplyButton>
-                                                    </form>
-                                                </FormContainer>
-                                            ) : (
-                                                <>
-                                                    <strong>User: {reply.userName}:</strong>
-                                                    <p>{reply.content}</p>
-                                                    {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || reply.userName === loggedInUserData.username)) && (
-                                                        <>
-                                                        <button onClick={() => handleEditReplyClick(reply.id, reply.content)}>Edit reply</button>
-                                                         <button onClick={() => handleDeleteReplyClick(reply.id)}>Delete reply</button>
-                                                        </>
-                                                    )}
-                                                    <DateContainer><strong>Created Date:</strong> {formatDate(reply.createdDate)}</DateContainer>
-                                                </>
-                                            )}
-                                        </ReplyContainer>
-                                    ))}
-                                </div>
-                            )}
-                        </>
-                    )}
-                    {loggedInUserData && (
-                        <ReplyButton onClick={() => handleReplyClick(post.id)}>Reply To Post</ReplyButton>
-                    )}
-                    {replyingToPostId === post.id && (
-                        <>
-                        <FormContainer>
-                            <TextWithColorWhite>Write Reply: </TextWithColorWhite>
-                            <form onSubmit={handleNewReplySubmit}>
-                                <ReplyTextArea
-                                    value={newReplyContent}
-                                    onChange={(e) => setNewReplyContent(e.target.value)}
-                                    placeholder="Write your reply..."
-                                />
-                                <SubmitButton type="submit">Submit Reply</SubmitButton>
-                                <ReplyButton onClick={() => setReplyingToPostId(null)}>Cancel</ReplyButton>
-                            </form>
-                        </FormContainer>
-                        </>
-                    )}
-                </PostContainer>
-            ))}
-            {loggedInUserData && (
-                <BottomFormContainer>
-                    <h3>Create New Post</h3>
-                    <form onSubmit={handleNewPostSubmit}>
-                        <TextArea
-                            value={newPostContent}
-                            onChange={(e) => setNewPostContent(e.target.value)}
-                            placeholder="Post content"
-                        />
-                        <SubmitButton type="submit">Submit Post</SubmitButton>
-                    </form>
-                </BottomFormContainer>
-            )}
-        </MainContainer>
-    );
+                        )}
+                        {post.replies.length > 0 && (
+                            <>
+                                <ToggleRepliesLink onClick={() => toggleReplies(post.id)}>
+                                    {visibleReplies[post.id] ? "Hide replies" : `Show replies (${post.replies.length})`}
+                                </ToggleRepliesLink>
+                                {visibleReplies[post.id] && (
+                                    <div className="replies">
+                                        <h4>Replies:</h4>
+                                        {post.replies.map((reply) => (
+                                            <ReplyContainer key={reply.id} className="reply">
+                                                {editingReplyId === reply.id ? (
+                                                    <FormContainer>
+                                                        <TextWithColorWhite>Edit Reply</TextWithColorWhite>
+                                                        <form onSubmit={handleEditReplySubmit}>
+                                                            <ReplyTextArea
+                                                                value={editContent}
+                                                                onChange={(e) => setEditContent(e.target.value)}
+                                                            />
+                                                            <SubmitButton type="submit">Submit Edit</SubmitButton>
+                                                            <ReplyButton
+                                                                onClick={() => setEditingReplyId(null)}>Cancel</ReplyButton>
+                                                        </form>
+                                                    </FormContainer>
+                                                ) : (
+                                                    <>
+                                                        <strong>User: {reply.userName}:</strong>
+                                                        <p>{reply.content}</p>
+                                                        {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || reply.userName === loggedInUserData.username)) && (
+                                                            <>
+                                                                <button
+                                                                    onClick={() => handleEditReplyClick(reply.id, reply.content)}>Edit
+                                                                    reply
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleDeleteReplyClick(reply.id)}>Delete
+                                                                    reply
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                        <DateContainer><strong>Created
+                                                            Date:</strong> {formatDate(reply.createdDate)}
+                                                        </DateContainer>
+                                                    </>
+                                                )}
+                                            </ReplyContainer>
+                                        ))}
+                                    </div>
+                                )}
+                            </>
+                        )}
+                        {loggedInUserData && (
+                            <ReplyButton onClick={() => handleReplyClick(post.id)}>Reply To Post</ReplyButton>
+                        )}
+                        {replyingToPostId === post.id && (
+                            <>
+                                <FormContainer>
+                                    <TextWithColorWhite>Write Reply: </TextWithColorWhite>
+                                    <form onSubmit={handleNewReplySubmit}>
+                                        <ReplyTextArea
+                                            value={newReplyContent}
+                                            onChange={(e) => setNewReplyContent(e.target.value)}
+                                            placeholder="Write your reply..."
+                                        />
+                                        <SubmitButton type="submit">Submit Reply</SubmitButton>
+                                        <ReplyButton onClick={() => setReplyingToPostId(null)}>Cancel</ReplyButton>
+                                    </form>
+                                </FormContainer>
+                            </>
+                        )}
+                    </PostContainer>
+                ))}
+                {loggedInUserData && (
+                    <BottomFormContainer>
+                        <h3>Create New Post</h3>
+                        <form onSubmit={handleNewPostSubmit}>
+                            <TextArea
+                                value={newPostContent}
+                                onChange={(e) => setNewPostContent(e.target.value)}
+                                placeholder="Post content"
+                            />
+                            <SubmitButton type="submit">Submit Post</SubmitButton>
+                        </form>
+                    </BottomFormContainer>
+                )}
+            </MainContainer>
+        );
 
-
+    }
 }

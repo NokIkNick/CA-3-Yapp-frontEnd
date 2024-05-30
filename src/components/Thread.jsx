@@ -3,7 +3,7 @@ import {Outlet} from "react-router-dom";
 import styled from "styled-components";
 import {useState} from "react";
 import * as PropTypes from "prop-types";
-import {editThread} from "../services/apiFacade.js";
+import {editThread, deleteThread} from "../services/apiFacade.js";
 
 const MainContainer = styled.div`
     display: flex;
@@ -38,6 +38,7 @@ TextArea.propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.string
 };
+
 export default function Thread({ threadData,setThreadData, posts, setPosts, loggedInUser }) {
 
     const [editingThread, setEditingThread] = useState(false);
@@ -49,10 +50,12 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
         setEditContent(content);
     };
 
-    function handleDeleteThreadClick(id) {
+    const handleDeleteThreadClick = async (e) => {
+        e.preventDefault();
 
-    }
-
+        const data = await deleteThread(threadData.id);
+        setThreadData([]);
+    };
     const handleEditThreadSubmit = async (e) => {
         e.preventDefault();
         if (editContent.trim() && editingThread === true) {
@@ -67,7 +70,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
         <MainContainer>
             {threadData.id && (
                 <>
-                    {editingThread ?  (
+                    {editingThread ? (
                         <ThreadContenData>
                             <p>Edit Post:</p>
                             <form onSubmit={handleEditThreadSubmit}>
@@ -75,19 +78,28 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                                     value={editContent}
                                     onChange={(e) => setEditContent(e.target.value)}
                                 />
-                                <button type="submit">Submit Edit</button>
-                                <button onClick={() => setEditingThread(false)}>Cancel</button>
+                                {(loggedInUser && (loggedInUser.roles.includes("ADMIN") || threadData.userName === loggedInUser.username)) && (
+                                    <>
+                                        <button type="submit">Submit Edit</button>
+                                        <button onClick={() => setEditingThread(false)}>Cancel</button>
+                                    </>
+                                )}
                             </form>
                         </ThreadContenData>
-                        ) : (
+                    ) : (
                         <ThreadContenData>
                             <div><strong>{threadData.title} by {threadData.userName} </strong></div>
                             <br/>
                             {threadData.content}
                             <br/>
                             <br/>
-                            <button onClick={() => handleEditThreadClick(threadData.content)}>Edit thread</button>
-                            <button onClick={() => handleDeleteThreadClick(threadData.id)}>Delete thread</button>
+                            {(loggedInUser && (loggedInUser.roles.includes("ADMIN") || threadData.userName === loggedInUser.username)) && (
+                                <>
+                                    <button onClick={() => handleEditThreadClick(threadData.content)}>Edit thread
+                                    </button>
+                                    <button onClick={() => handleDeleteThreadClick(threadData.id)}>Delete thread</button>
+                                </>
+                            )}
                         </ThreadContenData>
                     )}
                     <br/>

@@ -37,6 +37,7 @@ export default function SpecificThread({loggedInUser}){
         const fetchAndSetData = async () => {
             const data = await fetchThreadData(id);
             setThreadData(data);
+            console.log(data.posts + "data in specific thread");
             setPosts(data.posts);
         };
         fetchAndSetData();
