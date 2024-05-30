@@ -1,7 +1,7 @@
 
 import styled from "styled-components";
 import {useEffect, useState} from "react";
-import {formatDate, postSubmit, replySubmit, editPost, editReply , deleteReply , deletePost} from "../services/apiFacade.js";
+import {formatDate, postSubmit, replySubmit, editPost, editReply} from "../services/apiFacade.js";
 
 // Styled components
 const MainContainer = styled.div`
@@ -48,20 +48,12 @@ const DateContainer = styled.p`
     color: var(--green);
 `;
 
-const TextWithColorWhite = styled.p`
-    color: white;
-    //position: absolute;
-  /*  top: 8px; !* Adjust to be inside the padding and border *!
-    left: 8px; !* Adjust to be inside the padding and border *!
-    margin: 0; !* Optional: Remove default margin *!*/
-    `;
-
-const TextWithColorBlack = styled.p`
+const TextWithColor = styled.p`
     color: black;
-    //position: absolute;
-  /*  top: 8px; !* Adjust to be inside the padding and border *!
-    left: 8px; !* Adjust to be inside the padding and border *!
-    margin: 0; !* Optional: Remove default margin *!*/
+    position: absolute;
+    top: 8px; /* Adjust to be inside the padding and border */
+    left: 8px; /* Adjust to be inside the padding and border */
+    margin: 0; /* Optional: Remove default margin */
     `;
 
 const ReplyButton = styled.button`
@@ -228,47 +220,34 @@ const handleEditReplySubmit = async (e) => {
     }
 }
 
-    function handleDeleteReplyClick(id) {
-       // const data = await deleteReply(id);
-    }
-
-    function handleDeletePostClick(id) {
-        
-    }
-
     return (
         <MainContainer>
             {posts && posts.map((post) => (
                 <PostContainer key={post.id} className="post">
-                    <TextWithColorBlack>
-                        <strong>By: {post.userName}:</strong>
-                    </TextWithColorBlack>
+                    <TextWithColor>
+                        <strong>Post by: {post.userName}:</strong>
+                    </TextWithColor>
                     <br/>
                     {editingPostId === post.id ? (
                         <FormContainer>
-                            <TextWithColorWhite>Edit Post:</TextWithColorWhite>
+                            <TextWithColor>Edit Post:</TextWithColor>
                             <form onSubmit={handleEditPostSubmit}>
                                 <TextArea
                                     value={editContent}
                                     onChange={(e) => setEditContent(e.target.value)}
                                 />
                                 <SubmitButton type="submit">Submit Edit</SubmitButton>
-                                <ReplyButton onClick={() => setEditingPostId(null)}>Cancel</ReplyButton>
                             </form>
                         </FormContainer>
                     ) : (
                         <>
-                        <p>{post.content}</p>
-                        <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
-                        {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || post.userName === loggedInUserData.username)) && (
-                            <>
-                            <button onClick={() => handleEditPostClick(post.id, post.content)}>Edit post</button>
-                            <button onClick={() => handleDeletePostClick(post.id)}>Delete post</button>
-                            </>
+                            <p>{post.content}</p>
+                            <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
+                            {loggedInUserData && post.userName === loggedInUserData.username && (
+                                <button onClick={() => handleEditPostClick(post.id, post.content)}>Edit</button>
+                            )}
+                        </>
                     )}
-                    <br/>
-                </>
-            )}
                     {post.replies.length > 0 && (
                         <>
                             <ToggleRepliesLink onClick={() => toggleReplies(post.id)}>
@@ -281,25 +260,21 @@ const handleEditReplySubmit = async (e) => {
                                         <ReplyContainer key={reply.id} className="reply">
                                             {editingReplyId === reply.id ? (
                                                 <FormContainer>
-                                                    <TextWithColorWhite>Edit Reply</TextWithColorWhite>
+                                                    <h4>Edit Reply</h4>
                                                     <form onSubmit={handleEditReplySubmit}>
                                                         <ReplyTextArea
                                                             value={editContent}
                                                             onChange={(e) => setEditContent(e.target.value)}
                                                         />
                                                         <SubmitButton type="submit">Submit Edit</SubmitButton>
-                                                        <ReplyButton onClick={() => setEditingReplyId(null)}>Cancel</ReplyButton>
                                                     </form>
                                                 </FormContainer>
                                             ) : (
                                                 <>
-                                                    <strong>User: {reply.userName}:</strong>
+                                                    <strong>Reply by User: {reply.userName}:</strong>
                                                     <p>{reply.content}</p>
-                                                    {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || reply.userName === loggedInUserData.username)) && (
-                                                        <>
-                                                        <button onClick={() => handleEditReplyClick(reply.id, reply.content)}>Edit reply</button>
-                                                         <button onClick={() => handleDeleteReplyClick(reply.id)}>Delete reply</button>
-                                                        </>
+                                                    {loggedInUserData && reply.userName === loggedInUserData.username && (
+                                                        <button onClick={() => handleEditReplyClick(reply.id, reply.content)}>Edit</button>
                                                     )}
                                                     <DateContainer><strong>Created Date:</strong> {formatDate(reply.createdDate)}</DateContainer>
                                                 </>
@@ -311,12 +286,11 @@ const handleEditReplySubmit = async (e) => {
                         </>
                     )}
                     {loggedInUserData && (
-                        <ReplyButton onClick={() => handleReplyClick(post.id)}>Reply To Post</ReplyButton>
+                        <ReplyButton onClick={() => handleReplyClick(post.id)}>Reply</ReplyButton>
                     )}
                     {replyingToPostId === post.id && (
-                        <>
                         <FormContainer>
-                            <TextWithColorWhite>Write Reply: </TextWithColorWhite>
+                            <TextWithColor>Write a Reply: </TextWithColor>
                             <form onSubmit={handleNewReplySubmit}>
                                 <ReplyTextArea
                                     value={newReplyContent}
@@ -324,10 +298,8 @@ const handleEditReplySubmit = async (e) => {
                                     placeholder="Write your reply..."
                                 />
                                 <SubmitButton type="submit">Submit Reply</SubmitButton>
-                                <ReplyButton onClick={() => setReplyingToPostId(null)}>Cancel</ReplyButton>
                             </form>
                         </FormContainer>
-                        </>
                     )}
                 </PostContainer>
             ))}

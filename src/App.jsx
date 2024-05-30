@@ -16,6 +16,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState({"username": "", "roles": "", "email": ""});
   const [search, setSearch] = useState("");
   const [tokenIsValid, setTokenIsValid] = useState(false);
+  const [currentToken, setCurrentToken] = useState("");
   
   
   useEffect(() => {
@@ -33,6 +34,13 @@ function App() {
 
     let tokenData = JSON.parse(atob(token.split('.')[1]));
     if(tokenData.exp < Date.now() / 1000){
+      alert("Token has expired, please log in again");
+      setTokenIsValid(false);
+      localStorage.removeItem("token");
+      return;
+    }
+
+    if(currentToken !== token){
       alert("Token has expired, please log in again");
       setTokenIsValid(false);
       localStorage.removeItem("token");
@@ -71,8 +79,8 @@ function App() {
 
           {/*These routes are exempt from the AppLayout component */}
           <Route index element={<Navigate to="/login"/>}/>   
-          <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setTokenIsValid={setTokenIsValid}/>}/>
-          <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} setTokenIsValid={setTokenIsValid}/>}/>
+          <Route path="/login" element={<Login setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setTokenIsValid={setTokenIsValid} setCurrentToken={setCurrentToken}/>}/>
+          <Route path="/register" element={<Register setLoggedInUser={setLoggedInUser} setTokenIsValid={setTokenIsValid} setCurrentToken={setCurrentToken}/>}/>
           <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>

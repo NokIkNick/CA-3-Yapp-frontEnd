@@ -45,7 +45,7 @@ export default function SpecificThread({loggedInUser}){
     return(
         <Container>
             <ThreadContainer>
-            <Thread threadData={threadData} setThreadData={setThreadData} posts={posts} setPosts={setPosts} loggedInUser={loggedInUser}/>
+            <Thread threadData={threadData} posts={posts} setPosts={setPosts} loggedInUser={loggedInUser}/>
             </ThreadContainer>
         </Container>
     )

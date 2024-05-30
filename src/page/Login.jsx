@@ -113,7 +113,7 @@ const ErrorText = styled.p`
     margin-bottom: 1rem;
 `
 
-export const Login = ({ loggedInUser, setLoggedInUser, setTokenIsValid }) => {
+export const Login = ({ loggedInUser, setLoggedInUser, setTokenIsValid, setCurrentToken }) => {
     const [error, setError] = useState(null);
     const [credentials, setCredentials] = useState({"username": "", "password": ""});
     const [showPassword, setShowPassword] = useState(false);
@@ -150,6 +150,7 @@ export const Login = ({ loggedInUser, setLoggedInUser, setTokenIsValid }) => {
 
             setLoggedInUser({"username": data.username, "roles": data.roles, "email": data.email});
             localStorage.setItem("token", data.token);
+            setCurrentToken(data.token);
             setTokenIsValid(true);
             navigate("/home");
         }).catch((err) => {

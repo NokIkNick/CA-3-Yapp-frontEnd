@@ -58,7 +58,7 @@ const FormContainer = styled.form`
     flex-direction: column;
 `
     
-export const Register = ({setLoggedInUser, setTokenIsValid}) => {
+export const Register = ({setLoggedInUser, setTokenIsValid, setCurrentToken}) => {
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [error, setError] = useState(null);
@@ -91,6 +91,7 @@ export const Register = ({setLoggedInUser, setTokenIsValid}) => {
             login(credentials.username, credentials.password).then((dataTwo) => {
                 setLoggedInUser({"username": dataTwo.username, "roles": dataTwo.roles, "email": dataTwo.email});
                 localStorage.setItem("token", dataTwo.token);
+                setCurrentToken(dataTwo.token);
                 setTokenIsValid(true);
                 navigate("/home");
             }).catch((err) => {
