@@ -43,14 +43,15 @@ const ThreadContenData = styled.div`
 const TextArea = styled.textarea`
     margin-bottom: 1rem;
     padding: 0.5rem;
-    width: 100%;
-    height: 5rem;
+    width: 25rem;
+    height: 9rem;
     box-sizing: border-box;
     resize: none;
+    border-radius: 0.5rem; /* Rounded corners */
 
     @media screen and (max-width: 400px), (max-height: 533px) {
-        height: 400px;
-        width: 50%;
+        height: 4rem;
+        width: 20rem;
     }
 `;
 
