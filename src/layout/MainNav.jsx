@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -55,9 +55,11 @@ const Buttons = styled.div`
 `;
 
 
-export const MainNav = ({setSearch}) => {
+export const MainNav = ({search, setSearch}) => {
 const params = useParams();
 const navigate = useNavigate();
+let debounceTimer;
+const inputRef = useRef();
 const MainNav = () => {
     let button;
     if (window.location.pathname === "/home" || window.location.pathname === "/createthread" || window.location.pathname === "/accountPage") {
@@ -76,17 +78,9 @@ return (
 );
 }
 
-
-let debounceTimer;
-
-const debounce = (callback, time) => {
-  window.clearTimeout(debounceTimer);
-  debounceTimer = window.setTimeout(callback, time);
-};
-
 function handleChange(event){
     const search = event.target.value;
-    debounce(() => handleSearchPosts(search), 500);
+    handleSearchPosts(search);
 }
 
 function handleSearchPosts(search){
@@ -104,6 +98,10 @@ function userButton(){
     }
 }
 
+useEffect(() => {
+    inputRef.current.focus();
+}, [search]);
+
 
 const SearchField = () => {
     let input;
@@ -111,7 +109,7 @@ const SearchField = () => {
     if(window.location.pathname === "/accountPage" || window.location.pathname === "/thread/" || window.location.pathname === "/user/"+params.id) {
         input = null;
     } else {
-        input = <input type="search" placeholder="Search..." onChange={handleChange} />;
+        input = <input type="search" placeholder="Search..." value={search} ref={inputRef} onChange={handleChange} />;
     }
 
     return (

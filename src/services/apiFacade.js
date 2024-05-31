@@ -175,6 +175,21 @@ export const editPost = async (editContent,postIdToEdit) => {
         const data = await response.json();
         return data;
 };
+export const editThread = async (editContent,threadIdToEdit) => {
+    const response = await fetch(`${BASE_URL}/protected/editThread/${threadIdToEdit}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            content: editContent,
+        })
+    });
+    const data = await response.json();
+    return data;
+};
+
 export const editReply = async (editContent,replyIdToEdit) => {
         const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
             method: 'PUT',
@@ -189,7 +204,34 @@ export const editReply = async (editContent,replyIdToEdit) => {
         const data = await response.json();
         return data;
 }
-
+export const deleteReply = async (editContent,replyIdToEdit) => {
+    const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            content: editContent
+        })
+    });
+    const data = await response.json();
+    return data;
+}
+export const deletePost = async (editContent,replyIdToEdit) => {
+    const response = await fetch(`${BASE_URL}/protected/editReply/${replyIdToEdit}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+            content: editContent
+        })
+    });
+    const data = await response.json();
+    return data;
+}
 
 export const fetchThreadData = async (id) => {
     try {
@@ -205,7 +247,7 @@ export function formatDate(createdDate) {
     // Extracting individual components
     const [year, month, day, hours, minutes, seconds, milliseconds] = createdDate;
     // Creating a new Date object
-    const dateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+    const dateObject = new Date(year, month - 1, day, hours+2, minutes, seconds);
     // Formatting the date
-    return dateObject.toLocaleString(); // Adjust to your desired format
+    return dateObject.toLocaleString('da-DK'); // Adjust to your desired format
 }
