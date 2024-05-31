@@ -128,7 +128,7 @@ export default function ReplyItem({
             ) : (
                 <>
                     <Text>{reply.content}</Text>
-                    {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || reply.userName === loggedInUserData.username)) && (
+                    {(loggedInUserData && (loggedInUserData.roles.includes("admin") || reply.userName === loggedInUserData.username)) && (
                         <ButtonContainer>
                             <EditButton onClick={() => handleEditReplyClick(reply.id, reply.content)}>Edit</EditButton>
                             <DeleteButton onClick={() => handleDeleteReplyClick(reply.id)}>Delete</DeleteButton>
