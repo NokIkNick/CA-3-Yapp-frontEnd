@@ -205,7 +205,7 @@ export default function PostItem({
                 <>
                     <Text>{post.content}</Text>
                     <DateContainer><strong>Created Date:</strong> {formatDate(post.createdDate)}</DateContainer>
-                    {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || post.userName === loggedInUserData.username)) && (
+                    {(loggedInUserData && (loggedInUserData.roles.includes("admin") || post.userName === loggedInUserData.username)) && (
                         <ButtonContainer>
                             <EditButton onClick={() => handleEditPostClick(post.id, post.content)}>Edit</EditButton>
                             <DeleteButton onClick={() => handleDeletePostClick(post.id)}>Delete</DeleteButton>
