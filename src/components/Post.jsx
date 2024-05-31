@@ -28,7 +28,7 @@ const PostContainer = styled.div`
 `;
 
 const ReplyContainer = styled.div`
-    background: var(--baseWhite);;
+    background: var(--baseWhite);
     min-height: 10vh;
     padding: 12px;
     margin: 8px 16px;
