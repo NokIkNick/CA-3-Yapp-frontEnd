@@ -6,24 +6,30 @@ import {fetchThreadData} from "../services/apiFacade";
 
 
 const Container = styled.div`
-    height: calc(100vh - 1rem);
-    overflow-y: auto;
-    background-color: white;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-top: 4rem;
+    min-height: calc(100vh - 1rem); /* Minimum height of viewport minus 1rem */
+    background-color: var(--green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
 
-    @media(max-width:400px){
-        width: 70%;
+    @media (max-width: 400px), (max-height: 533px) {
+        font-size: 0.8rem;
     }
 `;
 
 const ThreadContainer = styled.div`
-    background-color: #f8f9fa; /* Light gray background color */
-    border: 1px solid #ddd; /* Light gray border */
-    padding: 20px;
-    margin: 20px;
+    background-color: var(--offwhite); /* Light gray background color */
+    border: 0.1rem solid #dddddd; /* Light gray border */
+    padding: 1.5rem;
+    margin: 1.5rem;
     border-radius: 8px;
+    width: 100%;
+
+    @media (max-width: 400px) , (max-height: 533px) {
+        width: 100%;
+    }
 `;
 
 export default function SpecificThread({loggedInUser}){
