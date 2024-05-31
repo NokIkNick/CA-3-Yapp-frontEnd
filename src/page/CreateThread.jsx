@@ -10,7 +10,6 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 0.1rem solid red;
     width: calc(100% - 1rem - 2 * 0.6rem);
     margin: 1rem;
     height: calc(100vh - 4rem);
