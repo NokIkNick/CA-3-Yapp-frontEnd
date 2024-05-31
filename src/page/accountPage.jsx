@@ -9,12 +9,17 @@ const Container = styled.div`
     height: 95vh;
     `;
 
+    const Search = styled.input`
+        ::placeholder {
+            color: var(--basewhite)
+        }
+    `;
+
     const PersonalInformation = styled.div`
     background-color: var(--basewhite);
     margin-top: 9%;
     margin-left: auto;
     margin-right: auto;
-    
     overflow-y: hidden;
     padding: 2%;
     border-radius: 5px;
@@ -123,7 +128,7 @@ export const AccountPage = ({loggedInUser}) => {
             return;
         }
         const filteredPosts = posts.filter((post) => {
-            return post.title && post.title.toLowerCase().includes(search.toLowerCase());
+            return post.content && post.content.toLowerCase().includes(search.toLowerCase());
         });
         setFilteredPosts(filteredPosts);
     }
@@ -142,23 +147,20 @@ export const AccountPage = ({loggedInUser}) => {
 
 return (
     <Container>
-            
             <PersonalInformation>
                 <button onClick={handleLogout}>Logout</button>
                 <h1>Account Page</h1>
                 <p>Here you can see your account information</p>
                 <p>Username: {loggedInUser.username}</p>
                 <p>Email: {loggedInUser.email}</p>
-                <form>
-                    <input type="seach" placeholder="filter topics" onChange={handleSearch}/>
-                </form>
+                <Search placeholder="filter threads and posts under your name" onChange={handleSearch}/>
                 <p>Threads under your name :</p>
                 <Threads>
                 <ThreadsUnderYourName>
                 
                     {filteredThreads && filteredThreads.map((thread) => (
                         <div key={thread.id} onClick={() => {navigate(`/thread/${thread.id}`);}}>
-                            <h2>{thread.title}</h2>
+                            <h3>{thread.title}</h3>
                             <p>{thread.content}</p>
                         </div>
                     ))}

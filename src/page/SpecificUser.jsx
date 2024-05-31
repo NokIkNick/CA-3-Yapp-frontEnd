@@ -102,8 +102,9 @@ export const SpecificUser = () => {
     }, []);
 
     useEffect(() => {
-        filterThreads(search);
         filterPosts(search);
+        filterThreads(search);
+        
     }, [search]);
 
 
@@ -112,14 +113,14 @@ export const SpecificUser = () => {
     }
 
     function filterPosts(search) {
+        console.log("posts");
         if (search === '') {
             setFilteredPosts(posts);
             return;
         }
         const filteredPosts = posts.filter((post) => {
-            return post.title && post.title.toLowerCase().includes(search.toLowerCase());
+            return post.content && post.content.toLowerCase().includes(search.toLowerCase());
         });
-        
         setFilteredPosts(filteredPosts);
     }
 
@@ -157,7 +158,6 @@ return (
                 <PostUnderYourName>
                     {filteredposts && filteredposts.map((post) => (
                     <div key={post.id} onClick={() => {navigate(`/thread/${post.threadId}`);}}>
-                        <h1>{post.title}</h1>
                         <p>{post.content}</p>    
                     </div>
                     ))}
