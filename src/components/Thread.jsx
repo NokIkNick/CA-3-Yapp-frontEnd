@@ -1,57 +1,159 @@
 import Post from './Post';
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import {useState} from "react";
 import * as PropTypes from "prop-types";
-import {editThread} from "../services/apiFacade.js";
+import {editThread, deleteThread} from "../services/apiFacade.js";
+
 
 const MainContainer = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
     width: 100%;
-    padding-top: 0.01rem; /* Optional: add padding to the top */
+    min-height: 100vh;
+    @media(max-width:400px){
+        width: 100%;
+    }
 `;
+
 const ThreadContenData = styled.div`
     display: flex;
-    background:  var(--basewhite);
+    background: var(--basewhite);
     min-height: 20vh;
     min-width: 100vh;
     align-items: center;
     flex-direction: column;
-    margin: 16px;
-    padding: 16px; /* Optional: add padding inside the container */
-    border: 2px solid darkblue; /* Border with a different color */
-    border-radius: 8px; /* Optional: add rounded corners */
+    margin: 1rem;
+    padding: 1rem;
+    border: 0.2rem solid var(--green);
+    border-radius: 0.5rem;
+    max-width: 400px;
+    max-height: 533px;
+
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
 `;
 
 const TextArea = styled.textarea`
-    margin-bottom: 10px;
-    padding: 8px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
     width: 100%;
-    height: 50px; /* Larger default height for post text area */
+    height: 5rem;
     box-sizing: border-box;
     resize: none;
+
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        height: 400px;
+        width: 50%;
+    }
+`;
+
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
+const Button = styled.button`
+    padding: 0.25rem 0.5rem; /* Adjust button padding */
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 0.5rem; /* More rounded corners */
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 4px 6px equivalent */
+    transition: background-color 0.3s, transform 0.3s;
+
+`;
+
+const SubmitButton = styled(Button)`
+    background-color: #4CAF50; /* Example background color */
+    color: black;
+
+    &:hover {
+        background-color: #45a049;
+        transform: translateY(-0.125rem); /* -2px equivalent */
+    }
+
+    &:active {
+        background-color: #3e8e41;
+        transform: translateY(0);
+    }
+`;
+
+const CancelButton = styled(Button)`
+    margin-left: 10px;
+    background-color: #FFA500; /* Orange color */
+    color: white;
+
+    &:hover {
+        background-color: #FF8C00; /* Darker orange on hover */
+        transform: translateY(-0.125rem); /* -2px equivalent */
+    }
+
+    &:active {
+        background-color: #FF4500; /* Even darker orange when active */
+        transform: translateY(0);
+    }
+`;
+
+const EditButton = styled(Button)`
+    background-color: #4CAF50; /* Example background color */
+    color: white;
+
+    &:hover {
+        background-color: #45a049;
+        transform: translateY(-0.125rem); /* -2px equivalent */
+    }
+
+    &:active {
+        background-color: #3e8e41;
+        transform: translateY(0);
+    }
+`;
+
+const DeleteButton = styled(Button)`
+    background-color: #FF0000;
+    &:hover {
+        background-color: #CD5C5C;
+        transform: translateY(-0.125rem);
+    }
+    &:active {
+        background-color: #8B0000;
+        transform: translateY(0);
+    }
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        padding: 0.25rem 0.4rem; /* Adjusted padding */
+        min-width: 5rem; /* Adjusted min-width */
+    }
 `;
 
 TextArea.propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.string
 };
+
 export default function Thread({ threadData,setThreadData, posts, setPosts, loggedInUser }) {
 
     const [editingThread, setEditingThread] = useState(false);
     const [editContent, setEditContent] = useState('');
-
+    const navigate = useNavigate();
 
     const handleEditThreadClick = (content) => {
         setEditingThread(true);
         setEditContent(content);
     };
 
-    function handleDeleteThreadClick(id) {
-
-    }
+    const handleDeleteThreadClick = async (e) => {
+        const data = await deleteThread(threadData.id);
+        setThreadData([]);
+        navigate('/home')
+    };
 
     const handleEditThreadSubmit = async (e) => {
         e.preventDefault();
@@ -67,7 +169,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
         <MainContainer>
             {threadData.id && (
                 <>
-                    {editingThread ?  (
+                    {editingThread ? (
                         <ThreadContenData>
                             <p>Edit Post:</p>
                             <form onSubmit={handleEditThreadSubmit}>
@@ -75,19 +177,28 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                                     value={editContent}
                                     onChange={(e) => setEditContent(e.target.value)}
                                 />
-                                <button type="submit">Submit Edit</button>
-                                <button onClick={() => setEditingThread(false)}>Cancel</button>
+                                {(loggedInUser && (loggedInUser.roles.includes("ADMIN") || threadData.userName === loggedInUser.username)) && (
+                                    <ButtonContainer>
+                                        <SubmitButton type="submit">Submit Edit</SubmitButton>
+                                        <CancelButton onClick={() => setEditingThread(false)}>Cancel</CancelButton>
+                                    </ButtonContainer>
+                                )}
                             </form>
                         </ThreadContenData>
-                        ) : (
+                    ) : (
                         <ThreadContenData>
                             <div><strong>{threadData.title} by {threadData.userName} </strong></div>
                             <br/>
                             {threadData.content}
                             <br/>
                             <br/>
-                            <button onClick={() => handleEditThreadClick(threadData.content)}>Edit thread</button>
-                            <button onClick={() => handleDeleteThreadClick(threadData.id)}>Delete thread</button>
+                            {(loggedInUser && (loggedInUser.roles.includes("ADMIN") || threadData.userName === loggedInUser.username)) && (
+                                <ButtonContainer>
+                                    <EditButton onClick={() => handleEditThreadClick(threadData.content)}>Edit thread
+                                    </EditButton>
+                                    <DeleteButton onClick={() => handleDeleteThreadClick(threadData.id)}>Delete thread</DeleteButton>
+                                </ButtonContainer>
+                            )}
                         </ThreadContenData>
                     )}
                     <br/>
