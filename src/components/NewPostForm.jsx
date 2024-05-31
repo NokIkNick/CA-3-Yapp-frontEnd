@@ -34,8 +34,7 @@ export default function NewPostForm({ newPostContent, setNewPostContent, handleN
             <h3>Create New Post</h3>
             <form onSubmit={(e) => {
                 e.preventDefault();
-                handleNewPostSubmit(newPostContent);
-                setNewPostContent('');
+                handleNewPostSubmit(e);
             }}>
                 <TextArea
                     value={newPostContent}

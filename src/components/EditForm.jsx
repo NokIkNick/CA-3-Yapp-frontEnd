@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
@@ -33,6 +33,12 @@ const ReplyButton = styled.button`
 `;
 
 export default function EditForm({ editContent, setEditContent, handleSubmit, cancelEdit }) {
+    useEffect(() => {
+        if (editContent === '') {
+            setEditContent(editContent);
+        }
+    }, [editContent, setEditContent]);
+
     return (
         <FormContainer>
             <form onSubmit={handleSubmit}>

@@ -23,18 +23,6 @@ const TextWithColorBlack = styled.p`
     color: black;
 `;
 
-const ToggleRepliesLink = styled.p`
-    cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-`;
-
-const ReplyButton = styled.button`
-    margin-top: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-`;
-
 const DateContainer = styled.p`
     position: absolute;
     top: 8px;
@@ -44,26 +32,38 @@ const DateContainer = styled.p`
     color: var(--green);
 `;
 
+const ReplyButton = styled.button`
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+`;
+
+const ToggleRepliesLink = styled.p`
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+`;
+
 export default function PostItem({
                                      post,
                                      loggedInUserData,
-                                     visibleReplies,
                                      toggleReplies,
                                      handleReplyClick,
                                      handleEditPostClick,
-                                     handleEditReplyClick,
-                                     handleDeleteReplyClick,
                                      handleDeletePostClick,
-                                     editingPostId,
-                                     editingReplyId,
-                                     setEditContent,
-                                     editContent,
-                                     handleEditPostSubmit,
-                                     handleEditReplySubmit,
                                      replyingToPostId,
                                      newReplyContent,
                                      setNewReplyContent,
-                                     handleNewReplySubmit
+                                     handleNewReplySubmit,
+                                     visibleReplies,
+                                     handleEditReplyClick,
+                                     handleDeleteReplyClick,
+                                     editingReplyId,
+                                     editingPostId,
+                                     setEditContent,
+                                     editContent,
+                                     handleEditPostSubmit,
+                                     handleEditReplySubmit
                                  }) {
     return (
         <PostContainer>
