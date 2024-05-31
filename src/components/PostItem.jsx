@@ -219,6 +219,7 @@ export default function PostItem({
                     <ToggleRepliesLink onClick={() => toggleReplies(post.id)}>
                         {visibleReplies[post.id] ? "Hide replies" : `Show replies (${post.replies.length})`}
                     </ToggleRepliesLink>
+                    <br/>
                     {visibleReplies[post.id] && (
                         <div className="replies">
                             <h4>Replies:</h4>
