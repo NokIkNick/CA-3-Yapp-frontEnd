@@ -58,6 +58,14 @@ const TextArea = styled.textarea`
 const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
+    align-self: center;
+    margin-top: 1rem;
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
 `;
 
 const Button = styled.button`
