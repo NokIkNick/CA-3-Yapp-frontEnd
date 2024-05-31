@@ -50,7 +50,7 @@ export default function ReplyItem({
             ) : (
                 <>
                     <TextWithColorBlack>
-                        <strong>User: {reply.userName}:</strong>
+                        <strong>User: {reply.userName}</strong>
                     </TextWithColorBlack>
                     <p>{reply.content}</p>
                     {(loggedInUserData && (loggedInUserData.roles.includes("ADMIN") || reply.userName === loggedInUserData.username)) && (

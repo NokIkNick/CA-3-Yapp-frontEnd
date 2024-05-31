@@ -68,7 +68,7 @@ export default function PostItem({
     return (
         <PostContainer>
             <TextWithColorBlack>
-                <strong>By: {post.userName}:</strong>
+                <strong>User: {post.userName}</strong>
             </TextWithColorBlack>
             <br/>
             {editingPostId === post.id ? (

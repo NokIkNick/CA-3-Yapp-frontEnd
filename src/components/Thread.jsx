@@ -5,33 +5,54 @@ import {useState} from "react";
 import * as PropTypes from "prop-types";
 import {editThread, deleteThread} from "../services/apiFacade.js";
 
+
 const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding-top: 0.01rem; /* Optional: add padding to the top */
+    /* Media Query for smaller screens */
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+    }
 `;
+
 const ThreadContenData = styled.div`
     display: flex;
-    background:  var(--basewhite);
+    background: var(--basewhite);
     min-height: 20vh;
     min-width: 100vh;
     align-items: center;
     flex-direction: column;
     margin: 16px;
-    padding: 16px; /* Optional: add padding inside the container */
-    border: 2px solid darkblue; /* Border with a different color */
-    border-radius: 8px; /* Optional: add rounded corners */
+    padding: 16px;
+    border: 2px solid darkblue;
+    border-radius: 8px;
+    max-width: 400px;
+    max-height: 533px;
+    /* Media Query for smaller screens */
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+    }
 `;
 
 const TextArea = styled.textarea`
     margin-bottom: 10px;
     padding: 8px;
     width: 100%;
-    height: 50px; /* Larger default height for post text area */
+    height: 50px;
     box-sizing: border-box;
     resize: none;
+
+    /* Media Query for smaller screens */
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        height: 40px;
+    }
 `;
 
 TextArea.propTypes = {
