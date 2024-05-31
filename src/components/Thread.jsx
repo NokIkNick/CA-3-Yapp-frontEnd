@@ -186,7 +186,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                                     value={editContent}
                                     onChange={(e) => setEditContent(e.target.value)}
                                 />
-                                {(loggedInUser && (loggedInUser.roles.includes("ADMIN") || threadData.userName === loggedInUser.username)) && (
+                                {(loggedInUser && (loggedInUser.roles.includes("admin") || threadData.userName === loggedInUser.username)) && (
                                     <ButtonContainer>
                                         <SubmitButton type="submit">Submit Edit</SubmitButton>
                                         <CancelButton onClick={() => setEditingThread(false)}>Cancel</CancelButton>
@@ -201,7 +201,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                             {threadData.content}
                             <br/>
                             <br/>
-                            {(loggedInUser && (loggedInUser.roles.includes("ADMIN") || threadData.userName === loggedInUser.username)) && (
+                            {(loggedInUser && (loggedInUser.roles.includes("admin") || threadData.userName === loggedInUser.username)) && (
                                 <ButtonContainer>
                                     <EditButton onClick={() => handleEditThreadClick(threadData.content)}>Edit thread
                                     </EditButton>
