@@ -136,6 +136,8 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
     const [replyingToPostId, setReplyingToPostId] = useState(null);
     const [editingPostId, setEditingPostId] = useState(null);
     const [editingReplyId, setEditingReplyId] = useState(null);
+    const [postIdToDelete, setPostIdToDelete] = useState(null);
+    const [replyIdToDelete, setReplyIdToDelete] = useState(null);
     const [editContent, setEditContent] = useState('');
 
 
@@ -232,12 +234,30 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
             }
         }
 
-        function handleDeleteReplyClick(id) {
-            // const data = await deleteReply(id);
+        function handleDeleteReplyClick(id){
+            handleDeleteReply(id);
         }
-
+        const handleDeleteReply = async (id) => {
+            const data = await deleteReply(id);
+            if(data) {
+                setPosts((prev) => {
+                    return prev.map((post) => {
+                        return {
+                            ...post,
+                            replies: post.replies.filter((reply) => reply.id !== id)
+                        };
+                    });
+                });
+            }
+        }
         function handleDeletePostClick(id) {
-
+            handleDeletePost(id);
+        }
+        const handleDeletePost = async (id) => {
+            const data = await deletePost(id);
+            if(data) {
+                setPosts((prev) => prev.filter((post) => post.id !== id));
+            }
         }
 
         return (
