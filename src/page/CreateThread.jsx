@@ -6,149 +6,153 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Container = styled.div`
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-top: 2rem, auto;
-        background-color: var(--offwhite);
-        height: calc(100vh - 0rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0.1rem solid red;
+    width: calc(100% - 1rem - 2 * 0.6rem);
+    margin: 1rem;
+    height: calc(100vh - 4rem);
+    box-sizing: border-box;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
 
-    `;
+    @media (min-width: 768px) {
+        /* Styles for desktop */
+        width: calc(100% - 1rem - 2 * 0.6rem);
+        height: calc(100vh - 4rem);
+        margin: 1rem;
+    }
+
+`;
 
     const StyledForm = styled.form`
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
-        width: 60%;
+        align-items: center;
+        width: 100%;
+        margin: 1rem auto;
+        height: calc(100% - 4rem);
         background-color: var(--basewhite);
-        border-radius: 0.4rem;
         padding: 1rem;
-        margin-top: 1rem;
-        border: solid var(--green) 0.2rem;
-        
-        @media (max-width: 1000px){
-            width: 90%;
-            margin-top: 2rem;
-        }
+        border: 1rem solid var(--green);
+        border-radius: 3rem;
+        box-sizing: border-box;
+        @media (min-width: 768px) {
+        /* Styles for desktop */
+        width: 70%;
+        margin: 1rem auto;
+    }
+
     `;
 
     const StyledTitleInput = styled.input`
-        width: 50%;
-        height: 8%;
-        margin-right: 40%;
-        font-size: 1.5rem;
-        border-radius: 0.4rem;
-        border: solid var(--green) 0.2rem;
-        padding-left: 0.5rem;
-        
-        &:focus{
-            outline: none;
-            border-color: initial;
+        width: 85%;
+        height: 15%;
+        margin-bottom: 1rem;
+        font-size: 110%;
+        padding-left: 0.2rem;
+        border: 0.1rem solid var(--green);
+        border-radius: 0.5rem;
+        white-space: normal;
+        &:focus {
+            outline: 0.1rem inset var(--green);
         }
 
-        @media (max-width: 1000px){
-            width: 80%;
-            margin-right: 10%;
-        }
+        @media (min-width: 768px) {
+        /* Styles for desktop */
+        margin-right: 51%;
+        width: 40%;
+    }
+
     `;
 
     const StyledAuthorInput = styled.input`
+        width: 65%;
+        height: 15%;
         margin-bottom: 1rem;
-        width: 20%;
-        height: 5%;
-        margin-right: 70%;
-        font-size: 1.5rem;
-        pointer-events: none;
-        padding: 0.5rem;
-
-        border-radius: 0.4rem;
-        border: solid var(--green) 0.2rem;
-
-        @media (max-width: 1000px){
-            width: 60%;
-            margin-right: 30%;
-            
+        margin-top: 2rem;
+        font-size: 110%;
+        text-align: center;
+        color: var(--green);
+        font-weight: bold;
+        &:focus {
+            outline: none;
         }
+        &:hover {
+            cursor: not-allowed;
+        }
+
+        @media (min-width: 768px) {
+        /* Styles for desktop */
+        width: 20%;
+        margin-right: 71%;
+    }
+
+
     `;
 
 
     const StyledSubmitInput = styled.input`
-            margin-top: 1rem;
-            background-color: var(--green);
-            color: var(--offwhite);
-            border: solid var(--dark-green) 0.1rem;
-            margin-right: 60%;
-            width: 30%;
-            height: 10%;
-            font-size: 1.5rem;
-            cursor: pointer;
-
-        &:hover{
+        width: 100%;
+        height: 20%;
+        margin: 1rem auto;
+        font-size: 1.5rem;
+        background-color: var(--green);
+        color: var(--offwhite);
+        border: none;
+        border-radius: 0.5rem;
+        &:hover {
             background-color: var(--dark-green);
-            color: var(--offwhite);
-            border: solid var(--offwhite) 0.1rem;
-            border-radius: 0.4rem;
-            outline: none;
+            cursor: pointer;
         }
-
-
-        @media (max-width: 1000px){
-            width: 60%;
-            margin: 1rem auto;
-        }
+        @media (min-width: 768px) {
+        /* Styles for desktop */
+        width: 20%;
+        
+    }
 
     `;
 
     const TextArea = styled.textarea`
-        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
         resize: none;
-        width: 90%;
-        height: 30rem;
-        margin: auto;
-        padding: 1;
-        margin-top: 1rem;
-        border-radius: 0.4rem;
-        border: solid var(--green) 0.2rem;
+        border: 0.1rem solid var(--green);
+        border-radius: 0.5rem;
+        font-size: 110%;
         padding: 0.5rem;
-        font-size: 1.5rem;
-
-        &:focus{
-            outline: none;
-            border-color: initial;
+        &:focus {
+            outline: 0.1rem inset var(--green);
         }
+        @media (min-width: 768px) {
+        /* Styles for desktop */
+        width: 91%;
+        height: 100%;
+        
+    }
 
     `;
 
     const StyledSelect = styled.select`
-        width: 20%;
-        height: 5%;
-        margin-right: 70%;
-        margin-top: 1rem;
+        width: 40%;
+        height: 10%;
+        margin-bottom: 1rem;
         font-size: 1rem;
-        background-color: var(--green);
-        color: var(--offwhite);
-        border: none;
-        padding-left: 0.5rem;
-        border-radius: 5px;
-        cursor: pointer;
+        @media (min-width: 768px) {
+        /* Styles for desktop */
+        width: 20%;
+        margin-right: 71%;
+        
+    }
 
-        &:hover{
-            background-color: var(--dark-green);
-            color: var(--offwhite);
-        }
-
-        @media (max-width: 1000px){
-            width: 60%;
-            margin-right: 30%;
-        }
     `;
 
     const StyledOption = styled.option`
-        color: var(--offwhite);
-        background-color: var(--green);
-        font-weight: bold;
+        width: 80%;
+        height: 80%;
         
     `;
 
@@ -212,14 +216,14 @@ export const CreateThread = ({ loggedInUser }) => {
     <>
         <Container>
             <StyledForm onSubmit={handleSubmit}>
-                <StyledAuthorInput id='author' type='text' readOnly value={loggedInUser ? loggedInUser.username : "No User"}></StyledAuthorInput>
-                <StyledTitleInput id='title' type='text' onChange={handleOnChange}></StyledTitleInput> 
-                <StyledSelect id='category' onChange={handleOnChange}>
+                <StyledAuthorInput name='author' id='author' type='text' readOnly value={loggedInUser ? loggedInUser.username : "No User"}></StyledAuthorInput>
+                <StyledTitleInput required name='title' id='title' type='text' onChange={handleOnChange} placeholder="Who's hype about.."></StyledTitleInput> 
+                <StyledSelect name='category' id='category' onChange={handleOnChange}>
                     {categories ? categories.map((category) => {
                         return <StyledOption key={category.id} value={category.id}>{category.name}</StyledOption>
                     }) : <StyledOption value=''>Loading...</StyledOption>}
                 </StyledSelect>
-                <TextArea id='content' onChange={handleOnChange}></TextArea>
+                <TextArea required id='content' onChange={handleOnChange} placeholder="I cannot believe that.."></TextArea>
                 {error && <ErrorText>{error}</ErrorText>}
                 <StyledSubmitInput type='submit' value='Publish Thread'></StyledSubmitInput>
             </StyledForm>
