@@ -15,21 +15,30 @@ const MainContainer = styled.div`
     @media(max-width:400px){
         width: 100%;
     }
+    @media(max-width:460px){
+        width: 100%;
+    }
+    @media(max-width:800px){
+        width: 100%;
+    }
+    @media(max-width:900px){
+        width: 100%;
+    }
 `;
 
 const ThreadContenData = styled.div`
     display: flex;
     background: var(--basewhite);
     min-height: 20vh;
-    min-width: 100vh;
+    min-width: 100%;
     align-items: center;
     flex-direction: column;
     margin: 1rem;
     padding: 1rem;
     border: 0.2rem solid var(--green);
     border-radius: 0.5rem;
-    max-width: 400px;
-    max-height: 533px;
+    /*max-width: 400px;
+    max-height: 533px;*/
 
     @media screen and (max-width: 400px), (max-height: 533px) {
         /* Adjust styles for smaller screens */
@@ -38,6 +47,28 @@ const ThreadContenData = styled.div`
         padding: 0.5rem;
         min-width: 95%;
     }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
+    @media screen and (max-width: 900px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
+    
 `;
 
 const TextArea = styled.textarea`
@@ -53,6 +84,18 @@ const TextArea = styled.textarea`
         height: 4rem;
         width: 20rem;
     }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        height: 4rem;
+        width: 20rem;
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        height: 4rem;
+        width: 20rem;
+    }
+    @media screen and (max-width: 900px), (max-height: 533px) {
+        height: 4rem;
+        width: 20rem;
+    }
 `;
 
 const ButtonContainer = styled.div`
@@ -61,6 +104,24 @@ const ButtonContainer = styled.div`
     align-self: center;
     margin-top: 1rem;
     @media screen and (max-width: 400px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 900px), (max-height: 533px) {
         flex-direction: row;
         justify-content: center;
         align-items: center;
@@ -96,7 +157,7 @@ const SubmitButton = styled(Button)`
 `;
 
 const CancelButton = styled(Button)`
-    margin-left: 10px;
+    margin-left: 0.7rem;
     background-color: #FFA500; /* Orange color */
     color: white;
 
@@ -138,7 +199,11 @@ const DeleteButton = styled(Button)`
     }
     @media screen and (max-width: 400px), (max-height: 533px) {
         padding: 0.25rem 0.4rem; /* Adjusted padding */
-        min-width: 5rem; /* Adjusted min-width */
+        //min-width: 5rem; /* Adjusted min-width */
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        padding: 0.25rem 0.4rem; /* Adjusted padding */
+        //min-width: 5rem; /* Adjusted min-width */
     }
 `;
 
@@ -180,7 +245,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                 <>
                     {editingThread ? (
                         <ThreadContenData>
-                            <p>Edit Post:</p>
+                            <p><strong>Edit Post:</strong> </p>
                             <form onSubmit={handleEditThreadSubmit}>
                                 <TextArea
                                     value={editContent}
@@ -196,7 +261,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                         </ThreadContenData>
                     ) : (
                         <ThreadContenData>
-                            <div><strong>{threadData.title} by {threadData.userName} </strong></div>
+                            <div><strong>{threadData.title} by {threadData.userName} -- {threadData.roleNames} </strong></div>
                             <br/>
                             {threadData.content}
                             <br/>

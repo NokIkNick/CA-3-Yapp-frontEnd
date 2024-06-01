@@ -140,11 +140,11 @@ return (
     <Container>
             <PersonalInformation>
                 <h1>Account Page of {params.id}</h1>
-                <p>Here you can see your account information</p>
+                <p>Here you can see his/hers threads and posts</p>
                 <input type="seach" placeholder="Filter threads and posts" onChange={handleSearch}/>
                 <Threads>
                 <ThreadsUnderYourName>
-                <p>Threads under your name :</p>
+                <p>Threads under username {params.id} :</p>
                     {filteredThreads && filteredThreads.map((thread) => (
                         <div key={thread.id} onClick={() => {navigate(`/thread/${thread.id}`);}}>
                             <h1>{thread.title}</h1>
@@ -154,7 +154,7 @@ return (
                 </ThreadsUnderYourName>
                 </Threads>
                 <Threads>
-                <p>Posts under your name : </p>
+                <p>Posts under username {params.id} : </p>
                 <PostUnderYourName>
                     {filteredposts && filteredposts.map((post) => (
                     <div key={post.id} onClick={() => {navigate(`/thread/${post.threadId}`);}}>

@@ -20,6 +20,15 @@ const MainContainer = styled.div`
         height: auto;
         width: 95%;
     }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        height: auto;
+        width: 95%;
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        height: auto;
+        width: 95%;
+        font-size: 1rem;
+    }
 `;
 
 const PostContainer = styled.div`
@@ -36,6 +45,14 @@ const PostContainer = styled.div`
     border-radius: 1rem; /* Rounded corners */
     overflow: hidden; /* Ensure text doesn't overflow */
     @media screen and (max-width: 400px), (max-height: 533px) {
+        height: 90%;
+        width: 95%;
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        height: 90%;
+        width: 95%;
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
         height: 90%;
         width: 95%;
     }
@@ -79,6 +96,24 @@ const ButtonContainer = styled.div`
         align-items: flex-end;
         overflow-x: auto; /* Add horizontal scrolling for smaller screens */
     }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 900px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
 `;
 const ButtonContainerReply = styled.div`
     display: flex;
@@ -87,6 +122,10 @@ const ButtonContainerReply = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     @media screen and (max-width: 400px), (max-height: 533px) {
+        flex-direction: row;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
         flex-direction: row;
         overflow-x: auto; /* Add horizontal scrolling for smaller screens */
     }
@@ -119,6 +158,10 @@ const ReplyButton = styled(Button)`
         padding: 0.25rem 0.4rem; /* Adjusted padding */
         min-width: 5rem; /* Adjusted min-width */
     }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        padding: 0.25rem 0.4rem; /* Adjusted padding */
+        min-width: 5rem; /* Adjusted min-width */
+    }
 `;
 
 const EditButton = styled(Button)`
@@ -132,6 +175,10 @@ const EditButton = styled(Button)`
         transform: translateY(0);
     }
     @media screen and (max-width: 400px), (max-height: 533px) {
+        padding: 0.25rem 0.4rem; /* Adjusted padding */
+        min-width: 5rem; /* Adjusted min-width */
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
         padding: 0.25rem 0.4rem; /* Adjusted padding */
         min-width: 5rem; /* Adjusted min-width */
     }
@@ -149,7 +196,11 @@ const DeleteButton = styled(Button)`
     }
     @media screen and (max-width: 400px), (max-height: 533px) {
         padding: 0.25rem 0.4rem; /* Adjusted padding */
-        min-width: 5rem; /* Adjusted min-width */
+        max-width: 4rem; /* Adjusted min-width */
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        padding: 0.25rem 0.4rem; /* Adjusted padding */
+        max-width: 4rem; /* Adjusted min-width */
     }
 `;
 
@@ -185,12 +236,15 @@ export default function PostItem({
                                      setEditContent,
                                      editContent,
                                      handleEditPostSubmit,
-                                     handleEditReplySubmit
+                                     handleEditReplySubmit,
+                                     handleClickToUser
                                  }) {
+    
+    
     return (
         <MainContainer>
             <TextWithColorWhite>
-                <strong>User: {post.userName}</strong>
+                <strong onClick={()=>{handleClickToUser(post.userName)}}>User: {post.userName}</strong>
             </TextWithColorWhite>
             <PostContainer>
             <br/>
@@ -234,6 +288,7 @@ export default function PostItem({
                                     setEditContent={setEditContent}
                                     editContent={editContent}
                                     handleEditReplySubmit={handleEditReplySubmit}
+                                    handleClickToUser={handleClickToUser}
                                 />
                             ))}
                         </div>

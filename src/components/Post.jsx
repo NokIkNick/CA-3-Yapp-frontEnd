@@ -11,6 +11,7 @@ import {
 } from "../services/apiFacade";
 import PostItem from "./PostItem";
 import NewPostForm from "./NewPostForm";
+import { useNavigate } from "react-router-dom";
 
 // Styled components
 const MainContainer = styled.div`
@@ -94,6 +95,12 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     color: var(--baseWhite);
+    @media (max-width: 460px) , (max-height: 533px) {
+        width: 100%;
+    }
+    @media (max-width: 460px) , (max-height: 533px) {
+        width: 100%;
+    }
     
 `;
 
@@ -146,6 +153,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
     const [editingPostId, setEditingPostId] = useState(null);
     const [editingReplyId, setEditingReplyId] = useState(null);
     const [editContent, setEditContent] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoggedInUserData(loggedInUser);
@@ -267,6 +275,11 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
         }
     };
 
+    function handleClickToUser(username) {
+        navigate(`/user/${username}`);
+    }
+
+
     return (
         <MainContainer>
             {posts && posts.map((post) => (
@@ -291,6 +304,7 @@ export default function Post({ posts ,setPosts, threadId, loggedInUser }) {
                     editContent={editContent}
                     handleEditPostSubmit={handleEditPostSubmit}
                     handleEditReplySubmit={handleEditReplySubmit}
+                    handleClickToUser={handleClickToUser}
                 />
             ))}
             {loggedInUserData && (

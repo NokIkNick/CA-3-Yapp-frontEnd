@@ -7,6 +7,8 @@ import { formatDate } from '../services/apiFacade';
 const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
+    background-color: var(--green);
+    border-radius: 1rem;
 `;
 
 const Text = styled.div`
@@ -25,13 +27,17 @@ const ReplyContainer = styled.div`
     width: 90%;
     box-sizing: border-box;
     position: relative;
+    align-self: center;
     margin-left: 20px;
+    margin-bottom: 1rem;
     border: 2px var(--green) solid;
     border-radius: 1rem;
 `;
 
-const TextWithColorBlack = styled.p`
-    color: black;
+const TextWithColorWhite = styled.p`
+    color: var(--offwhite);
+    margin-top: 0.5rem;
+    margin-left: 0.5rem
 `;
 
 const ButtonContainer = styled.div`
@@ -41,6 +47,24 @@ const ButtonContainer = styled.div`
     align-self: flex-start;
     justify-content: flex-start;
     @media screen and (max-width: 400px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        overflow-x: auto; /* Add horizontal scrolling for smaller screens */
+    }
+    @media screen and (max-width: 900px), (max-height: 533px) {
         flex-direction: row;
         justify-content: flex-start;
         align-items: flex-start;
@@ -98,7 +122,11 @@ const DeleteButton = styled(Button)`
     }
     @media screen and (max-width: 400px), (max-height: 533px) {
         padding: 0.25rem 0.4rem; /* Adjusted padding */
-        min-width: 5rem; /* Adjusted min-width */
+        //max-width: 4rem; /* Adjusted min-width */
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        padding: 0.25rem 0.4rem; /* Adjusted padding */
+        //max-width: 4rem; /* Adjusted min-width */
     }
 `;
 
@@ -110,13 +138,14 @@ export default function ReplyItem({
                                       editingReplyId,
                                       setEditContent,
                                       editContent,
-                                      handleEditReplySubmit
+                                      handleEditReplySubmit,
+                                      handleClickToUser
                                   }) {
     return (
         <MainContainer>
-            <TextWithColorBlack>
-                <strong>User: {reply.userName}</strong>
-            </TextWithColorBlack>
+            <TextWithColorWhite>
+                <strong onClick={()=>{handleClickToUser(reply.userName)}}>User: {reply.userName}</strong>
+            </TextWithColorWhite>
             <ReplyContainer>
             {editingReplyId === reply.id ? (
                 <EditForm
