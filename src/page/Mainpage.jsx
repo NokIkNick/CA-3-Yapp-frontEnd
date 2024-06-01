@@ -5,6 +5,7 @@ import { fetchThreads, fetchCategories } from '../services/apiFacade';
 import ThreadItem from '../components/Threaditems';
 
 const Container = styled.div`
+    color: var(--grey);
     height: 100vh;
     overflow-y: auto;
     scrollbar-width: none;
@@ -14,6 +15,7 @@ const Container = styled.div`
 `
 
 const Select = styled.select`
+    color: var(--grey);
     display : block;
     margin: 1rem 1rem;
     border-radius: 0.7rem;

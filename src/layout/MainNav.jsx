@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const NavStyle = styled.nav`
+    color: var(--grey);
     background-color: var(--green);
     display: flex;
     align-items: center;
@@ -30,6 +31,7 @@ const SearchWrapper = styled.div`
             border: 1px solid gray;
             border-radius: 5px;
             background-color: var(--basewhite);
+            outline: none;
         }
     @media (max-width: 500px) {
         input {
