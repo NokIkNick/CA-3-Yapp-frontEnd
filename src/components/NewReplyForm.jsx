@@ -14,6 +14,12 @@ const FormContainer = styled.div`
     @media screen and (max-width: 400px), (max-height: 533px) {
         width: 95%; /* Adjust width for smaller screens */
     }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        width: 95%; /* Adjust width for smaller screens */
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        width: 95%; /* Adjust width for smaller screens */
+    }
 `;
 
 const TextArea = styled.textarea`
