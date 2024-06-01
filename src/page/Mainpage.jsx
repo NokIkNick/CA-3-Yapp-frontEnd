@@ -1,29 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { fetchThreads } from '../services/apiFacade';
+import { fetchThreads, fetchCategories } from '../services/apiFacade';
 import ThreadItem from '../components/Threaditems';
 
 const Container = styled.div`
     height: 100vh;
     overflow-y: auto;
-    background-color: white;
     scrollbar-width: none;
     -ms-overflow-style: none;
     margin-top: 3rem;
     padding-bottom: 3rem;
-    //height, box sizing and overflow wrap could be removed for smoother experience. try it.
-    @media(max-width:400px){
-        width:100vw;
-        padding: 0;
-    }
+`
 
+const Select = styled.select`
+    display : block;
+    margin: 1rem 1rem;
+    border-radius: 0.7rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    background-color: var(--basewhite);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("/arrow-down.svg");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-blend-mode: normal;
+    background-size: 2rem;
+    transition: background-image 0.1s ease-in-out;
+
+    &:focus {
+        background-image: url("/arrow-up.svg");
+        outline: none;
+    }
 `
 
 export const Mainpage = ({search}) => {
     const [items, setItems] = useState([]);
     const navigate = useNavigate();
     const [filteredItems, setFilteredItems] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const selectRef = useRef();
 
     useEffect(() => {
         // Disable scrolling on the body
@@ -38,7 +56,8 @@ export const Mainpage = ({search}) => {
         const fetchData = async () => {
             try {
                 const data = await fetchThreads();
-
+                const categories = await fetchCategories();
+                setCategories(categories);
                 setItems(data);
                 setFilteredItems(data);
             } catch (error) {
@@ -53,6 +72,7 @@ export const Mainpage = ({search}) => {
     }, [search]);
 
     function filterItems(search) {
+        selectRef.current.blur();
     if (search === '') {
         setFilteredItems(items);
         return;
@@ -62,7 +82,8 @@ export const Mainpage = ({search}) => {
         const titleMatch = item.title && item.title.toLowerCase().includes(lowerCaseSearch);
         const userNameMatch = item.userName && item.userName.toLowerCase().includes(lowerCaseSearch);
         const contentMatch = item.content && item.content.toLowerCase().includes(lowerCaseSearch);
-        return titleMatch || userNameMatch || contentMatch;
+        const categoryMatch = item.category && item.category.toLowerCase().includes(lowerCaseSearch);
+        return titleMatch || userNameMatch || contentMatch || categoryMatch;
     });
     setFilteredItems(filteredItems);
 }
@@ -79,11 +100,19 @@ export const Mainpage = ({search}) => {
 
     return (
         <Container>
+            <Select onChange={(e) => {filterItems(e.target.value)}} ref={selectRef}>
+                <option value="">All Categories</option>
+                {categories.map((category) => (
+                    <option key={category.id} value={category.name}>
+                        {category.name}
+                    </option>
+                ))}
+            </Select>
             <ThreadItem
                 items={filteredItems}
                 goToThread={goToThread}
                 goToUser={goToUser}
             />
         </Container>
-    )
+    );
 };

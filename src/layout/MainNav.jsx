@@ -49,7 +49,7 @@ const Buttons = styled.div`
         border-radius: 5px;
         cursor: pointer;
         img {
-            height: 0.8rem;
+            height: 1rem;
         }
     }
 `;
@@ -105,8 +105,7 @@ useEffect(() => {
 
 const SearchField = () => {
     let input;
-    //missing functionality for removing on threads
-    if(window.location.pathname === "/accountPage" || window.location.pathname === "/thread/" || window.location.pathname === "/user/"+params.id) {
+    if(window.location.pathname === "/accountPage" || window.location.pathname === "/thread/"+params.id || window.location.pathname === "/user/"+params.id || window.location.pathname === "/createthread") {
         input = null;
     } else {
         input = <input type="search" placeholder="Search..." value={search} ref={inputRef} onChange={handleChange} />;
