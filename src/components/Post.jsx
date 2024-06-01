@@ -94,6 +94,12 @@ const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     color: var(--baseWhite);
+    @media (max-width: 460px) , (max-height: 533px) {
+        width: 100%;
+    }
+    @media (max-width: 460px) , (max-height: 533px) {
+        width: 100%;
+    }
     
 `;
 

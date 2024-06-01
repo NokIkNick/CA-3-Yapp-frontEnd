@@ -13,7 +13,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     font-size: 1rem;
-
+    width: 100%;
     @media (max-width: 400px), (max-height: 533px) {
         font-size: 0.8rem;
     }
@@ -24,10 +24,13 @@ const ThreadContainer = styled.div`
     border: 0.1rem solid #dddddd; /* Light gray border */
     padding: 1.5rem;
     margin: 1.5rem;
-    border-radius: 8px;
+    border-radius: 0.5px;
     width: 100%;
 
     @media (max-width: 400px) , (max-height: 533px) {
+        width: 100%;
+    }
+    @media (max-width: 460px) , (max-height: 533px) {
         width: 100%;
     }
 `;

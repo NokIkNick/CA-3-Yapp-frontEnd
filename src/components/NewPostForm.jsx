@@ -16,7 +16,7 @@ const BottomFormContainer = styled.div`
     border-radius: 1rem; /* Make corners more round */
 
     @media (max-width: 800px) {
-        max-width: 37.5rem; /* 600px equivalent */
+        //max-width: 37.5rem; /* 600px equivalent */
     }
 
     @media (max-width: 600px) {
@@ -34,6 +34,19 @@ const BottomFormContainer = styled.div`
         width: calc(100% - 20px);
         font-size: 0.8rem;
     }
+    @media (max-width: 460px) and (max-height: 544px) {
+        bottom: 10px;
+        left: 10px;
+        transform: none;
+        width: calc(100% - 20px);
+        font-size: 0.8rem;
+    }
+    @media (max-width: 800px) and (max-height: 544px) {
+        bottom: 10px;
+        left: 10px;
+        transform: none;
+        font-size: 1rem;
+    }
 `;
 
 const TextArea = styled.textarea`
@@ -46,12 +59,24 @@ const TextArea = styled.textarea`
     border-radius: 0.5rem; /* Add border radius to textarea */
 
     @media (max-width: 600px) {
-        height: 2.5rem; /* 40px equivalent */
+        height: 3rem; /* 40px equivalent */
     }
 
     @media (max-width: 400px) {
-        height: 1.875rem;
+        height: 3rem;
         font-size: 0.8rem;
+    }
+    @media (max-width: 460px) {
+        height: 3rem;
+        font-size: 0.8rem;
+    }
+    @media (max-width: 800px) {
+        height: 5rem;
+        font-size: 1rem;
+    }
+    @media (max-width: 900px) {
+        height: 5rem;
+        font-size: 1rem;
     }
 `;
 
@@ -85,6 +110,11 @@ const SubmitButton = styled.button`
         padding: 0.25rem 0.5rem;
         font-size: 0.8rem;
     }
+    @media (max-width: 460px) {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+   
 `;
 
 
