@@ -59,8 +59,8 @@ const FormContainer = styled.form`
 `
     
 export const Register = ({setLoggedInUser, setTokenIsValid}) => {
-    const [password, setPassword] = React.useState("");
-    const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState(null);
     const [credentials, setCredentials] = useState({"email": "","username": "","password": ""});
     const navigate = useNavigate();
@@ -106,7 +106,7 @@ export const Register = ({setLoggedInUser, setTokenIsValid}) => {
                 <Logo src = '/fulllogo.svg' alt='logo' onClick={() => {navigate("/login")}}/>
                 <FormContainer onSubmit={handleSubmit}>
                 {error && <ErrorText>{error}</ErrorText>}
-                    <Input type="text" id='email' placeholder="Email" onChange={handleOnChange} />
+                    <Input type="email" id='email' placeholder="Email" onChange={handleOnChange} />
                     <Input type="text" id='username' placeholder="Username" onChange={handleOnChange} />
                     <Input type="password" id='password' placeholder="Password" onChange={handleOnChange}/>
                     <Input type="password" placeholder="Confirm password" onChange={e => setConfirmPassword(e.target.value)}/>

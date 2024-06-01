@@ -33,7 +33,7 @@ function App() {
 
     let tokenData = JSON.parse(atob(token.split('.')[1]));
     if(tokenData.exp < Date.now() / 1000){
-      alert("Token has expired, please log in again"+ tokenData.exp + " " + Date.now() / 1000);
+      alert("Token has expired, please log in again");
       setTokenIsValid(false);
       localStorage.removeItem("token");
       return;

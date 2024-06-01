@@ -236,12 +236,15 @@ export default function PostItem({
                                      setEditContent,
                                      editContent,
                                      handleEditPostSubmit,
-                                     handleEditReplySubmit
+                                     handleEditReplySubmit,
+                                     handleClickToUser
                                  }) {
+    
+    
     return (
         <MainContainer>
             <TextWithColorWhite>
-                <strong>User: {post.userName}</strong>
+                <strong onClick={()=>{handleClickToUser(post.userName)}}>User: {post.userName}</strong>
             </TextWithColorWhite>
             <PostContainer>
             <br/>
@@ -285,6 +288,7 @@ export default function PostItem({
                                     setEditContent={setEditContent}
                                     editContent={editContent}
                                     handleEditReplySubmit={handleEditReplySubmit}
+                                    handleClickToUser={handleClickToUser}
                                 />
                             ))}
                         </div>

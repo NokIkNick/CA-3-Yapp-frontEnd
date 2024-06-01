@@ -26,6 +26,19 @@ const Container = styled.div`
     width: 90%;
     text-align: center;
     color: var(--grey);
+    button {
+        background-color: var(--green);
+        color: var(--basewhite);
+        padding: 1%;
+        border-radius: 5px;
+        margin: 1% 0;
+        width: 20%;
+        border: none;
+        cursor: pointer;
+        &:focus {
+            outline: none;
+        }
+    }
     @media (max-width: 900px) {
         margin-top: 15%;
     }
@@ -45,6 +58,14 @@ const Container = styled.div`
         width: 100%;
         text-align: center;
         border: none;
+        &::placeholder {
+            color: var(--offwhite);
+            font-size: 1rem;
+        }
+        &:focus {
+            outline: none;
+        }
+        
     }
     `;
 
@@ -153,7 +174,7 @@ return (
                 <p>Here you can see your account information</p>
                 <p>Username: {loggedInUser.username}</p>
                 <p>Email: {loggedInUser.email}</p>
-                <Search placeholder="filter threads and posts under your name" onChange={handleSearch}/>
+                <Search placeholder="filter threads and posts under your name" onChange={handleSearch} />
                 <p>Threads under your name :</p>
                 <Threads>
                 <ThreadsUnderYourName>
@@ -170,7 +191,7 @@ return (
                 <Threads>
                 <PostUnderYourName>
                     {filteredposts && filteredposts.map((post) => (
-                    <div key={post.id} onClick={() => {navigate(`/post/${post.id}`);}}>
+                    <div key={post.id} onClick={() => {navigate(`/thread/${post.threadId}`);}}>
                         <h1>{post.title}</h1>
                         <p>{post.content}</p>    
                     </div>

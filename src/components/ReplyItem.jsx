@@ -138,13 +138,14 @@ export default function ReplyItem({
                                       editingReplyId,
                                       setEditContent,
                                       editContent,
-                                      handleEditReplySubmit
+                                      handleEditReplySubmit,
+                                      handleClickToUser
                                   }) {
     return (
         <MainContainer>
-            <TextWithColorWhite>
-                <strong>User: {reply.userName}</strong>
-            </TextWithColorWhite>
+            <TextWithColorBlack>
+                <strong onClick={()=>{handleClickToUser(reply.userName)}}>User: {reply.userName}</strong>
+            </TextWithColorBlack>
             <ReplyContainer>
             {editingReplyId === reply.id ? (
                 <EditForm

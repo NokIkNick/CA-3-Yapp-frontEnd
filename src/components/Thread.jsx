@@ -261,7 +261,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                         </ThreadContenData>
                     ) : (
                         <ThreadContenData>
-                            <div><strong>{threadData.title} by {threadData.userName} </strong></div>
+                            <div><strong>{threadData.title} by {threadData.userName} -- {threadData.roleNames} </strong></div>
                             <br/>
                             {threadData.content}
                             <br/>

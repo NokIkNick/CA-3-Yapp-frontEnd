@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const NavStyle = styled.nav`
+    color: var(--grey);
     background-color: var(--green);
     display: flex;
     align-items: center;
@@ -30,6 +31,7 @@ const SearchWrapper = styled.div`
             border: 1px solid gray;
             border-radius: 5px;
             background-color: var(--basewhite);
+            outline: none;
         }
     @media (max-width: 500px) {
         input {
@@ -49,7 +51,7 @@ const Buttons = styled.div`
         border-radius: 5px;
         cursor: pointer;
         img {
-            height: 0.8rem;
+            height: 1rem;
         }
     }
 `;
@@ -105,8 +107,7 @@ useEffect(() => {
 
 const SearchField = () => {
     let input;
-    //missing functionality for removing on threads
-    if(window.location.pathname === "/accountPage" || window.location.pathname === "/thread/" || window.location.pathname === "/user/"+params.id) {
+    if(window.location.pathname === "/accountPage" || window.location.pathname === "/thread/"+params.id || window.location.pathname === "/user/"+params.id || window.location.pathname === "/createthread") {
         input = null;
     } else {
         input = <input type="search" placeholder="Search..." value={search} ref={inputRef} onChange={handleChange} />;
