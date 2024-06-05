@@ -12,6 +12,7 @@ const Container = styled.div`
     -ms-overflow-style: none;
     margin-top: 3rem;
     padding-bottom: 3rem;
+    display: flexbox;
 `
 
 const Select = styled.select`
@@ -67,6 +68,12 @@ export const Mainpage = ({search}) => {
             }
         };
         fetchData();
+
+        return () => { //Cleanup function to make sure the state is reset when the component is unmounted and resolves potential memory leaks
+            setItems([]);
+            setFilteredItems([]);
+        }
+
     }, [navigate]);
 
     useEffect(() => {
@@ -104,7 +111,7 @@ export const Mainpage = ({search}) => {
         <Container>
             <Select onChange={(e) => {filterItems(e.target.value)}} ref={selectRef}>
                 <option value="">All Categories</option>
-                {categories.map((category) => (
+                {categories && categories.map((category) => (
                     <option key={category.id} value={category.name}>
                         {category.name}
                     </option>
