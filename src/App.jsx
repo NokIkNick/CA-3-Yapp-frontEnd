@@ -15,6 +15,7 @@ import { Flexbox } from './examExamples/Flexbox.jsx'
 import { Grid } from './examExamples/Grid.jsx'
 import { Asyncexample } from './examExamples/Asyncexample.jsx'
 import { StorageExample } from './examExamples/StorageExample.jsx'
+import { EventBubblingExample } from './examExamples/EventBubblingExample.jsx'
 
 
 function App() {
@@ -83,6 +84,7 @@ function App() {
           <Route path="/grid" element={<Grid/>}></Route>
           <Route path="/async" element={<Asyncexample/>}></Route>
           <Route path="/storage" element={<StorageExample/>}></Route>
+          <Route path="/eventBubbling" element={<EventBubblingExample/>}></Route>
           <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
