@@ -12,7 +12,7 @@ const Container = styled.div`
     -ms-overflow-style: none;
     margin-top: 3rem;
     padding-bottom: 3rem;
-    display: flexbox;
+    display: block;
 `
 
 const Select = styled.select`

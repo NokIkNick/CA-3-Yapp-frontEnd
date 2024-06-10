@@ -34,11 +34,18 @@ const ChildComponent = () => {
 
     const handleClickChild = (e) => {
         //e.stopPropagation();
+        //e.preventDefault();
+        
         console.log('Child Component clicked');
     }
 
+    //first event, happens in the capturing phase meaning it goes from the top to the bottom
+    const handleCapture = () => {
+        console.log("Capture event for child");
+    }
+
     return (
-        <div className='child' onClick={handleClickChild}>
+        <div className='child' onClickCapture={handleCapture} onClick={handleClickChild}>
         <h1 className='child'>Child Component</h1>
         </div>
     )
