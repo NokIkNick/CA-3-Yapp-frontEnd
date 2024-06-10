@@ -17,7 +17,6 @@ import { Asyncexample } from './examExamples/Asyncexample.jsx'
 import { StorageExample } from './examExamples/StorageExample.jsx'
 import { EventBubblingExample } from './examExamples/EventBubblingExample.jsx'
 import { WindowObject } from './examExamples/WindowObject.jsx'
-import { VariableScopes } from './examExamples/VariableScopes.jsx'
 
 
 function App() {
@@ -59,6 +58,7 @@ function App() {
       <BrowserRouter>
         <Routes>
 
+          {/*Subroutes of the wildcard: */}
           <Route path="*" element={<TokenValidator tokenIsValid={tokenIsValid}>
               <Routes>
               <Route element={
