@@ -32,6 +32,7 @@ const ParentComponent = () => {
 
 const ChildComponent = () => {
 
+    //React uses a synthetic event system that wraps the native events and adds some additional functionality.
     const handleClickChild = (e) => {
         //e.stopPropagation();
         //e.preventDefault();
@@ -39,7 +40,7 @@ const ChildComponent = () => {
         console.log('Child Component clicked');
     }
 
-    //first event, happens in the capturing phase meaning it goes from the top to the bottom
+    //first event, happens in the capturing phase meaning it goes from the top to the bottom. So the capture happens, then the bubbling happens.
     const handleCapture = () => {
         console.log("Capture event for child");
     }
