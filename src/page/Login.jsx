@@ -168,9 +168,9 @@ export const Login = ({ loggedInUser, setLoggedInUser, setTokenIsValid }) => {
         <img src="\fulllogo.svg"></img>
         {error && <ErrorText>{error}</ErrorText>}
             <form onSubmit={handleSubmit}>
-                <input name="username" type="text" placeholder="Username" onChange={handleOnChange}/>
+                <input name="username" value={credentials.username} type="text" placeholder="Username" onChange={handleOnChange}/>
                 <InputWrapper>
-                <input name="password" type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
+                <input name="password" value={credentials.password} type={showPassword ? "text" : "password"} placeholder="Password" onChange={handleOnChange}/>
                 <button onClick={togglePasswordVisibility} type="button">
                     <img src={showPassword ? "/eye-svgrepo-com.svg" : "/circle-svgrepo-com.svg"}></img>
                 </button>

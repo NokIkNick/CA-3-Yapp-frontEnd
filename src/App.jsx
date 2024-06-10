@@ -17,6 +17,7 @@ import { Asyncexample } from './examExamples/Asyncexample.jsx'
 import { StorageExample } from './examExamples/StorageExample.jsx'
 import { EventBubblingExample } from './examExamples/EventBubblingExample.jsx'
 import { WindowObject } from './examExamples/WindowObject.jsx'
+import { VariableScopes } from './examExamples/VariableScopes.jsx'
 
 
 function App() {
