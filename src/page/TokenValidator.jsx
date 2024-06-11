@@ -18,7 +18,7 @@ export const TokenValidator = ({tokenIsValid, children}) => {
       navigate("/login");
       console.log("Im in the token validator!, token is invalid!");
     }
-  }, [tokenIsValid])
+  }, [tokenIsValid, navigate])
 
     if(tokenIsValid) return <>{children};</>
 }
