@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchThreads, fetchCategories } from '../services/apiFacade';
 import ThreadItem from '../components/Threaditems';
-import LoadingIcons from 'react-loading-icons';
 import SpinningCircles from 'react-loading-icons/dist/esm/components/spinning-circles';
 
 const Container = styled.div`
