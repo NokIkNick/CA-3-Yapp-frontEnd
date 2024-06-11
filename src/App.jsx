@@ -17,6 +17,8 @@ import { Asyncexample } from './examExamples/Asyncexample.jsx'
 import { StorageExample } from './examExamples/StorageExample.jsx'
 import { EventBubblingExample } from './examExamples/EventBubblingExample.jsx'
 import { WindowObject } from './examExamples/WindowObject.jsx'
+import { Questions } from './page/Questions.jsx'
+import { Question } from './page/Question.jsx'
 
 
 function App() {
@@ -88,6 +90,11 @@ function App() {
           <Route path="/storage" element={<StorageExample/>}></Route>
           <Route path="/eventBubbling" element={<EventBubblingExample/>}></Route>
           <Route path="/window" element={<WindowObject/>}></Route>
+          <Route path="/questions" element={<Questions/>}>
+              <Route index element={<Navigate to={"/questions/1"}></Navigate>}/>
+              <Route path=":questionId" element={<Question/>}/>
+
+          </Route>
           <Route path="*" element={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
