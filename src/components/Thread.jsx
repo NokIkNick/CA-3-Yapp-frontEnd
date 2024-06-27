@@ -30,7 +30,7 @@ const ThreadContenData = styled.div`
     display: flex;
     background: var(--basewhite);
     min-height: 20vh;
-    min-width: 100%;
+    min-width: 40%;
     align-items: center;
     flex-direction: column;
     margin: 1rem;
@@ -207,6 +207,41 @@ const DeleteButton = styled(Button)`
     }
 `;
 
+const StyledImage = styled.img`
+    width: 60vh;
+    height: auto;
+
+    @media screen and (max-width: 400px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
+    @media screen and (max-width: 460px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
+    @media screen and (max-width: 800px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
+    @media screen and (max-width: 900px), (max-height: 533px) {
+        /* Adjust styles for smaller screens */
+        width: 100%;
+        height: auto;
+        padding: 0.5rem;
+        min-width: 95%;
+    }
+
+`;
+
 TextArea.propTypes = {
     onChange: PropTypes.func,
     value: PropTypes.string
@@ -264,6 +299,7 @@ export default function Thread({ threadData,setThreadData, posts, setPosts, logg
                             <div><strong>{threadData.title} by {threadData.userName} -- {threadData.roleNames} </strong></div>
                             <br/>
                             {threadData.content}
+                            <StyledImage src='https://placehold.co/600x400'></StyledImage>
                             <br/>
                             <br/>
                             {(loggedInUser && (loggedInUser.roles.includes("admin") || threadData.userName === loggedInUser.username)) && (

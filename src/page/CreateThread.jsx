@@ -23,7 +23,6 @@ const Container = styled.div`
         height: calc(100vh - 4rem);
         margin: 1rem;
     }
-
 `;
 
     const StyledForm = styled.form`
@@ -89,7 +88,6 @@ const Container = styled.div`
         width: 20%;
         margin-right: 71%;
     }
-
 
     `;
 
@@ -161,9 +159,16 @@ const Container = styled.div`
         `;
 
 
+
+        const StyledFileSubmit = styled.input`
+        margin: 1rem auto;
+        font-size: 1rem;
+    `;
+
+
 export const CreateThread = ({ loggedInUser }) => {
     const [categories, setCategories] = useState(null);
-    const [createdThread, setCreatedThread] = useState({title: '', content: '', category: 1});
+    const [createdThread, setCreatedThread] = useState({title: '', content: '', category: 1, image: null});
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -224,6 +229,7 @@ export const CreateThread = ({ loggedInUser }) => {
                 </StyledSelect>
                 <TextArea required id='content' onChange={handleOnChange} placeholder="I cannot believe that.."></TextArea>
                 {error && <ErrorText>{error}</ErrorText>}
+                <StyledFileSubmit id='image' formEncType='multipart/form-data' accept='image/*' type='file' onChange={handleOnChange}></StyledFileSubmit>
                 <StyledSubmitInput type='submit' value='Publish Thread'></StyledSubmitInput>
             </StyledForm>
         </Container>
