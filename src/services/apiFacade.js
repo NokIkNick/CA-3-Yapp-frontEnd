@@ -115,7 +115,8 @@ export const createThread = async (thread, token) => {
             title: thread.title,
             content: thread.content,
             category: thread.category,
-            userName: thread.author
+            userName: thread.author,
+            image: thread.image
         })
     });
     const data = await response.json();
